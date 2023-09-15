@@ -1,14 +1,16 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import globalStyles from "./src/styles/globalStyles.js";
+import MainNavigator from "./src/navigation/MainNavigator.js";
+import { NavigationContainer } from "@react-navigation/native";
 
 export default function App() {
   return (
-    //probably want to update globalStyles to replace styles
-    <View style={styles.container}>
+    <NavigationContainer>
       <Text>Welcome to our attendance tracker app!</Text>
       <StatusBar style="auto" />
-    </View>
+      <MainNavigator />
+    </NavigationContainer>
   );
 }
 
