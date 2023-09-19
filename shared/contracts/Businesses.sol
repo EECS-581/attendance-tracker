@@ -1,7 +1,7 @@
 pragma solidity ^0.8.0;
 
 import "./IAttendanceToken.sol";
-import "./Attendees.sol";
+import "./IAttendees.sol";
 
 contract Businesses {
 
@@ -52,7 +52,7 @@ contract Businesses {
     }
 
     function changeAttendeeContract(address _newaddress)public onlyOwner returns (bool){
-        IAttendee newContract = IAttendee(_newaddress);
+        IAttendees newContract = IAttendees(_newaddress);
         attendeesContract = newContract;
         return (true);
     }

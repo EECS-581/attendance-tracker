@@ -38,7 +38,7 @@ contract Attendees {
 
     function setOrganizationID(string memory _string, uint256 _organizationID)public onlyOwner returns (bool){
         require(organizationToID[_string] == 0, "This Organization already has an ID");
-        require(idtoOrganization[_organizationID] == "", "This Organization ID is already taken");
+        require(keccak256(abi.encodePacked(idtoOrganization[_organizationID])) == keccak256(abi.encodePacked("")), "This Organization ID is already taken");
         organizationToID[_string] = _organizationID;
         idtoOrganization[_organizationID] = _string;
         return(true);
