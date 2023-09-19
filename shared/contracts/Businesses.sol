@@ -25,14 +25,14 @@ contract Businesses {
     // - _addressAttendee: The address of the Attendees contract
     constructor(address _addressToken, address _addressAttendee) {
         owner = msg.sender;
-        attendanceTokenContract = IAttendanceToken(_addressToken);
-        attendeesContract = IAttendees(_addressAttendee);
+        attendanceTokenContract = IAttendanceToken(_addressToken); //creates contract callable
+        attendeesContract = IAttendees(_addressAttendee); //creates contract callable
     }
 
     // Modifier: onlyOwner
     // Description: Ensures that only the owner can execute a function.
     modifier onlyOwner() {
-        require(msg.sender == owner, "You are not the owner of this contract");
+        require(msg.sender == owner, "You are not the owner of this contract"); //requires caller is owner
         _;
     }
 
@@ -74,9 +74,9 @@ contract Businesses {
     // Postconditions: The business is enrolled and assigned an ID.
     // Return: True if the operation is successful
     function enrollBusiness(string memory _businessName) public returns (bool) {
-        businessToID[_businessName] = idCounter;
-        idCounter++;
-        return true;
+        businessToID[_businessName] = idCounter; //sets id
+        idCounter++; //increments counter
+        return true; //returns true
     }
 
     // Function: createCoupon
@@ -93,16 +93,16 @@ contract Businesses {
     // Postconditions: A new coupon is created and associated with the business.
     // Return: True if the operation is successful
     function createCoupon(string memory _businessName, uint256 _price, uint256 _supply, uint256[] memory _banList, uint256 _couponID) public returns (bool) {
-        uint256 businessID = businessToID[_businessName];
-        Coupon storage coupon = couponIDToCoupon[_couponID];
-        coupon.couponID = _couponID;
-        coupon.price = _price;
-        coupon.supplyLeft = _supply;
+        uint256 businessID = businessToID[_businessName]; //get id
+        Coupon storage coupon = couponIDToCoupon[_couponID]; //get coupons
+        coupon.couponID = _couponID; //set value
+        coupon.price = _price; //set value
+        coupon.supplyLeft = _supply; //set value
         for (uint i = 0; i < _banList.length; i++) {
-            coupon.organizationBanList[_banList[i]] = true;
+            coupon.organizationBanList[_banList[i]] = true; //set all banned organizations
         }
-        uint256[] storage couponArray = businessToCouponIDs[businessID];
-        couponArray.push(_couponID);
+        uint256[] storage couponArray = businessToCouponIDs[businessID]; //gets array
+        couponArray.push(_couponID); //pushes new coupons
     }
 
     // Function: changeAttendeeContract
@@ -115,9 +115,9 @@ contract Businesses {
     // Postconditions: The Attendees contract address is updated.
     // Return: True if the operation is successful
     function changeAttendeeContract(address _newaddress) public onlyOwner returns (bool) {
-        IAttendees newContract = IAttendees(_newaddress);
-        attendeesContract = newContract;
-        return true;
+        IAttendees newContract = IAttendees(_newaddress); //changes pointer to contract
+        attendeesContract = newContract; //sets contract
+        return true; //returns true
     }
 
     // Function: changeTokenContract
@@ -130,9 +130,9 @@ contract Businesses {
     // Postconditions: The Attendance Token contract address is updated.
     // Return: True if the operation is successful
     function changeTokenContract(address _newaddress) public onlyOwner returns (bool) {
-        IAttendanceToken newContract = IAttendanceToken(_newaddress);
-        attendanceTokenContract = newContract;
-        return true;
+        IAttendanceToken newContract = IAttendanceToken(_newaddress); //sets new pointer
+        attendanceTokenContract = newContract; //sets contract variable
+        return true; //returns true
     }
 
     // Function: redeemCoupon

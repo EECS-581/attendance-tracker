@@ -58,9 +58,9 @@ contract Attendees {
     // Postconditions: A new Attendee is created and associated with _account
     // Return: True if the operation is successful
     function createAttendee(address _account, string memory _firstName, string memory _lastName, uint256 _organizationID) public onlyOwner returns (bool) {
-        Attendee memory attendee = Attendee(_firstName, _lastName, _organizationID);
-        addressToAttendee[_account] = attendee;
-        return true;
+        Attendee memory attendee = Attendee(_firstName, _lastName, _organizationID); //creates attendee
+        addressToAttendee[_account] = attendee; //adds attendee
+        return true; //return true
     }
 
     // Function: getAddressToAttendee
@@ -76,10 +76,10 @@ contract Attendees {
     // Unacceptable Input Values: None
     // Postconditions: Attendee information is retrieved
     function getAddressToAttendee(address _account) external view returns (string memory firstName, string memory lastName, uint256 organizationID) {
-        Attendee memory attendee = addressToAttendee[_account];
-        firstName = attendee.firstName;
-        lastName = attendee.lastName;
-        organizationID = attendee.organizationID;
+        Attendee memory attendee = addressToAttendee[_account]; // get attendee
+        firstName = attendee.firstName; //set first name
+        lastName = attendee.lastName; //set last name
+        organizationID = attendee.organizationID; //set id
     }
 
     // Function: setOrganizationID
