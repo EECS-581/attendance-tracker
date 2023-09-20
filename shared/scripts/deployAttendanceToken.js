@@ -1,19 +1,25 @@
-// scripts/deploy.js
-const hre = require("hardhat");
+require('dotenv').config()
+const ethers = require('ethers');
+
+const AttendanceToken = require('../abi/AttendanceToken.json');
 
 async function main() {
-  const [deployer] = await hre.ethers.getSigners();
 
-  console.log("Deploying contracts with the account:", deployer.address);
+  const AttendanceTokenBytecode = AttendanceToken.bytecode
+  const AttendanceTokenAbi = AttendanceToken.abi;
 
-  const AttendanceToken = await hre.ethers.getContractFactory("AttendanceToken");
-  const token = await AttendanceToken.deploy();
 
-  await token.deployed();
+  const provider = new ethers.JsonRpcProvider('https://rpc-mumbai.maticvigil.com');
+  const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
 
-  console.log("AttendanceToken deployed to:", token.address);
+  const factory = new ethers.ContractFactory(AttendanceTokenAbi, AttendanceTokenBytecode, wallet);
+
+  const contract = await factory.deploy();
+  await contract.waitForDeployment();
+  console.log(contract)
+
+  console.log(`Contract deployed at address: ${contract.target}`);
 }
-
 main()
   .then(() => process.exit(0))
   .catch((error) => {
