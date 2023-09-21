@@ -38,6 +38,11 @@ export default function App() {
     prepareApp();
   }, []);
 
+  // If fonts haven't been loaded, return null or a loading component
+  if (!fontsLoaded) {
+    return null; // or return a loading component if you have one
+  }
+
   return (
     <NavigationContainer>
       <Text style={{ fontFamily: "proximanova-regular" }}>
