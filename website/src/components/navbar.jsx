@@ -1,11 +1,13 @@
-import Link from "next/link";
 import React, { useState } from "react";
 import NavItem from "./navitem";
 
 const MENU_LIST = [
   { text: "Home", href: "/" },
   { text: "About Us", href: "/about" },
-  { text: "Login/Create Account", href: "/login" }
+  { text: "Instructor Dashboard", href: "/instructor_dashboard" },
+  { text: "Business Dashboard", href: "/business_dashboard" },
+  { text: "Login", href: "/login" },
+  { text: "Create Account", href: "/create_account"}
 ];
 
 const Navbar = () => {
@@ -15,9 +17,6 @@ const Navbar = () => {
   return (
     <header className="flex w-full">
       <nav className={`nav`}>
-        <Link href={"/"}>
-            {/* <h1 className="logo">LOGO!</h1> */}
-        </Link>
         <div onClick={() => setNavActive(!navActive)} className={`nav__menu-bar`}
         >
         </div>
