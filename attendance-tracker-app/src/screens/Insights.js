@@ -1,10 +1,11 @@
 import React from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
+import globalStyles from "../styles/globalStyles";
 
 const Insights = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Insights</Text>
+      <Text style={[globalStyles.defaultFont, { fontSize: 24 }]}>Insights</Text>
       <Button
         title="Get Started"
         onPress={() => {
