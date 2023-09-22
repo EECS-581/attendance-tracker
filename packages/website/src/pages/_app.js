@@ -8,9 +8,7 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter();
 
   return( 
-  <Web3Provider>
     <Component {...pageProps} />
-  </Web3Provider>
   );
 }
 export default MyApp;
