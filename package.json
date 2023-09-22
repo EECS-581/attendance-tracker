@@ -1,0 +1,8 @@
+{
+    "name": "attendance-tracker",
+    "private": true,
+    "workspaces": [
+      "packages/*"
+    ]
+  }
+  
