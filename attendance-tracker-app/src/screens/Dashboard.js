@@ -1,11 +1,19 @@
 import React from "react";
 import { View, Text } from "react-native";
 import globalStyles from "../styles/globalStyles.js";
+import QRScanner from "../components/QRScanner.js";
+import InsightsWidget from "../components/InsightsWidget.js";
 
-const Dashboard = () => {
+const Dashboard = ({ navigation }) => {
   return (
     <View style={globalStyles.container}>
       <Text style={globalStyles.title}>Dashboard</Text>
+      <QRScanner style={globalStyles.widgetStyle} />
+      <InsightsWidget
+        navigation={navigation}
+        style={globalStyles.widgetStyle}
+      />
+
       {/* ... other components */}
     </View>
   );
