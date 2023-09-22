@@ -9,8 +9,7 @@ const Landing = ({ navigation }) => {
       <Button
         title="Get Started"
         onPress={() => {
-          // Navigate to another screen or perform any other action
-          // For example: navigation.navigate('Dashboard');
+          navigation.navigate("Tabs"); // This line navigates to the tabs
         }}
       />
     </View>
