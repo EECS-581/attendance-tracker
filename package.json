@@ -1,8 +1,11 @@
 {
     "name": "attendance-tracker",
     "private": true,
-    "workspaces": [
-      "packages/*"
-    ]
+    
+        "workspaces": {
+          "packages": ["packages/*"],
+          "nohoist": ["**/expo", "**/expo/**"]
+        }
+      
   }
   
