@@ -7,8 +7,6 @@
 // This section brings in the necessary imports
 // import React and useState to track the active navbar item
 import React, { useState } from "react";
-// import the navitem component 
-import NavItem from "./navitem";
 
 // This section creates an array, that hold the menu item obejcts
 // The objects in the list contain the text, and path of each item
@@ -24,35 +22,33 @@ const MENU_LIST = [
 
 // creates the navbar component which is exported from this file
 const Navbar = () => {
-  // creates default state for each  navitem using the react state
-  const [navActive, setNavActive] = useState(null);
-  const [activeIdx, setActiveIdx] = useState(-1);
+  // creates the states needed to track which nav item is active
+  const [isActive, setIsActive] = useState(false);
+  // creates the toggle to add the active class
+  const toggleActiveClass = () => {
+    setIsActive(!isActive);
+  };
+  // sets the active state to false
+  const removeActive = () => {
+    setIsActive(false);
+  };
 
   // creates the exportable html for the navbar component
   return (
-    <header className="flex w-full">
+    <header>
       {/* creates a nav tag in html */}
-      <nav className={``}>
-        {/* creates a container for nav elements that will keep track of the active tab with a click event */}
-        <div onClick={() => setNavActive(!navActive)} className={`nav__menu-bar`}
-        >
-        </div>
-        {/* creates a container for nav elements that will list the menu items */}
-        <div className={`${navActive ? "active" : ""} nav__menu-list`}>
-          {/* list menu items  */}
-          {MENU_LIST.map((menu, idx) => (
+      <nav>
+        {/* creates a list elemnent for nav elements that will keep track of the active tab with a click event */}
+        <ul className={`${isActive ? "active" : ''} nav_list`}>
+        {/* create a list item for each element in the menu list */}
+        {MENU_LIST.map((menu) => (
             // click event checks for the active navitem
-            <div onClick={() => {
-              setActiveIdx(idx);
-              setNavActive(false);
-            }}
-            key={menu.text}
-            >
-              {/* Creates an instance of the navitem component for each menu item */}
-              <NavItem active={activeIdx === idx} {...menu} />
-            </div>
-          ))}
-        </div>
+            <li onClick={removeActive}>
+              {/* creates a link for each menu item with the link and text */}
+              <a className="nav_link" href={menu.href}>{menu.text}</a>
+            </li>
+        ))}
+        </ul>
       </nav>
     </header>
   );

@@ -16,8 +16,8 @@ export default function Home() {
     // Creates a main tag to hold the entire page, so it can be styled as a whole
     // The main tag holds the navbar component, a container for the hero section of the page
     // A container to hold the create account and sign in buttons, and a container for the footer
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
+    <main className="flex min-h-screen flex-col justify-between p-24">
+      <div>
         {/* This adds the navbar component to the page */}
         <Navbar />
       </div>
@@ -33,7 +33,7 @@ export default function Home() {
       </div>
       <div>  
         {/* This section creates the container for the two buttons    */}
-        <div className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <div className="max-w-fit text-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
           {/* This creates the button for creating an account - this links to the create account page  */}
           <a href="/create_account">Create Account</a>
         </div>
@@ -42,7 +42,7 @@ export default function Home() {
           Already have an account?
         </p>
         {/* This section creates the container to hold the login button which redirects to the login page */}
-        <div className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <div className="max-w-fit text-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
           <a href="/login">Sign in</a>
         </div>
       </div>
