@@ -1,38 +1,98 @@
-import { providers, JsonRpcBatchProvider, ethers } from 'ethers';
-require('dotenv').config()
+/* 
+ * Prologue Comments
+ * Name of code artifact: Web3 Context Provider
+ * Brief description: This code sets up a React context named Web3Context and a provider
+ * named Web3Provider for this context. It provides functionalities related to interacting with
+ * Ethereum blockchain via ethers.js, such as creating instances of provider and signer, 
+ * and interacting with a smart contract named AttendanceToken.
+ * Programmer’s name: Hudson Headley
+ * Date the code was created: 9-24-23
 
+ * Preconditions:
+ * - The environment variables NEXT_PUBLIC_INFURA_URL and NEXT_PUBLIC_PRIVATE_KEY
+ *   must be correctly set in the project's .env file.
+ * - AttendanceToken ABI must be correctly imported.
+ * 
+ * Postconditions:
+ * - Provides a context with functions and states that allow interaction with Ethereum blockchain and
+ *   a specific smart contract.
+ * 
+ * Error and exception condition values or types that can occur:
+ * - If the environment variables are not properly set, connection to the Ethereum blockchain may fail.
+ * - Any errors or exceptions during the Ethereum transaction are logged to the console but not handled.
+ * 
+ * Side effects:
+ * - Console logs the results of Ethereum transactions and balances.
+ * 
+ * Invariants:
+ * - The ethers.js library must remain constant for the duration of the component's lifecycle.
+ * 
+ * Any known faults:
+ * - Lack of error handling for scenarios where environment variables are not properly set, and
+ *   during the Ethereum transactions.
+ * 
+ */
 
-import { createContext, useContext, useState, useEffect, useCallback } from 'react';
-const AttendanceToken = require('../abi/AttendanceToken.json');
+import { providers, JsonRpcBatchProvider, ethers } from 'ethers'; // Importing necessary components and functions from ethers.js
+require('dotenv').config(); // Loading environment variables
 
-const Web3Context = createContext();
+import { createContext, useContext, useState, useEffect, useCallback } from 'react'; // Importing React hooks: createContext, useContext, useState, useEffect, useCallback
+const AttendanceToken = require('../abi/AttendanceToken.json'); // Importing ABI of AttendanceToken contract
 
+const Web3Context = createContext(); // Creating a new React context named Web3Context.
+
+// useWeb3Context is a custom hook that provides Web3Context.
 export const useWeb3Context = () => {
   return useContext(Web3Context);
 };
 
+// Web3Provider component provides the Web3Context to its children components.
 export const Web3Provider = ({ children }) => {
-    const [provider, setProvider] = useState(new ethers.JsonRpcProvider("https://polygon-mumbai.infura.io/v3/f0e3cf7078494cebb6cd3a8a0a57041f"));
+    // Initializing states.
+    const [provider, setProvider] = useState(new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_INFURA_URL));
     const [signer, setSigner] = useState(new ethers.Wallet(process.env.NEXT_PUBLIC_PRIVATE_KEY, provider));
-    const [AttendanceTokenContract, setAttendanceTokenContract] = useState(new ethers.Contract('0x6e85Ae42F0C8b00cc096a8c8c979633F624f975a',AttendanceToken.abi, provider));
+    const [AttendanceTokenContract, setAttendanceTokenContract] = useState(null);
     const [balance, setBalance] = useState(null);
-
-    async function getAttendanceBalance(address) {
-
-      const balance = await AttendanceTokenContract.balanceOf(userAddress);
-      setBalance(balance);
-      console.log(balance);
-    }
-
     
-
-
+    // Define an asynchronous function to get the balance of the AttendanceToken.
+    async function getAttendanceBalance(address) {
+      const balance = await AttendanceTokenContract.balanceOf(address); // Fetching balance of an address
+      setBalance(balance); // Setting balance state.
+      console.log(balance); // Logging the balance.
+    }
+    
+    // Define an asynchronous function to mint AttendanceToken.
+    async function mintAttendanceToken(address, amount) {
+      // Creating a contract instance.
+      let AttendanceTokenContract= new ethers.Contract('0x6e85Ae42F0C8b00cc096a8c8c979633F624f975a', AttendanceToken.abi, signer);
+      setAttendanceTokenContract(AttendanceTokenContract); // Setting the AttendanceTokenContract state.
+      
+      console.log("Minting Attendance Token"); // Logging the start of the minting process.
+    
+      const tx = await AttendanceTokenContract.mint(address, amount); // Minting tokens.
+      
+      console.log(tx); // Logging transaction object.
+      await tx.wait(); // Waiting for the transaction to be mined.
+      
+      console.log("Minted Attendance Token"); // Logging the end of the minting process.
+    }
+    
+    // Define an asynchronous function as a test function to perform minting and fetching balance.
+    async function mintTest() {
+      console.log(provider, signer, AttendanceTokenContract); // Logging provider, signer, and AttendanceTokenContract states.
+      // Minting tokens and fetching the balance for a specific address.
+      await mintAttendanceToken('0x06e6620C67255d308A466293070206176288A67B', 100); 
+      await getAttendanceBalance('0x06e6620C67255d308A466293070206176288A67B');
+    }
+    
+    // Defining the context value.
     const value = {
       provider,
       signer,
-      getAttendanceBalance
-      };
+      getAttendanceBalance,
+      mintTest
+    };
     
-      return <Web3Context.Provider value={value}>{children}</Web3Context.Provider>;
-
+    // Returning the Web3Context.Provider with value and children props.
+    return <Web3Context.Provider value={value}>{children}</Web3Context.Provider>;
 };
