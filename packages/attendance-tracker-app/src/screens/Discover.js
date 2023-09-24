@@ -7,6 +7,9 @@ const Discover = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={[globalStyles.defaultFont, { fontSize: 24 }]}>Discover</Text>
+      <Text style={[globalStyles.defaultFont, { fontSize: 12 }]} marginTop={20}>
+        Events in your area eligible for tokens will be diplayed here.
+      </Text>
     </View>
   );
 };

@@ -7,6 +7,7 @@ import Insights from "../screens/Insights";
 import Progress from "../screens/Progress";
 import Account from "../screens/Account";
 import Discover from "../screens/Discover";
+import Scan from "../screens/Scan";
 import { Ionicons } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
@@ -58,6 +59,7 @@ const MainNavigator = () => {
         component={Landing}
         options={{ headerShown: false }}
       />
+      <Stack.Screen name="Scan" component={Scan} />
       <Stack.Screen
         name="Tabs"
         component={TabNavigator}

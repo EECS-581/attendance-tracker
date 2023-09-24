@@ -17,7 +17,7 @@
     "@react-navigation/stack": "^6.3.17",
     "expo": "^49.0.10",
     "expo-app-loading": "^2.1.1",
-    "expo-barcode-scanner": "~12.5.3",
+    "expo-barcode-scanner": "^12.7.0",
     "expo-camera": "~13.4.4",
     "expo-font": "~11.4.0",
     "expo-splash-screen": "~0.20.5",
