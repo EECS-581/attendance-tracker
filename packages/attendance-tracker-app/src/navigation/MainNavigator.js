@@ -1,3 +1,32 @@
+/**
+ * MainNavigator.js
+ *
+ * This component sets up the main navigation for the app, including both stack and tab navigators.
+ *
+ * Programmer: Emma Nasseri
+ * Created on: 9/24/23
+ * Dates the code was revised: N/A
+ * Brief description of each revision & author: N/A
+ *
+ * Preconditions:
+ * - All imported screens (e.g., Landing, Dashboard, etc.) should be correctly defined and exported from their respective files.
+ *
+ * Postconditions:
+ * - Renders the main navigation structure of the app.
+ *
+ * Error and exception conditions:
+ * - If any of the imported screens are not correctly defined or missing, the navigator will not function correctly.
+ *
+ * Side effects:
+ * - None.
+ *
+ * Invariants:
+ * - The initial route for the stack navigator is always "Landing".
+ *
+ * Known faults:
+ * - None.
+ */
+
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -10,10 +39,12 @@ import Discover from "../screens/Discover";
 import Scan from "../screens/Scan";
 import { Ionicons } from "@expo/vector-icons";
 
+// Create instances for bottom tab and stack navigators
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 const TabNavigator = () => {
+  // Define the tab navigation structure and appearance
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -52,6 +83,7 @@ const TabNavigator = () => {
 };
 
 const MainNavigator = () => {
+  // Define the main stack navigation structure
   return (
     <Stack.Navigator initialRouteName="Landing">
       <Stack.Screen

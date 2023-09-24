@@ -16,8 +16,8 @@ const globalStyles = StyleSheet.create({
   widgetStyle: {
     padding: 10,
     borderRadius: 5,
-    borderWidth: 1,
-    borderColor: "#ddd",
+    borderWidth: 2,
+    borderColor: "black",
     marginBottom: 10,
     width: "90%",
     height: 150,
@@ -25,8 +25,6 @@ const globalStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 10, // This will give rounded edges
-    borderColor: "black", // This will give a black border
-    borderWidth: 1, // This sets the border width
     flexDirection: "row", // This will arrange child components in a row
   },
 });

@@ -1,17 +1,14 @@
 import React from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 import globalStyles from "../styles/globalStyles";
 
 const Progress = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={[globalStyles.defaultFont, { fontSize: 24 }]}>Progress</Text>
-      <Button
-        title="Get Started"
-        onPress={() => {
-          // Navigate to another screen or perform any other action
-          // For example: navigation.navigate('Dashboard');
-        }}
+      <Image
+        source={require("../../assets/images/progresstemp.png")}
+        style={styles.image}
       />
     </View>
   );
@@ -24,10 +21,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#f5f5f5",
   },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
+
+  image: {
+    width: 200,
+    height: 120,
+    margin: 20,
   },
 });
 

@@ -3,6 +3,7 @@ import { View, Text } from "react-native";
 import globalStyles from "../styles/globalStyles.js";
 import QRScanner from "../components/QRScanner.js";
 import InsightsWidget from "../components/InsightsWidget.js";
+import ProgressWidget from "../components/ProgressWidget.js";
 
 const Dashboard = ({ navigation }) => {
   return (
@@ -13,7 +14,10 @@ const Dashboard = ({ navigation }) => {
         style={globalStyles.widgetStyle}
       />
 
-      {/* ... other components */}
+      <ProgressWidget
+        navigation={navigation}
+        style={globalStyles.widgetStyle}
+      />
     </View>
   );
 };
