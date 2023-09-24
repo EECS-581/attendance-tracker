@@ -5,7 +5,7 @@
 // This pages sets up the UI, there are no pre or post conditions, and no inputs to this page
 
 // This imports the navbar component
-import Navbar from "@/components/navbar";
+import Navbar from "@/components/navbar"
 // This imports the footer component 
 import Footer from "@/components/footer";
 
