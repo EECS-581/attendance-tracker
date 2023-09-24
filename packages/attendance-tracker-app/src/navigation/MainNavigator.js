@@ -44,7 +44,6 @@ const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 const TabNavigator = () => {
-  // Define the tab navigation structure and appearance
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -67,11 +66,15 @@ const TabNavigator = () => {
           // Return the icon component
           return <Ionicons name={iconName} size={size} color={color} />;
         },
+        tabBarActiveTintColor: "plum",
+        tabBarInactiveTintColor: "black",
+        tabBarStyle: [
+          {
+            display: "flex",
+          },
+          null,
+        ],
       })}
-      tabBarOptions={{
-        activeTintColor: "plum",
-        inactiveTintColor: "black",
-      }}
     >
       <Tab.Screen name="Dashboard" component={Dashboard} />
       <Tab.Screen name="Discover" component={Discover} />
