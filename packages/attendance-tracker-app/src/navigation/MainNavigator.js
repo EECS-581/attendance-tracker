@@ -37,8 +37,8 @@ const TabNavigator = () => {
         },
       })}
       tabBarOptions={{
-        activeTintColor: "tomato",
-        inactiveTintColor: "gray",
+        activeTintColor: "plum",
+        inactiveTintColor: "black",
       }}
     >
       <Tab.Screen name="Dashboard" component={Dashboard} />

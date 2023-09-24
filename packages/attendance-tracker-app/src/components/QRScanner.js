@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, Button } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
+import LightColorfulButton from "./LightColorfulButton";
 
 export default function QRScanner() {
   const [hasPermission, setHasPermission] = useState(null);
@@ -37,7 +38,12 @@ export default function QRScanner() {
       ) : (
         <>
           <Text style={styles.text}>Your App Content</Text>
-          <Button title="Scan QR Code" onPress={() => setShowScanner(true)} />
+          <Button title="" />
+          <LightColorfulButton
+            title="Scan QR Code"
+            onPress={() => setShowScanner(true)}
+            shadowColor="powderblue"
+          />
         </>
       )}
 

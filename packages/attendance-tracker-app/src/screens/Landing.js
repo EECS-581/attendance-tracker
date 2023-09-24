@@ -1,17 +1,25 @@
 import React from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import globalStyles from "../styles/globalStyles";
+import LightColorfulButton from "../components/LightColorfulButton";
 
 const Landing = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Text style={[globalStyles.defaultFont, { fontSize: 24 }]}>Landing</Text>
-      <Button
-        title="Get Started"
-        onPress={() => {
-          navigation.navigate("Tabs"); // This line navigates to the tabs
-        }}
-      />
+      <View style={styles.titleContainer}>
+        <Text style={[globalStyles.defaultFont, { fontSize: 30 }]}>
+          Welcome
+        </Text>
+      </View>
+      <View style={styles.buttonContainer}>
+        <LightColorfulButton
+          title="Start Here"
+          shadowColor="powderblue"
+          onPress={() => {
+            navigation.navigate("Tabs");
+          }}
+        />
+      </View>
     </View>
   );
 };
@@ -19,9 +27,18 @@ const Landing = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#f5f5f5",
+    alignItems: "center",
+  },
+  titleContainer: {
+    flex: 2,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f5f5f5",
+  },
+  buttonContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   title: {
     fontSize: 24,

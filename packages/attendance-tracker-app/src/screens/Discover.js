@@ -1,18 +1,12 @@
 import React from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
 import globalStyles from "../styles/globalStyles";
+import LightColorfulButton from "../components/LightColorfulButton";
 
 const Discover = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={[globalStyles.defaultFont, { fontSize: 24 }]}>Discover</Text>
-      <Button
-        title="Get Started"
-        onPress={() => {
-          // Navigate to another screen or perform any other action
-          // For example: navigation.navigate('Dashboard');
-        }}
-      />
     </View>
   );
 };
