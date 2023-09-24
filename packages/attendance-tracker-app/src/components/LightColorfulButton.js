@@ -14,7 +14,6 @@ const LightColorfulButton = ({ title, onPress, shadowColor = "#D1CDC7" }) => {
 const styles = StyleSheet.create({
   shadow: {
     borderRadius: 10,
-    padding: 2, // This determines the offset of the shadow
   },
   button: {
     backgroundColor: "white",
@@ -25,6 +24,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 3,
+    marginRight: 3,
   },
   buttonText: {
     fontWeight: "bold",
