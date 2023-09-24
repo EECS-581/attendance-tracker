@@ -7,7 +7,6 @@ import InsightsWidget from "../components/InsightsWidget.js";
 const Dashboard = ({ navigation }) => {
   return (
     <View style={globalStyles.container}>
-      <Text style={globalStyles.title}>Dashboard</Text>
       <QRScanner style={globalStyles.widgetStyle} />
       <InsightsWidget
         navigation={navigation}

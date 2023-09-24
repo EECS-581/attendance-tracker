@@ -45,9 +45,6 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Text style={globalStyles.defaultFont}>
-        Welcome to our attendance tracker app!
-      </Text>
       <StatusBar style="auto" />
       <MainNavigator />
     </NavigationContainer>
