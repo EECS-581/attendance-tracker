@@ -1,9 +1,29 @@
+/**
+ * Name of code artifact: Landing Component
+ * Brief description: This component renders the Landing screen, displaying a welcome message and buttons for account creation and login.
+ * Programmer’s name: Emma Nasseri
+ * Date the code was created: 9/24/23
+ * Dates the code was revised: N/A
+ * Brief description of each revision & author: N/A
+ * Preconditions:
+ * - The component expects a `navigation` prop, typically passed from React Navigation.
+ * Acceptable and unacceptable input values or types:
+ * - `navigation`: Object (from React Navigation)
+ * Postconditions: Renders the Landing screen UI.
+ * Return values or types: JSX elements (React components)
+ * Error and exception condition values or types that can occur: N/A
+ * Side effects: Navigates to the "Tabs" route when either button is pressed.
+ * Invariants: N/A
+ * Any known faults: N/A
+ */
+
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import globalStyles from "../styles/globalStyles";
-import LightColorfulButton from "../components/LightColorfulButton";
+import globalStyles from "../styles/globalStyles"; // Importing global styles
+import LightColorfulButton from "../components/LightColorfulButton"; // Importing the LightColorfulButton component
 
 const Landing = ({ navigation }) => {
+  // Render the Landing screen UI
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
@@ -11,10 +31,17 @@ const Landing = ({ navigation }) => {
           Welcome
         </Text>
       </View>
+
       <View style={styles.buttonContainer}>
         <LightColorfulButton
-          title="Start Here"
+          title="Create Account"
           shadowColor="powderblue"
+          onPress={() => {}}
+        />
+
+        <LightColorfulButton
+          title="Login"
+          shadowColor="plum"
           onPress={() => {
             navigation.navigate("Tabs");
           }}
@@ -24,6 +51,7 @@ const Landing = ({ navigation }) => {
   );
 };
 
+// Styling for the Landing component
 const styles = StyleSheet.create({
   container: {
     flex: 1,
