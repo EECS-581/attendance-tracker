@@ -28,7 +28,7 @@
  * 
  */
 
-import { useContext, useState, useEffect } from "react"; // Importing React hooks: useContext, useState, useEffect.
+import {  createContext, useContext, useState, useEffect } from "react"; // Importing React hooks: useContext, useState, useEffect.
 
 import { Web3Context, useWeb3Context } from "./web3Context"; // Importing Web3Context and useWeb3Context from web3Context file.
 import { ethers } from "ethers"; // Importing ethers from ethers.js library.
@@ -38,7 +38,7 @@ export const useDbContext = () => {
     return useContext(dbContext); // Using React's useContext hook to provide dbContext.
 };
 
-export const dbContext = createContext(); // Creating a new React context named dbContext.
+const dbContext = createContext(); // Creating a new React context named dbContext.
 
 // DbProvider component provides the dbContext to its children components.
 export const DbProvider = ({ children }) => { // Accepting children props.
