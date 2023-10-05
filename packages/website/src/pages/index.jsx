@@ -40,17 +40,23 @@ export default function Home() {
       </div>
       <div>
         {/* This section creates the container for the two buttons    */}
-        <div className="max-w-fit text-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          {/* This creates the button for creating an account - this links to the create account page  */}
-          <a href="/create_account">Create Account</a>
-        </div>
-        <LightColorfulButton title="Create Account" link="/create_account" />
+
+        {/* This creates the button for creating an account - this links to the create account page  */}
+
+        <LightColorfulButton
+          shadowColor="powderblue"
+          title="Create Account"
+          link="/create_account"
+        />
         {/* This creates a paragraph tag to hold this sentence between the buttons */}
         <p>Already have an account?</p>
         {/* This section creates the container to hold the login button which redirects to the login page */}
-        <div className="max-w-fit text-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          <a href="/login">Sign in</a>
-        </div>
+
+        <LightColorfulButton
+          shadowColor="powderblue"
+          title="Sign in"
+          link="/login"
+        />
       </div>
       {/* This section creates a container to hold the footer */}
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">

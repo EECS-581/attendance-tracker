@@ -31,43 +31,39 @@
  */
 
 import React from "react";
-import { Text, TouchableOpacity, StyleSheet } from "react-native";
+import Link from "next/link";
 
 const SolidColorButton = ({
   title,
-  onPress,
-  backgroundColor = "plum",
+  link,
+  backgroundColor = "pink",
   textColor = "black",
 }) => {
   // Render the button with customizable background and text colors
-  return (
-    <TouchableOpacity
-      style={[styles.button, { backgroundColor: backgroundColor }]}
-      onPress={onPress}
-    >
-      <Text style={[styles.buttonText, { color: textColor }]}>{title}</Text>
-    </TouchableOpacity>
-  );
-};
-
-// Styles for the SolidColorButton component
-const styles = StyleSheet.create({
-  button: {
+  const buttonStyle = {
+    display: "inline-flex",
     borderRadius: 10,
     borderColor: "black",
     borderWidth: 2,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    padding: "10px 20px",
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 5,
     marginTop: 5,
     marginLeft: 5,
     marginRight: 5,
-  },
-  buttonText: {
     fontWeight: "bold",
-  },
-});
+    backgroundColor: backgroundColor,
+    color: textColor,
+    cursor: "pointer",
+    textDecoration: "none",
+  };
+
+  return (
+    <Link href={link} passHref>
+      <div style={buttonStyle}>{title}</div>
+    </Link>
+  );
+};
 
 export default SolidColorButton;
