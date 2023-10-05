@@ -7,7 +7,6 @@ pragma solidity ^0.8.0;
 // Created: 9/19/23
 // Revised: 9/19/23
 
-
 contract Attendees {
     // State variable to store the contract owner's address
     address owner;
@@ -45,6 +44,12 @@ contract Attendees {
     // Description: Maps organization names (string) to organization IDs (uint256).
     mapping(string => uint256) public organizationToID; 
 
+    // Event: AttendeeCreated
+    event AttendeeCreated(address indexed attendeeAddress, string firstName, string lastName, uint256 organizationID);
+
+    // Event: OrganizationIDSet
+    event OrganizationIDSet(string organizationName, uint256 organizationID);
+
     // Function: createAttendee
     // Description: Creates a new Attendee and associates it with an Ethereum address.
     // Parameters:
@@ -60,6 +65,7 @@ contract Attendees {
     function createAttendee(address _account, string memory _firstName, string memory _lastName, uint256 _organizationID) public onlyOwner returns (bool) {
         Attendee memory attendee = Attendee(_firstName, _lastName, _organizationID); //creates attendee
         addressToAttendee[_account] = attendee; //adds attendee
+        emit AttendeeCreated(_account, _firstName, _lastName, _organizationID); // Emit the AttendeeCreated event
         return true; //return true
     }
 
@@ -97,6 +103,7 @@ contract Attendees {
         require(keccak256(abi.encodePacked(idtoOrganization[_organizationID])) == keccak256(abi.encodePacked("")), "This Organization ID is already taken"); //checks to make sure business string is not empty
         organizationToID[_string] = _organizationID; //sets id
         idtoOrganization[_organizationID] = _string; //sets string
+        emit OrganizationIDSet(_string, _organizationID); // Emit the OrganizationIDSet event
         return true; //returns true if successful 
     }
 }
