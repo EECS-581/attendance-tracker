@@ -38,6 +38,7 @@ import Account from "../screens/Account";
 import Discover from "../screens/Discover";
 import Scan from "../screens/Scan";
 import { Ionicons } from "@expo/vector-icons";
+import CameraButton from "../components/CameraButton";
 
 // Create instances for bottom tab and stack navigators
 const Tab = createBottomTabNavigator();
@@ -88,19 +89,26 @@ const TabNavigator = () => {
 const MainNavigator = () => {
   // Define the main stack navigation structure
   return (
-    <Stack.Navigator initialRouteName="Landing">
-      <Stack.Screen
-        name="Landing"
-        component={Landing}
-        options={{ headerShown: false }}
+    <>
+      <Stack.Navigator initialRouteName="Landing">
+        <Stack.Screen
+          name="Landing"
+          component={Landing}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="Scan" component={Scan} />
+        <Stack.Screen
+          name="Tabs"
+          component={TabNavigator}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+      <CameraButton
+        onPress={() => {
+          // Handle the camera button press here
+        }}
       />
-      <Stack.Screen name="Scan" component={Scan} />
-      <Stack.Screen
-        name="Tabs"
-        component={TabNavigator}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
+    </>
   );
 };
 
