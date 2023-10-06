@@ -17,6 +17,7 @@ contract Businesses {
     address public owner; // Stores the owner's Ethereum address
     IAttendanceToken attendanceTokenContract; // Stores the address of the Attendance Token contract
     IAttendees attendeesContract; // Stores the address of the Attendees contract
+    string[] public BusinessesList; // Stores list of Businesses Enrolled
 
     // Define an event for business enrollment
     event BusinessEnrolled(string businessName, uint256 businessID);
@@ -96,6 +97,7 @@ contract Businesses {
     function enrollBusiness(string memory _businessName) public returns (uint256) {
         businessToID[_businessName] = idCounter; // Sets the ID for the business
         businessIdToOwner[idCounter] = msg.sender; // Maps business ID to the owner's address
+        BusinessesList.push(_businessName); //adds to lists of businesses
         idCounter++; // Increments the counter for the next business
         emit BusinessEnrolled(_businessName, businessToID[_businessName]); // Emit the BusinessEnrolled event
         return businessToID[_businessName]; // Return the business ID
