@@ -2,6 +2,7 @@
 // This code creates the Home or Landing Page for the website
 // Programmers name: Libby Miller
 // Date: 09/20/2023
+// Updated: 10/05/2023
 // This pages sets up the UI, there are no pre or post conditions, and no inputs to this page
 
 // This imports the navbar component
