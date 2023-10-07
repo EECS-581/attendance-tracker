@@ -28,6 +28,7 @@ import globalStyles from "./src/styles/globalStyles.js";
 import MainNavigator from "./src/navigation/MainNavigator.js";
 import { NavigationContainer } from "@react-navigation/native";
 import CameraButtonContext from "./src/contexts/CameraButtonContext.js";
+import { LoadingProvider } from "./src/contexts/Loading/LoadingContext.js";
 
 export default function App() {
   // State to manage font loading status
@@ -69,14 +70,16 @@ export default function App() {
 
   // Render the main navigation of the app
   return (
-    <CameraButtonContext.Provider
-      value={{ showCameraButton, setShowCameraButton }}
-    >
-      <NavigationContainer>
-        <StatusBar style="auto" />
-        <MainNavigator />
-      </NavigationContainer>
-    </CameraButtonContext.Provider>
+    <LoadingProvider>
+      <CameraButtonContext.Provider
+        value={{ showCameraButton, setShowCameraButton }}
+      >
+        <NavigationContainer>
+          <StatusBar style="auto" />
+          <MainNavigator />
+        </NavigationContainer>
+      </CameraButtonContext.Provider>
+    </LoadingProvider>
   );
 }
 

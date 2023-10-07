@@ -27,6 +27,7 @@ import CameraButton from "../components/CameraButton.js";
 
 const Dashboard = ({ navigation }) => {
   // Render the Dashboard screen UI
+
   return (
     <>
       <CameraButton navigation={navigation} visible={true} />
