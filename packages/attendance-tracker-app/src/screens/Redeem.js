@@ -22,17 +22,15 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import globalStyles from "../styles/globalStyles"; // Importing global styles
 import CameraButton from "../components/CameraButton";
 
-const Progress = ({ navigation }) => {
+const Redeem = ({ navigation }) => {
   // Render the Progress screen UI
   return (
     <>
       <CameraButton navigation={navigation} visible={true} />
       <View style={styles.container}>
-        <Text style={[globalStyles.defaultFont, { fontSize: 24 }]}>
-          Progress
-        </Text>
+        <Text style={[globalStyles.defaultFont, { fontSize: 24 }]}>Redeem</Text>
         <Image
-          source={require("../../assets/images/progresstemp.png")}
+          source={require("../../assets/images/redeemtemp.png")}
           style={styles.image}
         />
       </View>
@@ -55,4 +53,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Progress;
+export default Redeem;

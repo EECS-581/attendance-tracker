@@ -44,8 +44,8 @@ const CameraButton = ({ onPress, visible }) => {
 const styles = StyleSheet.create({
   cameraButton: {
     position: "absolute",
-    top: 40,
-    right: 30,
+    top: 20,
+    right: 20,
     backgroundColor: "black",
     borderRadius: 30,
     padding: 10,

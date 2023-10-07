@@ -22,7 +22,7 @@ import { View, Text } from "react-native";
 import globalStyles from "../styles/globalStyles.js"; // Importing global styles
 import QRScanner from "../components/QRScanner.js"; // Importing QRScanner widget
 import InsightsWidget from "../components/InsightsWidget.js"; // Importing InsightsWidget
-import ProgressWidget from "../components/ProgressWidget.js"; // Importing ProgressWidget
+import RedeemWidget from "../components/RedeemWidget.js"; // Importing RedeemsWidget
 import CameraButton from "../components/CameraButton.js";
 
 const Dashboard = ({ navigation }) => {
@@ -38,7 +38,7 @@ const Dashboard = ({ navigation }) => {
           style={globalStyles.widgetStyle}
         />
 
-        <ProgressWidget
+        <RedeemWidget
           navigation={navigation}
           style={globalStyles.widgetStyle}
         />
