@@ -17,13 +17,23 @@
  * Any known faults: N/A
  */
 
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import globalStyles from "../styles/globalStyles"; // Importing global styles
 import LightColorfulButton from "../components/LightColorfulButton"; // Importing the LightColorfulButton component
+import CameraButtonContext from "../contexts/CameraButtonContext";
 
 const Landing = ({ navigation }) => {
-  // Render the Landing screen UI
+  const { setShowCameraButton } = useContext(CameraButtonContext);
+
+  useEffect(() => {
+    setShowCameraButton(false); // Hide the camera button
+
+    return () => {
+      setShowCameraButton(true); // Show the camera button when leaving the screen
+    };
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>

@@ -21,27 +21,32 @@ import React from "react";
 import { View, Text, StyleSheet, Button, Image } from "react-native";
 import globalStyles from "../styles/globalStyles"; // Importing global styles
 import SimpleCard from "../components/SimpleCard";
+import CameraButton from "../components/CameraButton";
 
 const Insights = ({ navigation }) => {
   // Render the Insights screen UI
   return (
-    <View style={styles.container}>
-      <SimpleCard backgroundColor="antiquewhite">
-        <Text style={[globalStyles.defaultFont, { fontSize: 20 }]}>
-          Current token count:
-        </Text>
-      </SimpleCard>
+    <>
+      <CameraButton navigation={navigation} visible={true} />
+      <View style={styles.container}>
+        <CameraButton navigation={navigation} visible={true} />
+        <SimpleCard backgroundColor="antiquewhite">
+          <Text style={[globalStyles.defaultFont, { fontSize: 20 }]}>
+            Current token count:
+          </Text>
+        </SimpleCard>
 
-      <Image
-        source={require("../../assets/images/tempinsight1.png")}
-        style={styles.image}
-      />
+        <Image
+          source={require("../../assets/images/tempinsight1.png")}
+          style={styles.image}
+        />
 
-      <Image
-        source={require("../../assets/images/tempinsight2.png")}
-        style={styles.image}
-      />
-    </View>
+        <Image
+          source={require("../../assets/images/tempinsight2.png")}
+          style={styles.image}
+        />
+      </View>
+    </>
   );
 };
 

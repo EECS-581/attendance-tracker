@@ -23,23 +23,27 @@ import globalStyles from "../styles/globalStyles.js"; // Importing global styles
 import QRScanner from "../components/QRScanner.js"; // Importing QRScanner widget
 import InsightsWidget from "../components/InsightsWidget.js"; // Importing InsightsWidget
 import ProgressWidget from "../components/ProgressWidget.js"; // Importing ProgressWidget
+import CameraButton from "../components/CameraButton.js";
 
 const Dashboard = ({ navigation }) => {
   // Render the Dashboard screen UI
   return (
-    <View style={globalStyles.container}>
-      <QRScanner navigation={navigation} style={globalStyles.widgetStyle} />
+    <>
+      <CameraButton navigation={navigation} visible={true} />
+      <View style={globalStyles.container}>
+        <QRScanner navigation={navigation} style={globalStyles.widgetStyle} />
 
-      <InsightsWidget
-        navigation={navigation}
-        style={globalStyles.widgetStyle}
-      />
+        <InsightsWidget
+          navigation={navigation}
+          style={globalStyles.widgetStyle}
+        />
 
-      <ProgressWidget
-        navigation={navigation}
-        style={globalStyles.widgetStyle}
-      />
-    </View>
+        <ProgressWidget
+          navigation={navigation}
+          style={globalStyles.widgetStyle}
+        />
+      </View>
+    </>
   );
 };
 

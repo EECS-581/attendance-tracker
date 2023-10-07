@@ -20,17 +20,23 @@
 import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import globalStyles from "../styles/globalStyles"; // Importing global styles
+import CameraButton from "../components/CameraButton";
 
 const Progress = ({ navigation }) => {
   // Render the Progress screen UI
   return (
-    <View style={styles.container}>
-      <Text style={[globalStyles.defaultFont, { fontSize: 24 }]}>Progress</Text>
-      <Image
-        source={require("../../assets/images/progresstemp.png")}
-        style={styles.image}
-      />
-    </View>
+    <>
+      <CameraButton navigation={navigation} visible={true} />
+      <View style={styles.container}>
+        <Text style={[globalStyles.defaultFont, { fontSize: 24 }]}>
+          Progress
+        </Text>
+        <Image
+          source={require("../../assets/images/progresstemp.png")}
+          style={styles.image}
+        />
+      </View>
+    </>
   );
 };
 

@@ -27,7 +27,7 @@
  * - None.
  */
 
-import React from "react";
+import React, { useContext } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import Landing from "../screens/Landing";
@@ -39,6 +39,8 @@ import Discover from "../screens/Discover";
 import Scan from "../screens/Scan";
 import { Ionicons } from "@expo/vector-icons";
 import CameraButton from "../components/CameraButton";
+import { useNavigation } from "@react-navigation/native";
+import CameraButtonContext from "../contexts/CameraButtonContext";
 
 // Create instances for bottom tab and stack navigators
 const Tab = createBottomTabNavigator();
@@ -85,8 +87,10 @@ const TabNavigator = () => {
     </Tab.Navigator>
   );
 };
-
 const MainNavigator = () => {
+  const navigation = useNavigation();
+  const { showCameraButton } = useContext(CameraButtonContext);
+
   // Define the main stack navigation structure
   return (
     <>
@@ -103,11 +107,8 @@ const MainNavigator = () => {
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
-      <CameraButton
-        onPress={() => {
-          // Handle the camera button press here
-        }}
-      />
+
+      {showCameraButton && <CameraButton navigation={navigation} />}
     </>
   );
 };
