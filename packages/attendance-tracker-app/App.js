@@ -29,8 +29,19 @@ import MainNavigator from "./src/navigation/MainNavigator.js";
 import { NavigationContainer } from "@react-navigation/native";
 import CameraButtonContext from "./src/contexts/CameraButtonContext.js";
 import { LoadingProvider } from "./src/contexts/Loading/LoadingContext.js";
+//import { Web3Provider } from "../shared/contexts/web3Context.js";
+import { Buffer } from 'buffer';
 
 export default function App() {
+
+  if (typeof global.btoa === 'undefined') {
+    global.btoa = (str) => Buffer.from(str, 'binary').toString('base64');
+  }
+  
+  if (typeof global.atob === 'undefined') {
+    global.atob = (base64) => Buffer.from(base64, 'base64').toString('binary');
+  }
+  
   // State to manage font loading status
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [showCameraButton, setShowCameraButton] = useState(true);
@@ -70,6 +81,7 @@ export default function App() {
 
   // Render the main navigation of the app
   return (
+    //<Web3Provider>
     <LoadingProvider>
       <CameraButtonContext.Provider
         value={{ showCameraButton, setShowCameraButton }}
@@ -80,6 +92,7 @@ export default function App() {
         </NavigationContainer>
       </CameraButtonContext.Provider>
     </LoadingProvider>
+    //</Web3Provider>
   );
 }
 
