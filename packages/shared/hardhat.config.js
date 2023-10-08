@@ -1,5 +1,6 @@
 require("@nomicfoundation/hardhat-toolbox");
-require('dotenv').config()
+require('dotenv').config({ path: './.env.local' });
+console.log(process.env.NEXT_PUBLIC_PRIVATE_KEY)
 
 
 /** @type import('hardhat/config').HardhatUserConfig */
@@ -10,7 +11,7 @@ module.exports = {
     },
     polygon_mumbai: {
       url: "https://rpc-mumbai.maticvigil.com",
-      accounts: [process.env.PRIVATE_KEY]
+      accounts: [process.env.NEXT_PUBLIC_PRIVATE_KEY]
     }
   },
   solidity: {

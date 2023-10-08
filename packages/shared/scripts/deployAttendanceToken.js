@@ -32,7 +32,8 @@
  * 
  */
 
-require('dotenv').config(); // Loading environment variables
+require('dotenv').config({ path: './.env.local' });
+
 const ethers = require('ethers'); // Importing ethers.js library
 
 const AttendanceToken = require('../abi/AttendanceToken.json'); // Importing ABI and bytecode of AttendanceToken contract
@@ -43,19 +44,32 @@ async function main() {
   const AttendanceTokenAbi = AttendanceToken.abi;
 
   // Creating provider and wallet instances.
-  const provider = new ethers.JsonRpcProvider('https://rpc-mumbai.maticvigil.com');
-  const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
+  console.log(process.env.NEXT_PUBLIC_PRIVATE_KEY)
+  const provider = new ethers.providers.JsonRpcProvider(process.env.NEXT_PUBLIC_INFURA_URL);
+  const wallet = new ethers.Wallet(process.env.NEXT_PUBLIC_PRIVATE_KEY, provider);
 
   // Creating a ContractFactory instance to deploy the contract.
   const factory = new ethers.ContractFactory(AttendanceTokenAbi, AttendanceTokenBytecode, wallet);
+  console.log(factory)
 
   // Deploying the contract.
-  const contract = await factory.deploy();
-  await contract.waitForDeployment(); // Waiting for the contract to be deployed.
-  console.log(contract) // Logging the contract object.
+  try {
+    console.log("deploying");
+    const contract = await factory.deploy();
+    console.log("test");
+    console.log(contract.address);
+    await contract.deployed(); // Waiting for the contract to be deployed.
+    console.log(contract.address); // Logging the contract object.
 
-  // Logging the address at which the contract is deployed.
-  console.log(`Contract deployed at address: ${contract.address}`);
+    // Logging the address at which the contract is deployed.
+    console.log(`Contract deployed at address: ${contract.address}`);
+}
+catch (error) {
+    console.error("Deployment failed:");
+    console.error(error.message);
+    console.error("Full error object:", error);
+}
+
 }
 
 main()

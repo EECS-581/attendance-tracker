@@ -53,6 +53,8 @@ export const Web3Provider = ({ children }) => {
     const [signer, setSigner] = useState(new ethers.Wallet(process.env.NEXT_PUBLIC_PRIVATE_KEY, provider));
     const [AttendanceTokenContract, setAttendanceTokenContract] = useState(null);
     const [balance, setBalance] = useState(null);
+
+    const attendeesAddress ="0xFb8e15EdE3a4013Bb3d0b92b00505eB7c0a49EE5"
     
     // Define an asynchronous function to get the balance of the AttendanceToken.
     async function getAttendanceBalance(address) {
