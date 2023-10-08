@@ -27,17 +27,20 @@
  * - None.
  */
 
-import React from "react";
+import React, { useContext } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import Landing from "../screens/Landing";
 import Dashboard from "../screens/Dashboard";
 import Insights from "../screens/Insights";
-import Progress from "../screens/Progress";
+import Redeem from "../screens/Redeem";
 import Account from "../screens/Account";
 import Discover from "../screens/Discover";
 import Scan from "../screens/Scan";
 import { Ionicons } from "@expo/vector-icons";
+import CameraButton from "../components/CameraButton";
+import { useNavigation } from "@react-navigation/native";
+import CameraButtonContext from "../contexts/CameraButtonContext";
 
 // Create instances for bottom tab and stack navigators
 const Tab = createBottomTabNavigator();
@@ -55,8 +58,8 @@ const TabNavigator = () => {
             iconName = focused ? "home" : "home-outline";
           } else if (route.name === "Discover") {
             iconName = focused ? "search" : "search-outline";
-          } else if (route.name === "Progress") {
-            iconName = focused ? "bar-chart" : "bar-chart-outline";
+          } else if (route.name === "Redeem") {
+            iconName = focused ? "cash" : "cash-outline";
           } else if (route.name === "Insights") {
             iconName = focused ? "analytics" : "analytics-outline";
           } else if (route.name === "Account") {
@@ -78,29 +81,35 @@ const TabNavigator = () => {
     >
       <Tab.Screen name="Dashboard" component={Dashboard} />
       <Tab.Screen name="Discover" component={Discover} />
-      <Tab.Screen name="Progress" component={Progress} />
+      <Tab.Screen name="Redeem" component={Redeem} />
       <Tab.Screen name="Insights" component={Insights} />
       <Tab.Screen name="Account" component={Account} />
     </Tab.Navigator>
   );
 };
-
 const MainNavigator = () => {
+  const navigation = useNavigation();
+  const { showCameraButton } = useContext(CameraButtonContext);
+
   // Define the main stack navigation structure
   return (
-    <Stack.Navigator initialRouteName="Landing">
-      <Stack.Screen
-        name="Landing"
-        component={Landing}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen name="Scan" component={Scan} />
-      <Stack.Screen
-        name="Tabs"
-        component={TabNavigator}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
+    <>
+      <Stack.Navigator initialRouteName="Landing">
+        <Stack.Screen
+          name="Landing"
+          component={Landing}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="Scan" component={Scan} />
+        <Stack.Screen
+          name="Tabs"
+          component={TabNavigator}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+
+      {showCameraButton && <CameraButton navigation={navigation} />}
+    </>
   );
 };
 

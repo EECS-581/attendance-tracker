@@ -20,16 +20,25 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import globalStyles from "../styles/globalStyles"; // Importing global styles
+import CameraButton from "../components/CameraButton";
 
 const Discover = ({ navigation }) => {
   // Render the Discover screen UI
   return (
-    <View style={styles.container}>
-      <Text style={[globalStyles.defaultFont, { fontSize: 24 }]}>Discover</Text>
-      <Text style={[globalStyles.defaultFont, { fontSize: 12 }]} marginTop={20}>
-        Discover local events here, when they are listed.
-      </Text>
-    </View>
+    <>
+      <CameraButton navigation={navigation} visible={true} />
+      <View style={styles.container}>
+        <Text style={[globalStyles.defaultFont, { fontSize: 24 }]}>
+          Discover
+        </Text>
+        <Text
+          style={[globalStyles.defaultFont, { fontSize: 12 }]}
+          marginTop={20}
+        >
+          Discover local events here, when they are listed.
+        </Text>
+      </View>
+    </>
   );
 };
 
