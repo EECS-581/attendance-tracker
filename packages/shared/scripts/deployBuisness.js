@@ -1,4 +1,5 @@
 //NOT WORKING need to talk to cameron about contructor
+//lets see
 
 require('dotenv').config({ path: './.env.local' }); // Loading environment variables
 const ethers = require('ethers'); // Importing ethers.js library
