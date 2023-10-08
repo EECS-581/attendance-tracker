@@ -7,10 +7,13 @@ pragma solidity ^0.8.0;
 // Created: 9/19/23
 // Revised: 9/19/23
 
-
 contract Attendees {
     // State variable to store the contract owner's address
+    //sets organization counter to keep track of ID's
+    //State variable for total organizations added
     address owner;
+    uint256 organizationCounter = 1;
+    string[] Organizations;
 
     // Constructor: Attendees
     // Description: Initializes the contract and sets the owner to the sender's address.
@@ -45,6 +48,12 @@ contract Attendees {
     // Description: Maps organization names (string) to organization IDs (uint256).
     mapping(string => uint256) public organizationToID; 
 
+    // Event: AttendeeCreated
+    event AttendeeCreated(address indexed attendeeAddress, string firstName, string lastName, uint256 organizationID);
+
+    // Event: OrganizationIDSet
+    event OrganizationIDSet(string organizationName, uint256 organizationID);
+
     // Function: createAttendee
     // Description: Creates a new Attendee and associates it with an Ethereum address.
     // Parameters:
@@ -57,9 +66,14 @@ contract Attendees {
     // Unacceptable Input Values: None
     // Postconditions: A new Attendee is created and associated with _account
     // Return: True if the operation is successful
-    function createAttendee(address _account, string memory _firstName, string memory _lastName, uint256 _organizationID) public onlyOwner returns (bool) {
+    function createAttendee(address _account, string memory _firstName, string memory _lastName, string memory _organization) public onlyOwner returns (bool) {
+        if(organizationToID[_organization] == 0){ //checks to see if organization has ID
+            setOrganizationID(_organization); //if not sets ID
+        }
+        uint256 _organizationID = organizationToID[_organization]; //sets value
         Attendee memory attendee = Attendee(_firstName, _lastName, _organizationID); //creates attendee
         addressToAttendee[_account] = attendee; //adds attendee
+        emit AttendeeCreated(_account, _firstName, _lastName, _organizationID); // Emit the AttendeeCreated event
         return true; //return true
     }
 
@@ -92,11 +106,15 @@ contract Attendees {
     // Unacceptable Input Values: Duplicate organization names or organization IDs
     // Postconditions: The organization ID is set and associated with _string
     // Return: True if the operation is successful
-    function setOrganizationID(string memory _string, uint256 _organizationID) public onlyOwner returns (bool) {
+    function setOrganizationID(string memory _string) public returns (bool) {
+        require(msg.sender == owner || msg.sender == address(this), "You are not allowed to set organization values");
         require(organizationToID[_string] == 0, "This Organization already has an ID"); //requires not sending to zero address
-        require(keccak256(abi.encodePacked(idtoOrganization[_organizationID])) == keccak256(abi.encodePacked("")), "This Organization ID is already taken"); //checks to make sure business string is not empty
-        organizationToID[_string] = _organizationID; //sets id
-        idtoOrganization[_organizationID] = _string; //sets string
+        require(keccak256(abi.encodePacked(idtoOrganization[organizationCounter])) == keccak256(abi.encodePacked("")), "This Organization ID is already taken"); //checks to make sure business string is not empty
+        organizationToID[_string] = organizationCounter; //sets id
+        idtoOrganization[organizationCounter] = _string; //sets string
+        organizationCounter++; //increase counter
+        Organizations.push(_string); //adds to list of organizations
+        emit OrganizationIDSet(_string, organizationCounter); // Emit the OrganizationIDSet event
         return true; //returns true if successful 
     }
 }

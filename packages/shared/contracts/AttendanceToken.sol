@@ -13,6 +13,9 @@ contract AttendanceToken is ERC20 {
     // State variable to store the contract owner's address
     address public owner;
 
+    // Define an event for token minting
+    event TokensMinted(address indexed to, uint256 amount);
+
     // Constructor: AttendanceToken
     // Description: Initializes the contract and sets the owner to the sender's address.
     constructor() ERC20("Attendance Token", "AT") {
@@ -22,7 +25,7 @@ contract AttendanceToken is ERC20 {
     // Modifier: onlyOwner
     // Description: Ensures that only the owner can execute a function.
     modifier onlyOwner() {
-        require(msg.sender == owner, "You do not have the required privileges to do this"); //requirestatemnet
+        require(msg.sender == owner, "You do not have the required privileges to do this"); //require statement
         _;
     }
 
@@ -41,6 +44,7 @@ contract AttendanceToken is ERC20 {
     function mint(address _to, uint256 _amount) public onlyOwner returns (bool) {
         require(_to != address(0), "Cannot mint to account 0x"); //require statement
         _mint(_to, _amount); //mints to the amount
+        emit TokensMinted(_to, _amount); // Emit the TokensMinted event
         return true; //return true if successful
     }
 
