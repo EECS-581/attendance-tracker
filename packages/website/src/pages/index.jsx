@@ -5,15 +5,23 @@
 // Updated: 10/05/2023
 // This pages sets up the UI, there are no pre or post conditions, and no inputs to this page
 
-// This imports the navbar component
+import React, { useContext } from "react";
+import LoadingContext from "@/contexts/LoadingContext";
 import Navbar from "@/components/navbar";
-// This imports the footer component
+
 import Footer from "@/components/footer";
 import LightColorfulButton from "@/components/LightColorfulButton";
 
 // This section creates the Home component
 // Creates a Home component to export to other pages if necessary
 export default function Home() {
+  const { setIsLoading } = useContext(LoadingContext);
+  const handleTestLoadingClick = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 5000); // 5 seconds delay
+  };
   return (
     // Creates a main tag to hold the entire page, so it can be styled as a whole
     // The main tag holds the navbar component, a container for the hero section of the page
@@ -23,6 +31,7 @@ export default function Home() {
         {/* This adds the navbar component to the page */}
         <Navbar />
       </div>
+      <button onClick={handleTestLoadingClick}>Test Loading</button>
       <div>
         {/* This section creates a header tag for the website title */}
         <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl">
