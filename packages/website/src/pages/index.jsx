@@ -2,18 +2,27 @@
 // This code creates the Home or Landing Page for the website
 // Programmers name: Libby Miller
 // Date: 09/20/2023
-// Updated: 10/05/2023
+// Updated: 10/05/2023, 10/08/2023 to implement loading
 // This pages sets up the UI, there are no pre or post conditions, and no inputs to this page
 
-// This imports the navbar component
+import React, { useContext } from "react";
+import LoadingContext from "@/contexts/LoadingContext";
 import Navbar from "@/components/navbar";
-// This imports the footer component
+
 import Footer from "@/components/footer";
 import LightColorfulButton from "@/components/LightColorfulButton";
 
 // This section creates the Home component
 // Creates a Home component to export to other pages if necessary
 export default function Home() {
+  const { setIsLoading } = useContext(LoadingContext);
+  //this handler is for the temporary test loading button. all it does is wait 4 seconds and let the loading function work.
+  const handleTestLoadingClick = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 4000); // 4 seconds delay
+  };
   return (
     // Creates a main tag to hold the entire page, so it can be styled as a whole
     // The main tag holds the navbar component, a container for the hero section of the page
@@ -23,6 +32,10 @@ export default function Home() {
         {/* This adds the navbar component to the page */}
         <Navbar />
       </div>
+      <button onClick={handleTestLoadingClick}>
+        Click here to test Loading
+      </button>
+      {/* This is a temporary button for testing the loading functionality*/}
       <div>
         {/* This section creates a header tag for the website title */}
         <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl">
