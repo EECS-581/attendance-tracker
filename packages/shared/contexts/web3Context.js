@@ -33,7 +33,7 @@
  * 
  */
 
-import { providers, JsonRpcBatchProvider, ethers } from 'ethers'; // Importing necessary components and functions from ethers.js
+import {ethers } from 'ethers'; // Importing necessary components and functions from ethers.js
  // Loading environment variables
 
 import { createContext, useContext, useState, useEffect, useCallback } from 'react'; // Importing React hooks: createContext, useContext, useState, useEffect, useCallback
