@@ -33,8 +33,8 @@
  * 
  */
 
-import { providers, JsonRpcBatchProvider, ethers } from 'ethers'; // Importing necessary components and functions from ethers.js
-require('dotenv').config(); // Loading environment variables
+import {ethers } from 'ethers'; // Importing necessary components and functions from ethers.js
+ // Loading environment variables
 
 import { createContext, useContext, useState, useEffect, useCallback } from 'react'; // Importing React hooks: createContext, useContext, useState, useEffect, useCallback
 const AttendanceToken = require('../abi/AttendanceToken.json'); // Importing ABI of AttendanceToken contract
@@ -52,7 +52,9 @@ export const Web3Provider = ({ children }) => {
     const [provider, setProvider] = useState(new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_INFURA_URL));
     const [signer, setSigner] = useState(new ethers.Wallet(process.env.NEXT_PUBLIC_PRIVATE_KEY, provider));
     const [AttendanceTokenContract, setAttendanceTokenContract] = useState(null);
-    const [balance, setBalance] = useState(null);
+    const [balance, setBalance] = useState('0');
+
+    const attendeesAddress ="0xFb8e15EdE3a4013Bb3d0b92b00505eB7c0a49EE5"
     
     // Define an asynchronous function to get the balance of the AttendanceToken.
     async function getAttendanceBalance(address) {
@@ -90,7 +92,8 @@ export const Web3Provider = ({ children }) => {
       provider,
       signer,
       getAttendanceBalance,
-      mintTest
+      mintTest,
+      balance
     };
     
     // Returning the Web3Context.Provider with value and children props.

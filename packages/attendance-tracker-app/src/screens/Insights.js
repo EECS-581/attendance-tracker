@@ -22,8 +22,10 @@ import { View, Text, StyleSheet, Button, Image } from "react-native";
 import globalStyles from "../styles/globalStyles"; // Importing global styles
 import SimpleCard from "../components/SimpleCard";
 import CameraButton from "../components/CameraButton";
+import { useWeb3ContextApp } from "../../../shared/contexts/web3ContextApp";
 
 const Insights = ({ navigation }) => {
+  const {balance}= useWeb3ContextApp()
   // Render the Insights screen UI
   return (
     <>
@@ -32,7 +34,7 @@ const Insights = ({ navigation }) => {
         <CameraButton navigation={navigation} visible={true} />
         <SimpleCard backgroundColor="antiquewhite">
           <Text style={[globalStyles.defaultFont, { fontSize: 20 }]}>
-            Current token count:
+            Current token count: {balance}
           </Text>
         </SimpleCard>
 

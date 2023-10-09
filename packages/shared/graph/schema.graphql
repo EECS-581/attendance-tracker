@@ -1,0 +1,5 @@
+type TokenMinted @entity {
+  id: ID!
+  to: Bytes!
+  amount: BigInt!
+}
