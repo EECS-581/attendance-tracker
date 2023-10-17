@@ -23,36 +23,71 @@ const MENU_LIST = [
 // creates the navbar component which is exported from this file
 const Navbar = () => {
   // creates the states needed to track which nav item is active
-  const [isActive, setIsActive] = useState(false);
-  // creates the toggle to add the active class
-  const toggleActiveClass = () => {
-    setIsActive(!isActive);
-  };
-  // sets the active state to false
-  const removeActive = () => {
-    setIsActive(false);
-  };
+  const [active, setIsActive] = useState("Home");
+  // creates the toggle to add the mobile navigation
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // creates the exportable html for the navbar component
   return (
     <header>
-      {/* creates a nav tag in html */}
-      <nav>
-        {/* creates a list elemnent for nav elements that will keep track of the active tab with a click event */}
-        <ul className={`${isActive ? "active" : ''} nav_list`}>
-        {/* create a list item for each element in the menu list */}
-        {MENU_LIST.map((menu) => (
-            // click event checks for the active navitem
-            <li onClick={removeActive} key={menu.text}>
-              {/* creates a link for each menu item with the link and text */}
-              <a className="nav_link" href={menu.href}>{menu.text}</a>
-            </li>
-        ))}
-        </ul>
+      <nav className="bg-white shadow-lg">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-between items-center py-4">
+            <h1 className="text-black font-bold">AttendThis Logo</h1>
+            <div className="sm:hidden">
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="block text-gray-500 hover:text-gray-800 focus:outline-none focus:text-gray-800"
+              >
+                <svg
+                  className="w-8 h-8 fill-current"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M18 4a1 1 0 00-1-1H7a1 1 0 000 2h10a1 1 0 001-1zM5 12a1 1 0 011-1h11a1 1 0 110 2H6a1 1 0 01-1-1zm12 7a1 1 0 100-2H6a1 1 0 100 2h11z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <ul className="hidden sm:flex space-x-6">
+              {MENU_LIST.map((menu) => (
+                <li
+                  key={menu.text}
+                  className={`font-medium text-lg ${
+                    active === menu.text
+                      ? "text-gray-500 font-semibold"
+                      : "text-black"
+                  }`}
+                >
+                  <a href={menu.href}>{menu.text}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          {mobileMenuOpen && (
+            <div className="sm:hidden block py-2">
+              <ul className="space-y-2">
+                {MENU_LIST.map((menu) => (
+                  <li
+                    key={menu.text}
+                    className={`font-medium text-lg ${
+                      active === menu.text
+                        ? "text-gray-500 font-semibold"
+                        : "text-black"
+                    }`}
+                  >
+                    <a href={menu.href}>{menu.text}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
       </nav>
     </header>
   );
 };
 
-// export the navbar component so it can be used in other files
 export default Navbar;

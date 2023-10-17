@@ -1,42 +1,39 @@
-// Code Requirement 27.1 - Instructor - View classes UI - Display a list of classes
-// Code Requirement 22.2 - View Classes UI - Display buttons for adding, deleting, updating classes
-// This code creates the Instructor's View Classes Page for the website
+// Code Requirement 23.2 - Manage Coupons Page - Business Dashboard UI - Needs to have coupon list and manage coupon buttons
+// This code creates the manage coupons page which is accessible from the Business Dashboard Page for the website
 // Programmers name: Libby Miller
-// Date: 09/24/2023
-// Updtaed: 09/26/2023
-// This pages sets up the UI, there are no pre or post conditions, and no inputs to this page
+// Date: 10/17/2023
+// This pages sets up the UI, there are no pre or post conditions at this point, and no inputs to this page at this point
+// eventually inputs to this page will be the coupons pulled in from the backend
 
-// import the necessary components
-// import Navbar component
+// import necessary components
+// import Navbar
 import Navbar from "@/components/navbar";
-// import button component
-import SolidColorButton from "@/components/SolidColorButton";
-// import button component
-import LightColorfulButton from "@/components/LightColorfulButton";
-// import Footer component
+// import Footer
 import Footer from "@/components/footer";
+import LightColorfulButton from "@/components/LightColorfulButton";
+import SolidColorButton from "@/components/SolidColorButton";
 
-// creates a static list of classes - this will need to be updated when we are pulling from database
-var listItems = ['Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5'];
+// creates a static list of coupons - this will need to be updated when we are pulling from database
+var listItems = ['Coupon 1', 'Coupon 2', 'Coupon 3', 'Coupon 4', 'Coupon 5'];
 
-// creates the View Classes page
-export default function View_Classes() {
+// create the page Business Dashboard
+export default function Manage_Coupons() {
   return (
-    //creates a main html tag to hold the page 
+    // create main html to hold the page
     <main className="w-full overflow-hidden">
       <div className="py-6">
         <div className="container mx-auto">
         {/* This adds the navbar component to the page */}
           <Navbar />
         </div>
-        <div className="container mx-auto mt-6 px-4">
+      </div>
+      <div className="container mx-auto mt-6 px-4">
           {/* creates two headers for the page title and subtitle */}
-          <h1 className="text-3xl font-semibold mb-2">Instructor Dashboard</h1>
-          <h2 className="text-2xl font-medium mb-6">View Classes</h2>
+          <h1 className="text-3xl font-semibold mb-2">Business Dashboard</h1>
+          <h2 className="text-2xl font-medium mb-6">Manage Coupons</h2>
           <div className="flex space-x-4 mb-4">
             {/* creates the Add new class button, this will need to be updated once we have CRUD functionality */}
-            <SolidColorButton title="Add New Class" link="/" />
-            <SolidColorButton title="Manage Classes" link="/" />
+            <SolidColorButton title="Add New Coupon" link="/" />
           </div>
           {/* creates an html list, this will need to be refactored when pulling real data */}
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -61,12 +58,11 @@ export default function View_Classes() {
             ))}
           </ul>
         </div>
-      </div>
       {/* This section creates a container to hold the footer */}
       <div className="py-4 text-center text-sm text-gray-600">
         {/* This creates an instance of the footer component */}
         <Footer />
       </div> 
-    </main>   
+    </main>
   );
-};
+}

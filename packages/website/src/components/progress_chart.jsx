@@ -5,27 +5,45 @@
 // Date: 10/05/2023
 // This pages sets up the UI, there are no pre or post conditions, and no inputs to this page
 
-// import the victory chart libraries bar chart
+// import the victory chart libraries bar chartCFV  
 import { VictoryPie, VictoryAnimation, VictoryTheme, VictoryLabel } from 'victory';
 
 const ProgressChart = () => {
   return (
     // Creates an instance of the Victory Chart, this creates the chart with the specified theme and padding
-    // <svg viewBox="0 0 400 400" width="100%" height="100%">
-      <VictoryPie
-        // animate={{ duration: 1000 }}
-        // categories={{ x: ["participation", "non"] }}
-        colorScale={["gold", "cyan"]}
-        width={400} 
-        height={400}
-        data={[
-          { x: "participation", y: 65 },
-          { x: "non", y: 35 }
-        ]}
-        innerRadius={100}
-        padAngle={2}
-        // cornerRadius={25}    
-      />
+  <div className="bg-white p-4 rounded-lg shadow-md">
+    <div className="flex justify-center items-center">
+      <div className="relative">
+        <VictoryPie
+          colorScale={["cyan", "gray"]}
+          width={400} 
+          height={400}
+          data={[
+            { x: "attending", y: 65 },
+            { x: "not", y: 35 }
+          ]}
+          innerRadius={60}
+          labelComponent={
+            <VictoryLabel 
+              textAnchor="middle" 
+              verticalAnchor="middle" 
+              style={{
+                fontSize: 16,
+                fill: "gray",
+                fontWeight: "bold"
+              }}
+            />}   
+        />
+        <VictoryAnimation duration={1000} data={{ y: 65 }}>
+          {(style) => (
+            <p className="text-gray-900 text-2xl font-semibold absolute inset-0 flex items-center justify-center">
+              {`${Math.round(style.y)}%`}
+            </p>
+          )}
+        </VictoryAnimation>
+      </div>
+    </div>
+  </div>
   )
 }
 // exports ProgressChart component 

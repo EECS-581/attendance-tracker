@@ -9,16 +9,15 @@
   box-sizing: border-box;
 }
 
-nav {
-  background-color: lightgray;
+/* nav {
   padding: 10px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 40px;
   min-height: 70px;
-}
-
+} */
+/* 
 .nav_list {
   list-style: none;
   display: flex;
@@ -39,5 +38,5 @@ nav {
 
 .active:hover {
   font-size: 20px;
-}
+} */
 

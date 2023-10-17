@@ -50,9 +50,8 @@ const LoadingProvider = ({ children }) => {
   return (
     // Providing the isLoading state and setIsLoading function to children components.
     <LoadingContext.Provider value={{ isLoading, setIsLoading }}>
-      {isLoading && <Loading />} // Displaying the Loading component when
-      isLoading is true.
-      {children} // Rendering the children components.
+      {isLoading && <Loading />}
+      {children}
     </LoadingContext.Provider>
   );
 };

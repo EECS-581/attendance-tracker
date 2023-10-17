@@ -8,17 +8,25 @@
 const Footer = () => {
   return (
     // creates an html footer tag
-    <footer className="flex w-full">
+    <footer className="bg-white text-gray-800 py-8">
       {/* creates a container to hold the links within the footer */}
-      <div className="flex-initial w-1/2">
-        <p>USEFUL LINKS</p>
-        <a href="/" className="block">Home</a>
-        <a href="about" className="block">About</a>
-      </div>
-      {/* creates a container to hold the contact or other info */}
-      <div className="flex-initial w-1/2">
-        <p>CONTACT US</p>
-        <p>Contact info will go here eventually</p>
+      <div className="container mx-auto flex flex-wrap justify-between">
+        <div className="w-full sm:w-1/2 md:w-1/4 lg:w-1/6 mb-4">
+          <h2 className="text-xl font-bold">USEFUL LINKS</h2>
+          <ul className="mt-4 space-y-2">
+            <li>
+              <a href="/" className="hover:text-gray-300">Home</a>
+            </li>
+            <li>
+              <a href="about" className="hover:text-gray-300">About</a>
+            </li>
+          </ul>
+        </div>
+        {/* creates a container to hold the contact or other info */}
+        <div className="w-full sm: w-1/2 md:w-1/4 lg:w-1/6 mb-4">
+          <h2 className="text-xl font-bold">CONTACT US</h2>
+          <p className="mt-4">Contact info will go here eventually</p>
+        </div>
       </div>
     </footer>
   );
