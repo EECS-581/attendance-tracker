@@ -23,8 +23,6 @@ contract WalletFactory{
         Wallets.push(newWallet);
         emit WalletCreated(_firstName, _lastName, _organization, block.timestamp, address(newWallet));
         return true;
-
-
     }
 
 }
