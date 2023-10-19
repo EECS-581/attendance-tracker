@@ -4,32 +4,34 @@ import { useWeb3Context } from '../../../shared/contexts/web3Context';
 
 function AttendPage() {
   const router = useRouter();
-  const { classId } = router.query;
-  const { mintAttendanceToken, getAttendanceBalance  } = useWeb3Context();
+  const { mintAttendanceToken, getAttendanceBalance, balance } = useWeb3Context();
 
-  const [displayBalance, setDisplayBalance] = useState(0);
+  async function verifyAttendance() {
+    const { classId } = router.query;
+    console.log("verifying");
+    console.log(classId);
+    if (classId) {
+      // check if classId is valid
+      // get user address
+      const userAdress = "0x06e6620C67255d308A466293070206176288A67B";
+      // mint tokens
+      console.log("minting");
+      await mintAttendanceToken(userAdress, 1);
+      await getAttendanceBalance(userAdress)
+
+      console.log("balance set");
+    }
+  }
 
   useEffect(() => {
-
-    async function verifyAttendance() {
-        if (classId) {
-            // check if classId is valid
-            // get user address
-            const userAdress="0x06e6620C67255d308A466293070206176288A67B"
-            //mint tokens
-            console.log("minting")
-
-            await mintAttendanceToken(userAdress, 1) 
-            setDisplayBalance(await getAttendanceBalance(userAdress));
-            console.log("balance set")
-        }
+    if (router.isReady) {
+      verifyAttendance();
     }
-    verifyAttendance();
-  }, []);
+  }, [router.isReady]);
 
   return (
     <div>
-      Thank you for attending! Your balance is {displayBalance}.
+      Thank you for attending! Your new balance is {balance}.
     </div>
   );
 }

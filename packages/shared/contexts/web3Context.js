@@ -61,15 +61,17 @@ export const Web3Provider = ({ children }) => {
         : null
     );
     const [AttendanceTokenContract, setAttendanceTokenContract] = useState(null);
-    const [balance, setBalance] = useState('0');
+    const [balance, setBalance] = useState('loading...');
 
     const attendeesAddress ="0xFb8e15EdE3a4013Bb3d0b92b00505eB7c0a49EE5"
     
     // Define an asynchronous function to get the balance of the AttendanceToken.
     async function getAttendanceBalance(address) {
+      let AttendanceTokenContract= new ethers.Contract('0x6e85Ae42F0C8b00cc096a8c8c979633F624f975a', AttendanceToken.abi, signer);
       const balance = await AttendanceTokenContract.balanceOf(address); // Fetching balance of an address
-      setBalance(balance); // Setting balance state.
-      console.log(balance); // Logging the balance.
+      let formattedBalance= parseFloat(balance)
+      console.log(formattedBalance)
+      setBalance(formattedBalance); // Setting balance state.
     }
     
     // Define an asynchronous function to mint AttendanceToken.
