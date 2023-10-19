@@ -24,4 +24,12 @@ interface IAttendanceToken {
     // - _value: The amount of tokens to transfer
     // Returns: True if the transfer is successful
     function transferFrom(address _from, address _to, uint256 _value) external returns (bool);
+
+    // Function: approve
+    // Description: Approves the specified address to spend the specified amount of tokens on behalf of the owner
+    // Parameters:
+    // - _spender: The address authorized to spend
+    // - _value: The amount of tokens the spender is approved to spend
+    // Returns: True if the approval is successful
+    function approve(address _spender, uint256 _value) external returns (bool);
 }

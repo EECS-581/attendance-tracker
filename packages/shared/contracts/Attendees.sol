@@ -49,10 +49,10 @@ contract Attendees {
     mapping(string => uint256) public organizationToID; 
 
     // Event: AttendeeCreated
-    event AttendeeCreated(address indexed attendeeAddress, string firstName, string lastName, uint256 organizationID);
+    event AttendeeCreated(address indexed attendeeAddress, string firstName, string lastName, uint256 organizationID, uint256 time);
 
     // Event: OrganizationIDSet
-    event OrganizationIDSet(string organizationName, uint256 organizationID);
+    event OrganizationIDSet(string organizationName, uint256 organizationID, uint256 time);
 
     // Function: createAttendee
     // Description: Creates a new Attendee and associates it with an Ethereum address.
@@ -66,14 +66,14 @@ contract Attendees {
     // Unacceptable Input Values: None
     // Postconditions: A new Attendee is created and associated with _account
     // Return: True if the operation is successful
-    function createAttendee(address _account, string memory _firstName, string memory _lastName, string memory _organization) public onlyOwner returns (bool) {
+    function createAttendee(address _account, string memory _firstName, string memory _lastName, string memory _organization) public returns (bool) {
         if(organizationToID[_organization] == 0){ //checks to see if organization has ID
             setOrganizationID(_organization); //if not sets ID
         }
         uint256 _organizationID = organizationToID[_organization]; //sets value
         Attendee memory attendee = Attendee(_firstName, _lastName, _organizationID); //creates attendee
         addressToAttendee[_account] = attendee; //adds attendee
-        emit AttendeeCreated(_account, _firstName, _lastName, _organizationID); // Emit the AttendeeCreated event
+        emit AttendeeCreated(_account, _firstName, _lastName, _organizationID, block.timestamp); // Emit the AttendeeCreated event
         return true; //return true
     }
 
@@ -106,7 +106,7 @@ contract Attendees {
     // Unacceptable Input Values: Duplicate organization names or organization IDs
     // Postconditions: The organization ID is set and associated with _string
     // Return: True if the operation is successful
-    function setOrganizationID(string memory _string) public returns (bool) {
+    function setOrganizationID(string memory _string) onlyOwner public returns (bool) {
         require(msg.sender == owner || msg.sender == address(this), "You are not allowed to set organization values");
         require(organizationToID[_string] == 0, "This Organization already has an ID"); //requires not sending to zero address
         require(keccak256(abi.encodePacked(idtoOrganization[organizationCounter])) == keccak256(abi.encodePacked("")), "This Organization ID is already taken"); //checks to make sure business string is not empty
@@ -114,7 +114,11 @@ contract Attendees {
         idtoOrganization[organizationCounter] = _string; //sets string
         organizationCounter++; //increase counter
         Organizations.push(_string); //adds to list of organizations
-        emit OrganizationIDSet(_string, organizationCounter); // Emit the OrganizationIDSet event
+        emit OrganizationIDSet(_string, organizationCounter, block.timestamp); // Emit the OrganizationIDSet event
         return true; //returns true if successful 
+    }
+
+    function getOrganizationToId(string memory _name)public view returns(uint256){
+        return organizationToID[_name];
     }
 }
