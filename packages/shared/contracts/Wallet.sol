@@ -2,13 +2,13 @@ pragma solidity ^0.8.0;
 
 import "./IAttendees.sol";
 import "./IAttendanceToken.sol";
-import "./IBusinesses.sol";
+import "./Businesses.sol";
 
 contract Wallet {
     address public owner;
     IAttendees attendeesContract;
     IAttendanceToken tokenContract;
-    IBusinesses businessesContract;
+    Businesses businessesContract;
     mapping(address=>bool) approvedSigners;
 
     struct Coupon {
@@ -30,7 +30,7 @@ contract Wallet {
     ) {
         attendeesContract = IAttendees(_attendees);
         tokenContract = IAttendanceToken(_token);
-        businessesContract = IBusinesses(_businesses);
+        businessesContract = Businesses(_businesses);
         owner = _owner;
         approvedSigners[owner] = true;
         attendeesContract.createAttendee(msg.sender, _firstName, _lastName, _organization);
@@ -53,12 +53,12 @@ contract Wallet {
     }
 
     function buyCoupon(uint256 _couponID) public approvedsigner returns(bool){
-        Coupon storage coupon = businessesContract.couponIDToCoupon[_couponID]; // Gets the coupon
-        uint256 price = coupon.price;
+        (, uint256 price, , ) = businessesContract.getCouponDetails(_couponID);
         tokenContract.approve(address(businessesContract), price);
         businessesContract.buyCoupon(_couponID);
-        return true;
+        return true;    
     }
+
 
     function redeemCoupon(uint256 _couponID) public approvedsigner returns(bool){
         businessesContract.redeemCoupon(_couponID);
