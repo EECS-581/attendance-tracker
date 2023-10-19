@@ -1,27 +1,35 @@
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import {useWeb3context} from '../../../shared/contexts/web3Context'
+import { useEffect, useState } from 'react';
+import { useWeb3Context } from '../../../shared/contexts/web3Context';
 
 function AttendPage() {
   const router = useRouter();
   const { classId } = router.query;
+  const { mintAttendanceToken, getAttendanceBalance  } = useWeb3Context();
+
+  const [displayBalance, setDisplayBalance] = useState(0);
 
   useEffect(() => {
-    if (classId) {
-      // Retrieve the user's profile or ID.
-      // If you're using NextAuth or another authentication provider, 
-      // you can get the user details from the session or a similar method.
-      // For this example, I'll hardcode a userId.
-      const userId = "currentUser";
 
-      // Call your mint function here
-      console.log(userId, classId);
+    async function verifyAttendance() {
+        if (classId) {
+            // check if classId is valid
+            // get user address
+            const userAdress="0x06e6620C67255d308A466293070206176288A67B"
+            //mint tokens
+            console.log("minting")
+
+            await mintAttendanceToken(userAdress, 1) 
+            setDisplayBalance(await getAttendanceBalance(userAdress));
+            console.log("balance set")
+        }
     }
-  }, [classId]);
+    verifyAttendance();
+  }, []);
 
   return (
     <div>
-      Thank you for attending!
+      Thank you for attending! Your balance is {displayBalance}.
     </div>
   );
 }

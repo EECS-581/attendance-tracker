@@ -49,8 +49,17 @@ export const useWeb3Context = () => {
 // Web3Provider component provides the Web3Context to its children components.
 export const Web3Provider = ({ children }) => {
     // Initializing states.
-    const [provider, setProvider] = useState(new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_INFURA_URL));
-    const [signer, setSigner] = useState(new ethers.Wallet(process.env.NEXT_PUBLIC_PRIVATE_KEY, provider));
+    const [provider, setProvider] = useState(
+      process.env.NEXT_PUBLIC_INFURA_URL 
+        ? new ethers.providers.JsonRpcProvider(process.env.NEXT_PUBLIC_INFURA_URL)
+        : null
+    );
+    
+    const [signer, setSigner] = useState(
+      process.env.NEXT_PUBLIC_PRIVATE_KEY && provider 
+        ? new ethers.Wallet(process.env.NEXT_PUBLIC_PRIVATE_KEY, provider)
+        : null
+    );
     const [AttendanceTokenContract, setAttendanceTokenContract] = useState(null);
     const [balance, setBalance] = useState('0');
 
@@ -93,7 +102,8 @@ export const Web3Provider = ({ children }) => {
       signer,
       getAttendanceBalance,
       mintTest,
-      balance
+      balance,
+      mintAttendanceToken,
     };
     
     // Returning the Web3Context.Provider with value and children props.
