@@ -49,18 +49,29 @@ export const useWeb3Context = () => {
 // Web3Provider component provides the Web3Context to its children components.
 export const Web3Provider = ({ children }) => {
     // Initializing states.
-    const [provider, setProvider] = useState(new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_INFURA_URL));
-    const [signer, setSigner] = useState(new ethers.Wallet(process.env.NEXT_PUBLIC_PRIVATE_KEY, provider));
+    const [provider, setProvider] = useState(
+      process.env.NEXT_PUBLIC_INFURA_URL 
+        ? new ethers.providers.JsonRpcProvider(process.env.NEXT_PUBLIC_INFURA_URL)
+        : null
+    );
+    
+    const [signer, setSigner] = useState(
+      process.env.NEXT_PUBLIC_PRIVATE_KEY && provider 
+        ? new ethers.Wallet(process.env.NEXT_PUBLIC_PRIVATE_KEY, provider)
+        : null
+    );
     const [AttendanceTokenContract, setAttendanceTokenContract] = useState(null);
-    const [balance, setBalance] = useState('0');
+    const [balance, setBalance] = useState('loading...');
 
     const attendeesAddress ="0xFb8e15EdE3a4013Bb3d0b92b00505eB7c0a49EE5"
     
     // Define an asynchronous function to get the balance of the AttendanceToken.
     async function getAttendanceBalance(address) {
+      let AttendanceTokenContract= new ethers.Contract('0x6e85Ae42F0C8b00cc096a8c8c979633F624f975a', AttendanceToken.abi, signer);
       const balance = await AttendanceTokenContract.balanceOf(address); // Fetching balance of an address
-      setBalance(balance); // Setting balance state.
-      console.log(balance); // Logging the balance.
+      let formattedBalance= parseFloat(balance)
+      console.log(formattedBalance)
+      setBalance(formattedBalance); // Setting balance state.
     }
     
     // Define an asynchronous function to mint AttendanceToken.
@@ -93,7 +104,8 @@ export const Web3Provider = ({ children }) => {
       signer,
       getAttendanceBalance,
       mintTest,
-      balance
+      balance,
+      mintAttendanceToken,
     };
     
     // Returning the Web3Context.Provider with value and children props.

@@ -47,9 +47,11 @@ function MyApp({ Component, pageProps }) {
   // To make the contexts available to the Component and its child components,
   // you should wrap the Component with these providers.
   return (
-    <LoadingProvider>
-      <Component {...pageProps} />
-    </LoadingProvider>
+    <Web3Provider>
+      <LoadingProvider>
+        <Component {...pageProps} />
+      </LoadingProvider>
+    </Web3Provider>
   );
 }
 
