@@ -72,7 +72,7 @@ contract Businesses {
         coupon.supplyLeft = _supply; // Sets the coupon supply
         coupon.description = _description; // Sets the coupon description
         for (uint i = 0; i < _banList.length; i++) {
-            uint256 BusinessId = attendeesContract.organizationToId[_banList[i]];
+            uint256 BusinessId = attendeesContract.getOrganizationToId(_banList[i]);
             coupon.organizationBanList[BusinessId] = true; // Sets organizations to ban
         }
         uint256[] storage couponArray = businessToCouponIDs[businessID]; // Gets the array of coupon IDs for the business

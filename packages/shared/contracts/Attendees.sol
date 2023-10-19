@@ -117,4 +117,8 @@ contract Attendees {
         emit OrganizationIDSet(_string, organizationCounter, block.timestamp); // Emit the OrganizationIDSet event
         return true; //returns true if successful 
     }
+
+    function getOrganizationToId(string memory _name)public view returns(uint256){
+        return organizationToID[_name];
+    }
 }
