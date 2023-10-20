@@ -51,14 +51,16 @@ export const GraphProvider = ({ children }) => {
         // Define the GraphQL query for class attendance using template literals
         const ATTENDANCE_QUERY = `
         {
-            classSessions(where: {classSessionID: "${classSessionID}"}) {
-              classSessionID
+            classSessions(where: {sessionId: "${classSessionID}"}) {
+              sessionId
             }
         }
         `;
     
         // Use the generic querySubgraph function to fetch the data
         const data = await querySubgraph(ATTENDANCE_QUERY);
+
+        console.log(data)
 
         if (data.classSessions.length > 0) {
             return true;

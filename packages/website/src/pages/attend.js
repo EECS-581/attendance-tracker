@@ -6,7 +6,7 @@ import {useGraphContext} from "../../../shared/contexts/graphContext"
 function AttendPage() {
   const router = useRouter();
   const { mintAttendanceToken, getAttendanceBalance, balance } = useWeb3Context();
-  const {queryClassAttendance } = useGraphContext();
+  const {queryClassAttendance, checkClassSessionExists } = useGraphContext();
   
   async function checkAttendance(adress,classId){
     const data = await queryClassAttendance(classId)
@@ -30,12 +30,23 @@ function AttendPage() {
     console.log("verifying");
     console.log(classId);
     if (classId) {
-      console.log("checking")
+      console.log("checking if exists")
+      const check = await checkClassSessionExists(classId);
+
+      if(!check){
+        console.log("class session does not exist");
+        return;
+      }
+      console.log("class session exists");
+
 
       // get user address
+      console.log("checking if already attended")
       const userAdress = "0x06e6620C67255d308A466293070206176288A67B";
+
+      const checkAttend =await checkAttendance(userAdress,classId)
       
-      if(!(await checkAttendance(userAdress,classId))){
+      if(!checkAttend){
         // mint tokens
         console.log("minting");
         await mintAttendanceToken(userAdress, 1, classId);
