@@ -5,6 +5,29 @@ schema:
   file: schema.graphql
 dataSources:
   - kind: ethereum/contract
+    name: Classes
+    network: mumbai
+    source:
+      address: "0x1d382F4583A1C14A4b960FB32A0722AE7f05b3fd"
+      abi: Classes
+      startBlock: 41438464
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Class
+        - ClassSession
+      abis:
+        - name: Classes
+          file: abi/Classes.json
+      eventHandlers:
+        - event: EnrolledClass(string,uint256,uint256)
+          handler: handleEnrolledClass
+        - event: EnrolledClassSession(string,uint256,uint256,uint256)
+          handler: handleEnrolledClassSession
+      file: Classes/Classes.wasm
+  - kind: ethereum/contract
     name: AttendanceToken
     network: mumbai
     source:
@@ -25,4 +48,4 @@ dataSources:
       eventHandlers:
         - event: TokensMinted(indexed address,uint256,uint256,uint256)
           handler: handleTokensMinted
-      file: AttendanceToken/AttendanceToken.wasm
+      file: Classes/Classes.wasm

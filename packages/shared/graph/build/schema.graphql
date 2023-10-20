@@ -16,3 +16,18 @@ type Token @entity {
   id: ID!
   totalMinted: BigInt!
 }
+
+type Class @entity {
+  id: ID!
+  name: String!
+  classId: BigInt!
+  timestamp: Int!
+}
+
+type ClassSession @entity {
+  id: ID!
+  className: String!
+  classId: BigInt!
+  sessionId: BigInt!
+  timestamp: Int!
+}
