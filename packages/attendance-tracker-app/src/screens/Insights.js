@@ -23,9 +23,10 @@ import globalStyles from "../styles/globalStyles"; // Importing global styles
 import SimpleCard from "../components/SimpleCard";
 import CameraButton from "../components/CameraButton";
 import { useWeb3ContextApp } from "../../../shared/contexts/web3ContextApp";
+import AttendanceGraphComponent from "../components/Data Visualizations/AttendanceGrsphComponent";
 
 const Insights = ({ navigation }) => {
-  const {balance}= useWeb3ContextApp()
+  const { balance } = useWeb3ContextApp();
   // Render the Insights screen UI
   return (
     <>
@@ -38,15 +39,7 @@ const Insights = ({ navigation }) => {
           </Text>
         </SimpleCard>
 
-        <Image
-          source={require("../../assets/images/tempinsight1.png")}
-          style={styles.image}
-        />
-
-        <Image
-          source={require("../../assets/images/tempinsight2.png")}
-          style={styles.image}
-        />
+        <AttendanceGraphComponent />
       </View>
     </>
   );

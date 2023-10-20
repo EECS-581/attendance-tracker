@@ -41,6 +41,19 @@ const globalStyles = StyleSheet.create({
     borderRadius: 10,
     flexDirection: "row",
   },
+
+  dataVisualizationStyle: {
+    padding: 10,
+    borderRadius: 5,
+    borderWidth: 2,
+    borderColor: "black",
+    marginBottom: 10,
+    width: "90%",
+    backgroundColor: "#f5f5f5", // default background color, but it will be overridden if a prop is passed
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 10,
+  },
 });
 
 export default globalStyles;
