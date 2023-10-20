@@ -38,6 +38,7 @@ import {ethers } from 'ethers'; // Importing necessary components and functions 
 
 import { createContext, useContext, useState, useEffect, useCallback } from 'react'; // Importing React hooks: createContext, useContext, useState, useEffect, useCallback
 const AttendanceToken = require('../abi/AttendanceToken.json'); // Importing ABI of AttendanceToken contract
+const Classes = require('../abi/Classes.json'); // Importing ABI of Classes contract
 
 const Web3Context = createContext(); // Creating a new React context named Web3Context.
 
@@ -97,6 +98,36 @@ export const Web3Provider = ({ children }) => {
       await mintAttendanceToken('0x06e6620C67255d308A466293070206176288A67B', 100, 100); 
       await getAttendanceBalance('0x06e6620C67255d308A466293070206176288A67B');
     }
+
+    async function createClass(className, classId) {
+      // Creating a contract instance.
+      let ClassesContract= new ethers.Contract('0x1d382F4583A1C14A4b960FB32A0722AE7f05b3fd', Classes.abi, signer);
+      
+      console.log("Creating Class"); // Logging the start of the minting process.
+    
+      const tx = await ClassesContract.enrollClass(className, classId); // Minting tokens.
+      
+      console.log(tx); // Logging transaction object.
+      await tx.wait(); // Waiting for the transaction to be mined.
+      
+      console.log("Created Class"); // Logging the end of the minting process.
+
+    }
+
+    async function createClassSession(className, sessionId) {
+      // Creating a contract instance.
+      let ClassesContract= new ethers.Contract('0x1d382F4583A1C14A4b960FB32A0722AE7f05b3fd', Classes.abi, signer);
+      
+      console.log("Creating Class Session"); // Logging the start of the minting process.
+    
+      const tx = await ClassesContract.enrollClassSession(className, sessionId); // Minting tokens.
+      
+      console.log(tx); // Logging transaction object.
+      await tx.wait(); // Waiting for the transaction to be mined.
+      
+      console.log("Created Class Session"); // Logging the end of the minting process.
+
+    }
     
     // Defining the context value.
     const value = {
@@ -106,6 +137,8 @@ export const Web3Provider = ({ children }) => {
       mintTest,
       balance,
       mintAttendanceToken,
+      createClassSession,
+      createClass,
     };
     
     // Returning the Web3Context.Provider with value and children props.

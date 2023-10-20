@@ -47,9 +47,33 @@ export const GraphProvider = ({ children }) => {
         return querySubgraph(ATTENDANCE_QUERY);
     }
 
+    async function checkClassSessionExists(classSessionID) {
+        // Define the GraphQL query for class attendance using template literals
+        const ATTENDANCE_QUERY = `
+        {
+            classSessions(where: {sessionId: "${classSessionID}"}) {
+              sessionId
+            }
+        }
+        `;
+    
+        // Use the generic querySubgraph function to fetch the data
+        const data = await querySubgraph(ATTENDANCE_QUERY);
+
+        console.log(data)
+
+        if (data.classSessions.length > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
 
     const value = {
         queryClassAttendance,
+        checkClassSessionExists,
     };
 
     return (
