@@ -16,7 +16,7 @@ function AttendPage() {
       const userAdress = "0x06e6620C67255d308A466293070206176288A67B";
       // mint tokens
       console.log("minting");
-      await mintAttendanceToken(userAdress, 1);
+      await mintAttendanceToken(userAdress, 1, classId);
       await getAttendanceBalance(userAdress)
 
       console.log("balance set");
