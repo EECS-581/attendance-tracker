@@ -22,8 +22,6 @@ export function handleEnrolledClassSession(event: EnrolledClassSession): void {
   sessionEntity.save();
 }
 
-// ... rest of the mapping functions ...
-
 
 export function handleTokensMinted(event: TokensMinted): void {
   // Handle the mint event
