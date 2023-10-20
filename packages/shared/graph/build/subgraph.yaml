@@ -2,7 +2,7 @@ specVersion: 0.0.4
 description: Subgraph for AttendanceToken
 repository: https://github.com/EECS-581/attendance-tracker
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum/contract
     name: AttendanceToken
@@ -21,8 +21,8 @@ dataSources:
         - Token
       abis:
         - name: AttendanceToken
-          file: ../abi/AttendanceToken.json
+          file: abi/AttendanceToken.json
       eventHandlers:
         - event: TokensMinted(indexed address,uint256,uint256)
           handler: handleTokensMinted
-      file: ./mapping.ts
+      file: AttendanceToken/AttendanceToken.wasm

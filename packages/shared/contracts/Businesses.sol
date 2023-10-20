@@ -130,4 +130,11 @@ contract Businesses {
         require(false, "You do not own the coupon you are trying to redeem"); // Requires that the caller owns the coupon
         return false; // Returns false to indicate failure
     }
+
+    function getCouponDetails(uint256 _couponID) public view returns (uint256, uint256, uint256, string memory) {
+        Coupon storage coupon = couponIDToCoupon[_couponID];
+        return (coupon.couponID, coupon.price, coupon.supplyLeft, coupon.description);
+    }
+
+
 }

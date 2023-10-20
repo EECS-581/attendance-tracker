@@ -26,7 +26,7 @@ export const Web3ProviderApp = ({ children }) => {
 
   const getAttendanceBalance = async (address) => {
     const AttendanceTokenContractInstance = new ethers.Contract(
-      "0x6e85Ae42F0C8b00cc096a8c8c979633F624f975a",
+      "0x0B8788aFe6b45B2D9e71534770c403cA84a51359",
       AttendanceTokenABI.abi,
       signer
     );

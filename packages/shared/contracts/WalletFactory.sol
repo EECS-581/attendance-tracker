@@ -19,10 +19,11 @@ contract WalletFactory{
     }
 
     function createWallet(address _owner, address _attendees, address _token, address _businesses, string memory _firstName, string memory _lastName, string memory _organization)public onlyOwner returns(bool){
-        Wallet newWallet = new Wallet(msg.sender, _attendees, _token, _businesses, _firstName, _lastName, _organization);
-        Wallets.push(newWallet);
+        Wallet newWallet = new Wallet(_owner, _attendees, _token, _businesses, _firstName, _lastName, _organization);
+        Wallets.push(address(newWallet));  // Cast to address type here
         emit WalletCreated(_firstName, _lastName, _organization, block.timestamp, address(newWallet));
         return true;
     }
+
 
 }
