@@ -15,7 +15,7 @@ const TempCouponData = [
     offer: "10% Off",
     expiryDate: "15 Jan 2024",
     terms: "T&C Apply",
-    logo: "https://link_to_amazon_logo.com",
+    logo: require("../../assets/images/templogo.png"),
   },
   {
     id: 3,
@@ -24,7 +24,7 @@ const TempCouponData = [
     offer: "BOGO",
     expiryDate: "20 Feb 2024",
     terms: "T&C Apply",
-    logo: "https://link_to_nike_logo.com",
+    logo: require("../../assets/images/templogo.png"),
   },
   {
     id: 4,
@@ -33,7 +33,7 @@ const TempCouponData = [
     offer: "Free Fries",
     expiryDate: "10 Mar 2024",
     terms: "T&C Apply",
-    logo: "https://link_to_mcdonalds_logo.com",
+    logo: require("../../assets/images/templogo.png"),
   },
   {
     id: 5,
@@ -42,7 +42,7 @@ const TempCouponData = [
     offer: "5% Off",
     expiryDate: "30 Apr 2024",
     terms: "T&C Apply",
-    logo: "https://link_to_apple_logo.com",
+    logo: require("../../assets/images/templogo.png"),
   },
 ];
 

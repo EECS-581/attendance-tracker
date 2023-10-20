@@ -25,6 +25,7 @@
  * Known faults:
  * - None.
  */
+
 import React from "react";
 import { View, Text, Image } from "react-native";
 
@@ -38,40 +39,69 @@ const CouponCard = ({
   backgroundColor,
 }) => {
   return (
-    <View>
-      {logo && (
-        <Image
-          source={logo}
-          style={{ width: 50, height: 50, marginRight: 10 }}
-        />
-      )}
+    <View
+      style={{
+        flex: 1,
+        borderWidth: 1,
+        borderColor: "black",
+        borderWidth: 2,
+        borderRadius: 10,
+        padding: 10,
+        marginBottom: 10,
+      }}
+    >
+      {/* Top section for the logo and offer */}
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: 10,
+        }}
+      >
+        {logo && (
+          <Image
+            source={logo}
+            style={{ width: 50, height: 50, borderRadius: 25, marginRight: 10 }}
+          />
+        )}
 
-      <View style={{ flex: 1 }}>
-        <Text style={{ fontSize: 18, fontWeight: "bold" }}>{company}</Text>
+        <View
+          style={{
+            padding: 10,
+            backgroundColor: "black",
+            borderRadius: 5,
+            marginLeft: 10,
+          }}
+        >
+          <Text style={{ color: "white", fontWeight: "bold" }}>{offer}</Text>
+        </View>
+      </View>
+
+      {/* Bottom section for company and other details */}
+      <View>
+        <Text
+          style={{
+            fontSize: 18,
+            fontWeight: "bold",
+            marginBottom: 5,
+          }}
+        >
+          {company}
+        </Text>
         <Text style={{ marginVertical: 5 }}>{details}</Text>
-        <Text style={{ fontSize: 12, color: "gray" }}>
+        <Text style={{ fontSize: 12, color: "gray", marginBottom: 5 }}>
           Expires on: {expiryDate}
         </Text>
         <Text
           style={{
             fontSize: 12,
-            color: "blue",
+            color: "black",
             textDecorationLine: "underline",
           }}
         >
           {terms}
         </Text>
-      </View>
-
-      <View
-        style={{
-          padding: 10,
-          backgroundColor: "black",
-          borderRadius: 5,
-          marginLeft: 10,
-        }}
-      >
-        <Text style={{ color: "white", fontWeight: "bold" }}>{offer}</Text>
       </View>
     </View>
   );
