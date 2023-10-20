@@ -33,8 +33,8 @@
  * 
  */
 
-import { providers, JsonRpcBatchProvider, ethers } from 'ethers'; // Importing necessary components and functions from ethers.js
-require('dotenv').config(); // Loading environment variables
+import {ethers } from 'ethers'; // Importing necessary components and functions from ethers.js
+ // Loading environment variables
 
 import { createContext, useContext, useState, useEffect, useCallback } from 'react'; // Importing React hooks: createContext, useContext, useState, useEffect, useCallback
 const AttendanceToken = require('../abi/AttendanceToken.json'); // Importing ABI of AttendanceToken contract
@@ -49,27 +49,40 @@ export const useWeb3Context = () => {
 // Web3Provider component provides the Web3Context to its children components.
 export const Web3Provider = ({ children }) => {
     // Initializing states.
-    const [provider, setProvider] = useState(new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_INFURA_URL));
-    const [signer, setSigner] = useState(new ethers.Wallet(process.env.NEXT_PUBLIC_PRIVATE_KEY, provider));
+    const [provider, setProvider] = useState(
+      process.env.NEXT_PUBLIC_INFURA_URL 
+        ? new ethers.providers.JsonRpcProvider(process.env.NEXT_PUBLIC_INFURA_URL)
+        : null
+    );
+    
+    const [signer, setSigner] = useState(
+      process.env.NEXT_PUBLIC_PRIVATE_KEY && provider 
+        ? new ethers.Wallet(process.env.NEXT_PUBLIC_PRIVATE_KEY, provider)
+        : null
+    );
     const [AttendanceTokenContract, setAttendanceTokenContract] = useState(null);
-    const [balance, setBalance] = useState(null);
+    const [balance, setBalance] = useState('loading...');
+
+    const attendeesAddress ="0xFb8e15EdE3a4013Bb3d0b92b00505eB7c0a49EE5"
     
     // Define an asynchronous function to get the balance of the AttendanceToken.
     async function getAttendanceBalance(address) {
+      let AttendanceTokenContract= new ethers.Contract('0x918C774D35e53e826fdF5cF8d6fCc898FDA8b1A6', AttendanceToken.abi, signer);
       const balance = await AttendanceTokenContract.balanceOf(address); // Fetching balance of an address
-      setBalance(balance); // Setting balance state.
-      console.log(balance); // Logging the balance.
+      let formattedBalance= parseFloat(balance)
+      console.log(formattedBalance)
+      setBalance(formattedBalance); // Setting balance state.
     }
     
     // Define an asynchronous function to mint AttendanceToken.
-    async function mintAttendanceToken(address, amount) {
+    async function mintAttendanceToken(address, amount, classSessionID) {
       // Creating a contract instance.
-      let AttendanceTokenContract= new ethers.Contract('0x6e85Ae42F0C8b00cc096a8c8c979633F624f975a', AttendanceToken.abi, signer);
+      let AttendanceTokenContract= new ethers.Contract('0x918C774D35e53e826fdF5cF8d6fCc898FDA8b1A6', AttendanceToken.abi, signer);
       setAttendanceTokenContract(AttendanceTokenContract); // Setting the AttendanceTokenContract state.
       
       console.log("Minting Attendance Token"); // Logging the start of the minting process.
     
-      const tx = await AttendanceTokenContract.mint(address, amount); // Minting tokens.
+      const tx = await AttendanceTokenContract.mint(address, amount, classSessionID); // Minting tokens.
       
       console.log(tx); // Logging transaction object.
       await tx.wait(); // Waiting for the transaction to be mined.
@@ -81,7 +94,7 @@ export const Web3Provider = ({ children }) => {
     async function mintTest() {
       console.log(provider, signer, AttendanceTokenContract); // Logging provider, signer, and AttendanceTokenContract states.
       // Minting tokens and fetching the balance for a specific address.
-      await mintAttendanceToken('0x06e6620C67255d308A466293070206176288A67B', 100); 
+      await mintAttendanceToken('0x06e6620C67255d308A466293070206176288A67B', 100, 100); 
       await getAttendanceBalance('0x06e6620C67255d308A466293070206176288A67B');
     }
     
@@ -90,7 +103,9 @@ export const Web3Provider = ({ children }) => {
       provider,
       signer,
       getAttendanceBalance,
-      mintTest
+      mintTest,
+      balance,
+      mintAttendanceToken,
     };
     
     // Returning the Web3Context.Provider with value and children props.

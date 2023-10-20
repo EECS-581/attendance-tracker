@@ -19,7 +19,13 @@
  */
 
 // Import necessary modules and components
-import React, { useState, useEffect } from "react";
+import {decode, encode} from 'base-64'
+
+if (!global.btoa) {  global.btoa = encode }
+
+if (!global.atob) { global.atob = decode }
+
+import React, { useState, useEffect, useContext } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import * as SplashScreen from "expo-splash-screen";
@@ -27,10 +33,23 @@ import * as Font from "expo-font";
 import globalStyles from "./src/styles/globalStyles.js";
 import MainNavigator from "./src/navigation/MainNavigator.js";
 import { NavigationContainer } from "@react-navigation/native";
+import CameraButtonContext from "./src/contexts/CameraButtonContext.js";
+import { LoadingProvider } from "./src/contexts/Loading/LoadingContext.js";
+
+
+import { Web3ProviderApp } from "../shared/contexts/web3ContextApp.js";
+
+// This might also be required for crypto operations
+
+
 
 export default function App() {
+  
+
+  
   // State to manage font loading status
   const [fontsLoaded, setFontsLoaded] = useState(false);
+  const [showCameraButton, setShowCameraButton] = useState(true);
 
   // Effect hook to prevent native splash screen from auto-hiding
   useEffect(() => {
@@ -67,10 +86,18 @@ export default function App() {
 
   // Render the main navigation of the app
   return (
-    <NavigationContainer>
-      <StatusBar style="auto" />
-      <MainNavigator />
-    </NavigationContainer>
+    <Web3ProviderApp>
+    <LoadingProvider>
+      <CameraButtonContext.Provider
+        value={{ showCameraButton, setShowCameraButton }}
+      >
+        <NavigationContainer>
+          <StatusBar style="auto" />
+          <MainNavigator />
+        </NavigationContainer>
+      </CameraButtonContext.Provider>
+    </LoadingProvider>
+    </Web3ProviderApp>
   );
 }
 

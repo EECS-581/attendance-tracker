@@ -18,14 +18,23 @@
  * Any known faults: N/A
  */
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Text, View, StyleSheet, Button, Alert } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
+import CameraButtonContext from "../contexts/CameraButtonContext";
 
 export default function Scan() {
   // State to manage camera permission and scan status
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+  const { setShowCameraButton } = useContext(CameraButtonContext);
+  useEffect(() => {
+    setShowCameraButton(false); // Hide the camera button
+
+    return () => {
+      setShowCameraButton(true); // Show the camera button when leaving the screen
+    };
+  }, []);
 
   // Effect hook to request camera permission on component mount
   useEffect(() => {

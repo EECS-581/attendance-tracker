@@ -1,0 +1,18 @@
+type TokenHolder @entity {
+  id: ID!
+  address: Bytes!
+  balance: BigInt!
+}
+
+type MintEvent @entity {
+  id: ID!
+  to: Bytes!
+  amount: BigInt!
+  time: Int!
+  classSessionID: BigInt!
+}
+
+type Token @entity {
+  id: ID!
+  totalMinted: BigInt!
+}
