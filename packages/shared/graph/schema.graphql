@@ -9,6 +9,7 @@ type MintEvent @entity {
   to: Bytes!
   amount: BigInt!
   time: Int!
+  classSessionID: BigInt!
 }
 
 type Token @entity {
