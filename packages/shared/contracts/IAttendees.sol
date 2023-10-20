@@ -21,7 +21,7 @@ interface IAttendees {
 
     function createAttendee(address _account, string calldata _firstName, string calldata _lastName, string calldata _organization) external returns (bool);
 
-    function getOrganizationToId(string memory _name)external view returns(uint256)
+    function getOrganizationToId(string memory _name)external view returns(uint256);
 
 
 }

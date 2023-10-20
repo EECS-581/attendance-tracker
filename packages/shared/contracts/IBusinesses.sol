@@ -8,4 +8,6 @@ interface IBusinesses{
 
     function redeemCoupon(uint256 _couponID) external returns (bool);
 
+    function getCouponDetails(uint256 _couponID) external view returns (uint256, uint256, uint256, string memory);
+
 }

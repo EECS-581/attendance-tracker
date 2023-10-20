@@ -106,8 +106,7 @@ contract Attendees {
     // Unacceptable Input Values: Duplicate organization names or organization IDs
     // Postconditions: The organization ID is set and associated with _string
     // Return: True if the operation is successful
-    function setOrganizationID(string memory _string) onlyOwner public returns (bool) {
-        require(msg.sender == owner || msg.sender == address(this), "You are not allowed to set organization values");
+    function setOrganizationID(string memory _string) public returns (bool) {
         require(organizationToID[_string] == 0, "This Organization already has an ID"); //requires not sending to zero address
         require(keccak256(abi.encodePacked(idtoOrganization[organizationCounter])) == keccak256(abi.encodePacked("")), "This Organization ID is already taken"); //checks to make sure business string is not empty
         organizationToID[_string] = organizationCounter; //sets id

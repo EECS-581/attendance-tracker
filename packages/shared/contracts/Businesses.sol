@@ -44,19 +44,20 @@ contract Businesses {
         mapping(uint256 => bool) organizationBanList;
     }
 
-    uint256 public idCounter = 0;
+    uint256 public idCounter = 1;
 
-    uint256 couponIDCounter = 0;
+    uint256 couponIDCounter = 1;
 
-    mapping(string => uint256) public businessToID;
+    mapping(string => uint256) private businessToID;
 
-    mapping(uint256 => uint256[]) public businessToCouponIDs;
+    mapping(uint256 => uint256[]) private businessToCouponIDs;
 
-    mapping(address => uint256[]) public attendeeToCouponIDs;
+    mapping(address => uint256[]) private attendeeToCouponIDs;
 
-    mapping(uint256 => Coupon) public couponIDToCoupon;
+    mapping(uint256 => Coupon) private couponIDToCoupon;
 
     function enrollBusiness(string memory _businessName) onlyOwner public returns (uint256) {
+        require(businessToID[_businessName] == 0, "This business has already been enrolled");
         businessToID[_businessName] = idCounter; // Sets the ID for the business
         BusinessesList.push(_businessName); //adds to lists of businesses
         idCounter++; // Increments the counter for the next business
@@ -66,6 +67,7 @@ contract Businesses {
 
     function createCoupon(string memory _businessName, uint256 _price, uint256 _supply, string memory _description, string[] memory _banList) onlyOwner public returns (uint256) {
         uint256 businessID = businessToID[_businessName]; // Gets the business ID
+        require(businessID != 0, "This business has not been registered");
         Coupon storage coupon = couponIDToCoupon[couponIDCounter]; // Gets a reference to the coupon
         coupon.couponID = couponIDCounter; // Sets the coupon ID
         coupon.price = _price; // Sets the coupon price
@@ -99,6 +101,33 @@ contract Businesses {
         return businessToCouponIDs[id]; // Returns an array of coupon IDs associated with the business
     }
 
+    function getBusinessesList()public view returns(string[] memory){
+        return BusinessesList;
+    }
+
+    function getBusinessToID(string memory _businessName) public view returns (uint256) {
+        return businessToID[_businessName];
+    }
+
+    function getBusinessToCouponIDs(uint256 _businessID) public view returns (uint256[] memory) {
+        return businessToCouponIDs[_businessID];
+    }
+
+    function getAttendeeToCouponIDs(address _address) public view returns (uint256[] memory) {
+        return attendeeToCouponIDs[_address];
+    }
+
+    function getCouponIDToCoupon(uint256 _couponID) public view returns (uint256, uint256, string memory, uint256) {
+        Coupon storage coupon = couponIDToCoupon[_couponID];
+        return (coupon.couponID, coupon.price, coupon.description, coupon.supplyLeft);
+    }
+
+    function getCouponDetails(uint256 _couponID) public view returns (uint256, uint256, uint256, string memory) {
+        Coupon storage coupon = couponIDToCoupon[_couponID];
+        return (coupon.couponID, coupon.price, coupon.supplyLeft, coupon.description);
+    }
+ 
+
     function buyCoupon(uint256 _couponID) public returns (bool) {
         Coupon storage coupon = couponIDToCoupon[_couponID]; // Gets the coupon
         uint256 price = coupon.price; // Gets the coupon price
@@ -107,7 +136,7 @@ contract Businesses {
         require(!banned, "You are part of a banned organization"); // Requires that the caller's organization is not banned
         require(attendanceTokenContract.balanceOf(msg.sender) >= price); // Requires that the caller has enough tokens to buy the coupon
         require(coupon.supplyLeft > 0, "There are no coupons left"); // Requires that there are coupons left in supply
-        attendanceTokenContract.transferFrom(msg.sender, address(0), price); // Transfers tokens from the caller to the contract
+        attendanceTokenContract.transferFrom(msg.sender, address(this), price); // Transfers tokens from the caller to the contract
         coupon.supplyLeft--; // Decrements the coupon supply
         uint256[] storage usersCoupons = attendeeToCouponIDs[msg.sender]; // Gets the caller's coupon IDs
         usersCoupons.push(_couponID); // Adds the purchased coupon to the caller's coupons
@@ -130,4 +159,6 @@ contract Businesses {
         require(false, "You do not own the coupon you are trying to redeem"); // Requires that the caller owns the coupon
         return false; // Returns false to indicate failure
     }
+
+
 }
