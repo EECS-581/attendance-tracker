@@ -8,9 +8,9 @@ dataSources:
     name: AttendanceToken
     network: mumbai
     source:
-      address: "0x0B8788aFe6b45B2D9e71534770c403cA84a51359"
+      address: "0x918C774D35e53e826fdF5cF8d6fCc898FDA8b1A6"
       abi: AttendanceToken
-      startBlock: 41431915
+      startBlock: 41434737
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -23,6 +23,6 @@ dataSources:
         - name: AttendanceToken
           file: abi/AttendanceToken.json
       eventHandlers:
-        - event: TokensMinted(indexed address,uint256,uint256)
+        - event: TokensMinted(indexed address,uint256,uint256,uint256)
           handler: handleTokensMinted
       file: AttendanceToken/AttendanceToken.wasm

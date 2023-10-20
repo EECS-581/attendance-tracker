@@ -156,6 +156,19 @@ export class MintEvent extends Entity {
   set time(value: i32) {
     this.set("time", Value.fromI32(value));
   }
+
+  get classSessionID(): BigInt {
+    let value = this.get("classSessionID");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set classSessionID(value: BigInt) {
+    this.set("classSessionID", Value.fromBigInt(value));
+  }
 }
 
 export class Token extends Entity {

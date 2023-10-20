@@ -8,6 +8,7 @@ export function handleTokensMinted(event: TokensMinted): void {
   mintEvent.to = event.params.to;
   mintEvent.amount = event.params.amount;
   mintEvent.time = event.params.time.toI32();
+  mintEvent.classSessionID = event.params.classSessionID;  // Added this line
   mintEvent.save();
 
   // Update the TokenHolder's balance

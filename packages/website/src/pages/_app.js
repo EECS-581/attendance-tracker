@@ -38,6 +38,8 @@ import "@/styles/globals.css"; // Importing global styles
 import { Web3Provider } from "@shared/contexts/web3Context.js"; // Importing Web3Provider from the shared contexts
 import { DbProvider } from "@shared/contexts/dbContext.js"; // Importing DbProvider from the shared contexts
 import LoadingProvider from "@/contexts/LoadingProvider";
+import {GraphProvider} from "@shared/contexts/graphContext.js"
+
 // The MyApp component which receives Component and pageProps as props.
 function MyApp({ Component, pageProps }) {
   const router = useRouter(); // Initializing the router object using useRouter hook
@@ -47,10 +49,13 @@ function MyApp({ Component, pageProps }) {
   // To make the contexts available to the Component and its child components,
   // you should wrap the Component with these providers.
   return (
+    
     <Web3Provider>
-      <LoadingProvider>
-        <Component {...pageProps} />
-      </LoadingProvider>
+      <GraphProvider>
+        <LoadingProvider>
+          <Component {...pageProps} />
+        </LoadingProvider>
+      </GraphProvider>
     </Web3Provider>
   );
 }
