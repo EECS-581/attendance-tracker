@@ -46,7 +46,7 @@ const globalStyles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     borderWidth: 5,
-    borderColor: "lightblue",
+    borderColor: "skyblue",
     marginBottom: 10,
     width: "90%",
     alignItems: "center",
@@ -55,4 +55,13 @@ const globalStyles = StyleSheet.create({
   },
 });
 
+export const themeColors = [
+  "powderblue",
+  "lightblue",
+  "lavender",
+  "antiquewhite",
+  "lightpink",
+  "lightcyan",
+  "lightsteelblue",
+];
 export default globalStyles;

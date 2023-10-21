@@ -5,7 +5,7 @@ export const diffClassesData = [
     color: "#F00", // Example color for English classes
   },
   {
-    name: "Programming 1",
+    name: "EECS",
     classes: 10,
     color: "#0F0", // Example color for Programming 1 classes
   },

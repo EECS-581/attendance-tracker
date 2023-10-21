@@ -1,20 +1,30 @@
 import React from "react";
 import { View, Text, Dimensions } from "react-native";
 import { PieChart } from "react-native-chart-kit";
-import globalStyles from "../../styles/globalStyles";
+import globalStyles, { themeColors } from "../../styles/globalStyles";
 import { diffClassesData } from "./DiffClassesData";
 
+const shuffleArray = (array) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+  }
+  return array;
+};
+
 const DiffClassesPieChartComponent = () => {
-  const pieData = diffClassesData.map((item) => ({
-    name: item.name, // Only using the class name for the legend
+  const shuffledColors = shuffleArray([...themeColors]); // Create a copy and shuffle it
+
+  const pieData = diffClassesData.map((item, index) => ({
+    name: item.name,
     population: item.classes,
-    color: item.color,
-    legendFontColor: "#7F7F7F",
+    color: shuffledColors[index % shuffledColors.length], // Use modulo to cycle through colors if there are more data items than colors
+    legendFontColor: "white",
     legendFontSize: 15,
   }));
 
-  const chartWidth = Dimensions.get("window").width - 32 - 20; // Reduced 20 to account for possible paddings and margins
-  const chartHeight = 200; // Adjusted height
+  const chartWidth = Dimensions.get("window").width - 32 - 20;
+  const chartHeight = 200;
 
   return (
     <View
@@ -31,9 +41,7 @@ const DiffClassesPieChartComponent = () => {
           color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
         }}
         accessor={"population"}
-        backgroundColor={"transparent"}
         paddingLeft={"15"}
-        center={[10, 50]}
         absolute
       />
       <Text
