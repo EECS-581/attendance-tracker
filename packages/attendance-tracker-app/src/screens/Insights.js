@@ -18,8 +18,8 @@
  */
 
 import React from "react";
-import { View, Text, StyleSheet, Button, Image } from "react-native";
-import globalStyles from "../styles/globalStyles"; // Importing global styles
+import { View, Text, StyleSheet, ScrollView } from "react-native";
+import globalStyles from "../styles/globalStyles";
 import SimpleCard from "../components/SimpleCard";
 import CameraButton from "../components/CameraButton";
 import { useWeb3ContextApp } from "../../../shared/contexts/web3ContextApp";
@@ -28,12 +28,14 @@ import DiffClassesPieChartComponent from "../components/Data Visualizations/Diff
 
 const Insights = ({ navigation }) => {
   const { balance } = useWeb3ContextApp();
-  // Render the Insights screen UI
+
   return (
     <>
       <CameraButton navigation={navigation} visible={true} />
-      <View style={styles.container}>
-        <CameraButton navigation={navigation} visible={true} />
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.contentContainer}
+      >
         <SimpleCard backgroundColor="lightblue">
           <Text style={[globalStyles.defaultFont, { fontSize: 20 }]}>
             You currently have {balance} tokens.
@@ -42,18 +44,19 @@ const Insights = ({ navigation }) => {
 
         <AttendanceGraphComponent />
         <DiffClassesPieChartComponent />
-      </View>
+      </ScrollView>
     </>
   );
 };
 
-// Styling for the Insights component
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#f5f5f5",
+  },
+  contentContainer: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f5f5f5",
   },
   title: {
     fontSize: 24,
