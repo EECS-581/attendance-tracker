@@ -8,6 +8,7 @@
 // import the victory chart libraries Line chart
 import { VictoryLine, VictoryChart, VictoryAxis, VictoryTheme } from 'victory';
 
+// creates static data to pull into the chart
 const classData = [
   {name: "EECS 101", attendance: 100, date: "10/05"},
   {name: "EECS 268", attendance: 50, date: "10/01"},
@@ -16,27 +17,47 @@ const classData = [
   {name: "EECS 581", attendance: 80, date: "10/03"}
 ]
 
+// creates the line chart component 
 const LineChart = () => {
   return (
     // Creates an instance of the Victory Chart, this creates the chart with the specified theme and padding
-    <VictoryChart 
-      theme={VictoryTheme.material}
-    >
-      <VictoryLine
-        data={[
-          { x: 1, y: 2 },
-          { x: 2, y: 3 },
-          { x: 3, y: 4 },
-          { x: 4, y: 5 },
-          { x: 5, y: 6 },
-          { x: 6, y: 3 }
-        ]}
-        style={{
-          data: { stroke: "#c43a31" },
-          parent: { border: "1px solid #ccc" }
-        }}
-      />
-    </VictoryChart>
+    <div className="bg-white p-4 rounded-lg shadow-md">
+      <VictoryChart 
+        theme={VictoryTheme.material}
+        height={300}
+      >
+        {/* creates the line on the chart with the below specifications  */}
+        <VictoryLine
+          data={classData}
+          x="date"
+          y="attendance"
+          style={{
+            data: { stroke: "#4299E1" },
+            parent: { border: "1px solid #ccc" }
+          }}
+        />
+        {/* creates the x axis with the below specifications  */}
+        <VictoryAxis
+          label="Date"
+          style={{
+            axisLabel: { fontSize: 12, padding: 30 },
+            grid: { stroke: "gray" },
+            ticks: { stroke: "gray", size: 5 },
+            tickLabels: { fontSize: 8, padding: 5 }
+          }}
+        />
+        {/* creates the y axis with the below specifications  */}
+        <VictoryAxis
+          label="Attendance"
+          style={{
+            axisLabel: { fontSize: 12, padding: 30 },
+            ticks: { stroke: "gray", size: 5 },
+            tickLabels: { fontSize: 8, padding: 5 }
+          }}
+          dependentAxis
+        />
+      </VictoryChart>
+    </div>
   )
 }
 // exports LineChart component 

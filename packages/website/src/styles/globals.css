@@ -8,36 +8,3 @@
   margin: 0;
   box-sizing: border-box;
 }
-
-nav {
-  background-color: lightgray;
-  padding: 10px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 40px;
-  min-height: 70px;
-}
-
-.nav_list {
-  list-style: none;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 7rem;
-}
-
-.nav_link {
-  text-decoration: none;
-  color: black;
-  font-size: 18px;
-}
-
-.active {
-  font-weight: bold;
-}
-
-.active:hover {
-  font-size: 20px;
-}
-

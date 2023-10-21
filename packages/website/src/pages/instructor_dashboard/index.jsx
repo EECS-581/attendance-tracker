@@ -4,6 +4,7 @@
 // Programmers name: Libby Miller
 // Date: 09/24/2023
 // Updated: 10/05/2023 - to add insights widget
+// Updated: 10/17/2023, Requirement 36.7 - CSS styling version 1 - added tailwind css classes for styling
 // This pages sets up the UI, there are no pre or post condition to this page
 // inputs to this page will be the data points pulled from the instuctors classes
 
@@ -31,42 +32,53 @@ const classData = [
 export default function Instructor_dashboard() {
   return (
     // create a main html tag to hold the page
-    <main className="flex min-h-screen flex-col justify-between p-24">
-      {/* creates an instance of the Navbar component */}
-      <Navbar />
-      {/* creates a container to hold the button */}
-      <div>
-          {/* creates the view classes button/link */}
-        <LightColorfulButton
-          shadowColor="powderblue"
-          title="View Classes"
-          link="/view_classes"
-        />
+    <main className="w-full overflow-hidden">
+      <div className="py-6">
+        <div className="container mx-auto">
+      {/* <div className={`sm:px-16 px-6 flex justify-center items-center`}> */}
+        {/* <div className={`xl:max-w-[2280px] w-full`}> */}
+        {/* This adds the navbar component to the page */}
+          <Navbar />
+        </div>
       </div>
-        {/* creatse a container to hold the button */}
-        <div>
-          {/* creates a the qr code generator button */}
-          <LightColorfulButton
-          shadowColor="powderblue"
-          title="QR Code Generator"
-          link="/"
-          />
+      {/* creates a container to hold the button */}
+      <div className='max-w-4xl mx-auto p-6'>
+        <h1 className="text-3xl md:text-4xl font-semibold text-gray-900 text-center my-4">Instructor Dashboard</h1>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+          <div>
+            {/* creates the view classes button/link */}
+            <LightColorfulButton
+              shadowColor="powderblue"
+              title="View Classes"
+              link="/instructor_dashboard/view_classes"
+            />
+          </div>
+          {/* creatse a container to hold the button */}
+          <div>
+            {/* creates a the qr code generator button */}
+            <LightColorfulButton
+              shadowColor="powderblue"
+              title="QR Code Generator"
+              link="/instructor_dashboard/qr_code_generator"
+            />
+          </div>
         </div>
 
-        <div>
+        <div className="mt-6">
           {/* Creates a title for the insights widget  */}
-          <h2>Attendance Per Class</h2>
+          <h2 className='text-2xl md:text-3xl font-semibold text-gray-900'>Attendance Per Class</h2>
           {/* Creates an instance of the Victory Chart, this creates the chart with the specified theme and padding  */}
           <VictoryChart
             theme={VictoryTheme.material}
             domainPadding={20}
+            height={300}
           >
             {/* Creates the x-axis with a label and styling to make it look nicer */}
             <VictoryAxis
               label="Class"
               style={{
-                axisLabel: {fontSize: 20, padding: 30},
-                grid: {stroke: ({ tick }) => tick > 0.5 ? "red" : "grey"},
+                axisLabel: {fontSize: 16, padding: 30},
+                grid: {stroke: "grey"},
                 ticks: {stroke: "grey", size: 5},
                 tickLabels: {fontSize: 8, padding: 5}
               }}
@@ -90,16 +102,22 @@ export default function Instructor_dashboard() {
               // and attendance number for y-axis
               y="attendance"
             />
-          </VictoryChart>    
-          {/* Creates a link to the full insights page       */}
-          <LightColorfulButton
-            shadowColor="powderblue"
-            title="See All Insights"
-            link="/instructor_dashboard/insights"
-          />
+          </VictoryChart>  
+          <div className='text-center mt-6'>
+            {/* Creates a link to the full insights page       */}
+            <LightColorfulButton
+              shadowColor="powderblue"
+              title="See All Insights"
+              link="/instructor_dashboard/insights"
+            />
+          </div>  
         </div>
-        {/* creates an instance of the Footer component */}
-      <Footer /> 
+      </div>
+      {/* This section creates a container to hold the footer */}
+      <div className="py-4 text-center text-sm text-gray-600">
+        {/* This creates an instance of the footer component */}
+        <Footer />
+      </div> 
     </main>   
   );
 };

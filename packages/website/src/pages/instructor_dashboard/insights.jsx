@@ -2,6 +2,7 @@
 // This code creates the Insights Page for the instructor dashboard part of the website
 // Programmers name: Libby Miller
 // Date: 10/05/2023
+// Updated: 10/17/2023, Requirement 36.7 - CSS styling version 1 - added tailwind css classes for styling
 // This pages sets up the UI, there are no pre or post conditions, and no inputs to this page
 
 // import the necessary components
@@ -13,7 +14,7 @@ import BarChart from '@/components/bar_chart';
 import LineChart from '@/components/line_chart';
 // import ProgressChart component
 import ProgressChart from "@/components/progress_chart";
-// import Footer component
+// import Footerer90diu component
 import Footer from "@/components/footer";
 
 // this adds some dummy test data to use in the charts until we have the backend setup to pull data from
@@ -29,28 +30,41 @@ const classData = [
 export default function Insights() {
   return (
     //creates a main html tag to hold the page 
-    <main className="flex min-h-screen flex-col justify-between p-24">
-      {/* creates an instance of the Navbar component */}
-      <Navbar />
-      {/* creates two headers for the page title and subtitle */}
-      <h1>Instructor Dashboard</h1>
-      <h2>Insights</h2>
-      <div>
-        {/* Creates a title for the insights widget  */}
-        <h2>Attendance Per Class</h2>
-        {/* Creates an instance of the BarChart component */}
-        <BarChart />  
-      </div>      
-      <h3>Student Attendance Over Time</h3>
-      <div>
-        <LineChart />
+    <main className="w-full overflow-hidden">
+      <div className="py-6">
+        <div className="container mx-auto">
+        {/* This adds the navbar component to the page */}
+          <Navbar />
+        </div>
+        <div className="max-w-4xl mx-auto p-6">
+          {/* creates two headers for the page title and subtitle */}
+          <h1 className="text-3xl md:text-4xl font-semibold text-gray-900 text-center my-4">Instructor Dashboard</h1>
+          <h2 className="text-xl md:text-2xl text-gray-700 text-center my-4">Insights</h2>
+          <div className="mt-6">
+            {/* Creates a title for the insights widget  */}
+            <h3 className="text-2xl md:text-3xl font-semibold text-gray-900">Attendance Per Class</h3>
+            {/* Creates an instance of the BarChart component */}
+            <BarChart />  
+          </div>   
+          {/* creates a title for the line chart     */}
+          <h4 className="mt-6 text-2xl md:text-3xl font-semibold text-gray-900">Student Attendance Over Time</h4>
+          <div>
+            {/* creates an instance of the line chart  */}
+            <LineChart />
+          </div>
+          {/* creates a title for the progress chart  */}
+          <h5 className="mt-6 text-2xl md:text-3xl font-semibold text-gray-900">Student Attendance Overall</h5>
+          <div>
+            {/* creates an instance of the progress chart  */}
+            <ProgressChart />
+          </div>
+        </div>
       </div>
-      <h3>Progress Bar</h3>
-      <div>
-        <ProgressChart />
-      </div>
-      {/* creates an instance of the Footer component */}
-      <Footer />
+      {/* This section creates a container to hold the footer */}
+      <div className="py-4 text-center text-sm text-gray-600">
+        {/* This creates an instance of the footer component */}
+        <Footer />
+      </div> 
     </main>
   );
 };
