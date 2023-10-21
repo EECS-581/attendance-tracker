@@ -2,10 +2,11 @@
 // This code creates the About Page for the website
 // Programmers name: Libby Miller
 // Date: 09/26/2023
+// Updated: 10/17/2023, Requirement 36.7 - CSS styling version 1 - added tailwind css classes
 // This pages sets up the UI, there are no pre or post conditions, and no inputs to this page
 
 // import necessary components
-// import Navbar 
+// import Navbar component 
 import Navbar from "@/components/navbar";
 // import Footer
 import Footer from "@/components/footer";

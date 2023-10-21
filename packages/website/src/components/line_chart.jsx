@@ -8,6 +8,7 @@
 // import the victory chart libraries Line chart
 import { VictoryLine, VictoryChart, VictoryAxis, VictoryTheme } from 'victory';
 
+// creates static data to pull into the chart
 const classData = [
   {name: "EECS 101", attendance: 100, date: "10/05"},
   {name: "EECS 268", attendance: 50, date: "10/01"},
@@ -16,6 +17,7 @@ const classData = [
   {name: "EECS 581", attendance: 80, date: "10/03"}
 ]
 
+// creates the line chart component 
 const LineChart = () => {
   return (
     // Creates an instance of the Victory Chart, this creates the chart with the specified theme and padding
@@ -24,6 +26,7 @@ const LineChart = () => {
         theme={VictoryTheme.material}
         height={300}
       >
+        {/* creates the line on the chart with the below specifications  */}
         <VictoryLine
           data={classData}
           x="date"
@@ -33,6 +36,7 @@ const LineChart = () => {
             parent: { border: "1px solid #ccc" }
           }}
         />
+        {/* creates the x axis with the below specifications  */}
         <VictoryAxis
           label="Date"
           style={{
@@ -42,6 +46,7 @@ const LineChart = () => {
             tickLabels: { fontSize: 8, padding: 5 }
           }}
         />
+        {/* creates the y axis with the below specifications  */}
         <VictoryAxis
           label="Attendance"
           style={{

@@ -8,6 +8,7 @@
 // import the victory chart libraries bar chart
 import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme } from 'victory';
 
+// creates a static list of data for the chart, this will be replaced with real data 
 const classData = [
   {name: "EECS 101", attendance: 100, date: "10/05"},
   {name: "EECS 268", attendance: 50, date: "10/01"},
@@ -16,6 +17,7 @@ const classData = [
   {name: "EECS 581", attendance: 80, date: "10/03"}
 ]
 
+// creates the bar chart component 
 const BarChart = () => {
   return (
     // Creates an instance of the Victory Chart, this creates the chart with the specified theme and padding

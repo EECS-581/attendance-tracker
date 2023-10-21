@@ -24,6 +24,7 @@ const ProgressChart = () => {
           ]}
           innerRadius={60}
           labelComponent={
+            // create a label for the chart with these specifications
             <VictoryLabel 
               textAnchor="middle" 
               verticalAnchor="middle" 
@@ -34,8 +35,10 @@ const ProgressChart = () => {
               }}
             />}   
         />
+        {/* creates an animation for the progress chart  */}
         <VictoryAnimation duration={1000} data={{ y: 65 }}>
           {(style) => (
+            // create a text elemetn for the %
             <p className="text-gray-900 text-2xl font-semibold absolute inset-0 flex items-center justify-center">
               {`${Math.round(style.y)}%`}
             </p>

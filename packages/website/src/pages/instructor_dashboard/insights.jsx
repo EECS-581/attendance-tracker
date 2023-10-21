@@ -2,6 +2,7 @@
 // This code creates the Insights Page for the instructor dashboard part of the website
 // Programmers name: Libby Miller
 // Date: 10/05/2023
+// Updated: 10/17/2023, Requirement 36.7 - CSS styling version 1 - added tailwind css classes for styling
 // This pages sets up the UI, there are no pre or post conditions, and no inputs to this page
 
 // import the necessary components
@@ -44,13 +45,17 @@ export default function Insights() {
             <h3 className="text-2xl md:text-3xl font-semibold text-gray-900">Attendance Per Class</h3>
             {/* Creates an instance of the BarChart component */}
             <BarChart />  
-          </div>      
+          </div>   
+          {/* creates a title for the line chart     */}
           <h4 className="mt-6 text-2xl md:text-3xl font-semibold text-gray-900">Student Attendance Over Time</h4>
           <div>
+            {/* creates an instance of the line chart  */}
             <LineChart />
           </div>
+          {/* creates a title for the progress chart  */}
           <h5 className="mt-6 text-2xl md:text-3xl font-semibold text-gray-900">Student Attendance Overall</h5>
           <div>
+            {/* creates an instance of the progress chart  */}
             <ProgressChart />
           </div>
         </div>

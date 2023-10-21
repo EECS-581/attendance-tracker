@@ -3,13 +3,19 @@
 // Programmers name: Libby Miller
 // Date: 09/20/2023
 // Updated: 10/05/2023, 10/08/2023 to implement loading
+// Updated: 10/20/2023 - Requirement 36.7 - CSS styling version 1 
 // This pages sets up the UI, there are no pre or post conditions, and no inputs to this page
 
+// import necessary libraries and components
+// import react, and usecontext methods from react
 import React, { useContext } from "react";
+// import the loading context component 
 import LoadingContext from "@/contexts/LoadingContext";
+// import navbar component 
 import Navbar from "@/components/navbar";
-
+// import footer component 
 import Footer from "@/components/footer";
+// import button component 
 import LightColorfulButton from "@/components/LightColorfulButton";
 
 // This section creates the Home component
@@ -34,7 +40,6 @@ export default function Home() {
           <Navbar />
         </div>
       </div>
-      {/* This is a temporary button for testing the loading functionality*/}
       <div className="bg-gray-100 py-12 px-4 text-center">
         {/* This section creates a header tag for the website title */}
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-none text-gray-900 mb-4">

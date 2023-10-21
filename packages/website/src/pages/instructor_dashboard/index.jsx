@@ -4,6 +4,7 @@
 // Programmers name: Libby Miller
 // Date: 09/24/2023
 // Updated: 10/05/2023 - to add insights widget
+// Updated: 10/17/2023, Requirement 36.7 - CSS styling version 1 - added tailwind css classes for styling
 // This pages sets up the UI, there are no pre or post condition to this page
 // inputs to this page will be the data points pulled from the instuctors classes
 
@@ -42,6 +43,7 @@ export default function Instructor_dashboard() {
       </div>
       {/* creates a container to hold the button */}
       <div className='max-w-4xl mx-auto p-6'>
+        <h1 className="text-3xl md:text-4xl font-semibold text-gray-900 text-center my-4">Instructor Dashboard</h1>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
           <div>
             {/* creates the view classes button/link */}

@@ -3,7 +3,8 @@
 // This code creates the Instructor's View Classes Page for the website
 // Programmers name: Libby Miller
 // Date: 09/24/2023
-// Updtaed: 09/26/2023
+// Updated: 09/26/2023
+// Updated: 10/17/2023, Requirement 36.7 - CSS styling version 1 - added tailwind css classes for styling
 // This pages sets up the UI, there are no pre or post conditions, and no inputs to this page
 
 // import the necessary components
@@ -36,20 +37,25 @@ export default function View_Classes() {
           <div className="flex space-x-4 mb-4">
             {/* creates the Add new class button, this will need to be updated once we have CRUD functionality */}
             <SolidColorButton title="Add New Class" link="/" />
-            <SolidColorButton title="Manage Classes" link="/" />
+            {/* create manage classes button  */}
+            <SolidColorButton title="Manage Classes" link="/instructor_dashboard/manage_classes" />
           </div>
           {/* creates an html list, this will need to be refactored when pulling real data */}
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* loops through the list items  */}
           {listItems.map((listItem, index) => (
+            // for each item create a list item element 
             <li key={index} className="bg-white p-4 shadow-md rounded-md">
               <div className="flex justify-between items-center">
                 <span className="text-lg font-semibold">{listItem}</span>
+                {/* create a button for updating the class  */}
                 <div className="space-x-2">
                   <LightColorfulButton
                     shadowColor="#D1CDC7"
                     title="Update"
                     link="/"
                   />
+                  {/* create a button for deleting the class  */}
                   <LightColorfulButton
                     shadowColor="#D1CDC7"
                     title="Delete"
