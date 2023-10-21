@@ -24,6 +24,7 @@ import SimpleCard from "../components/SimpleCard";
 import CameraButton from "../components/CameraButton";
 import { useWeb3ContextApp } from "../../../shared/contexts/web3ContextApp";
 import AttendanceGraphComponent from "../components/Data Visualizations/AttendanceGraphComponent";
+import DiffClassesPieChartComponent from "../components/Data Visualizations/DiffClassesPieChartComponent";
 
 const Insights = ({ navigation }) => {
   const { balance } = useWeb3ContextApp();
@@ -40,6 +41,7 @@ const Insights = ({ navigation }) => {
         </SimpleCard>
 
         <AttendanceGraphComponent />
+        <DiffClassesPieChartComponent />
       </View>
     </>
   );
