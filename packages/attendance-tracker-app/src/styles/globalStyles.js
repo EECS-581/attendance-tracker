@@ -31,7 +31,7 @@ const globalStyles = StyleSheet.create({
   cardStyle: {
     padding: 10,
     borderRadius: 5,
-    borderWidth: 2,
+    borderWidth: 3,
     borderColor: "black",
     marginBottom: 10,
     width: "90%",
@@ -45,11 +45,10 @@ const globalStyles = StyleSheet.create({
   dataVisualizationStyle: {
     padding: 10,
     borderRadius: 5,
-    borderWidth: 2,
-    borderColor: "black",
+    borderWidth: 5,
+    borderColor: "lightblue",
     marginBottom: 10,
     width: "90%",
-    backgroundColor: "#f5f5f5", // default background color, but it will be overridden if a prop is passed
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 10,

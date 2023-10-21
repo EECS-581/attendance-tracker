@@ -23,7 +23,7 @@ import globalStyles from "../styles/globalStyles"; // Importing global styles
 import SimpleCard from "../components/SimpleCard";
 import CameraButton from "../components/CameraButton";
 import { useWeb3ContextApp } from "../../../shared/contexts/web3ContextApp";
-import AttendanceGraphComponent from "../components/Data Visualizations/AttendanceGrsphComponent";
+import AttendanceGraphComponent from "../components/Data Visualizations/AttendanceGraphComponent";
 
 const Insights = ({ navigation }) => {
   const { balance } = useWeb3ContextApp();
@@ -33,9 +33,9 @@ const Insights = ({ navigation }) => {
       <CameraButton navigation={navigation} visible={true} />
       <View style={styles.container}>
         <CameraButton navigation={navigation} visible={true} />
-        <SimpleCard backgroundColor="antiquewhite">
+        <SimpleCard backgroundColor="lightblue">
           <Text style={[globalStyles.defaultFont, { fontSize: 20 }]}>
-            Current token count: {balance}
+            You currently have {balance} tokens.
           </Text>
         </SimpleCard>
 
