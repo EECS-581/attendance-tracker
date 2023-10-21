@@ -1,7 +1,10 @@
 import React from "react";
 import { View, Text, Dimensions } from "react-native";
 import { PieChart } from "react-native-chart-kit";
-import globalStyles, { themeColors } from "../../styles/globalStyles";
+import globalStyles, {
+  brightColors,
+  themeColors,
+} from "../../styles/globalStyles";
 import { diffClassesData } from "./DiffClassesData";
 
 const shuffleArray = (array) => {
@@ -13,7 +16,7 @@ const shuffleArray = (array) => {
 };
 
 const DiffClassesPieChartComponent = () => {
-  const shuffledColors = shuffleArray([...themeColors]); // Create a copy and shuffle it
+  const shuffledColors = shuffleArray([...brightColors]); // Create a copy and shuffle it
 
   const pieData = diffClassesData.map((item, index) => ({
     name: item.name,

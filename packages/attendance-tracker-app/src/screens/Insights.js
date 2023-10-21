@@ -25,6 +25,7 @@ import CameraButton from "../components/CameraButton";
 import { useWeb3ContextApp } from "../../../shared/contexts/web3ContextApp";
 import AttendanceGraphComponent from "../components/Data Visualizations/AttendanceGraphComponent";
 import DiffClassesPieChartComponent from "../components/Data Visualizations/DiffClassesPieChartComponent";
+import ProgressComponent from "../components/Data Visualizations/ProgressComponent";
 
 const Insights = ({ navigation }) => {
   const { balance } = useWeb3ContextApp();
@@ -44,6 +45,31 @@ const Insights = ({ navigation }) => {
 
         <AttendanceGraphComponent />
         <DiffClassesPieChartComponent />
+        <ProgressComponent
+          currentAmount={balance}
+          amountRequired={5}
+          companyName={"Nike"}
+        />
+        <ProgressComponent
+          currentAmount={balance}
+          amountRequired={10}
+          companyName={"Starbucks"}
+        />
+        <ProgressComponent
+          currentAmount={balance}
+          amountRequired={20}
+          companyName={"McLains"}
+        />
+        <ProgressComponent
+          currentAmount={balance}
+          amountRequired={10}
+          companyName={"Subway"}
+        />
+        <ProgressComponent
+          currentAmount={balance}
+          amountRequired={20}
+          companyName={"Spotify"}
+        />
       </ScrollView>
     </>
   );

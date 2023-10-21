@@ -64,4 +64,13 @@ export const themeColors = [
   "lightcyan",
   "lightsteelblue",
 ];
+
+export const brightColors = [
+  "slateblue",
+  "paleturquoise",
+  "mediumaquamarine",
+  "plum",
+  "palegreen",
+  "mediumorchid",
+];
 export default globalStyles;
