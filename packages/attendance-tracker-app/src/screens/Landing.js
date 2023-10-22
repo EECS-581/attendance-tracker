@@ -24,6 +24,7 @@ import LightColorfulButton from "../components/LightColorfulButton"; // Importin
 import CameraButtonContext from "../contexts/CameraButtonContext";
 import { useLoading, useSpecificLoading } from "../contexts/Loading/useLoading";
 import { GeneralLoading } from "../components/Loading";
+import { GoogleSignin } from '../components/GoogleSignin';
 
 const Landing = ({ navigation }) => {
   const { setShowCameraButton } = useContext(CameraButtonContext);
@@ -55,6 +56,7 @@ const Landing = ({ navigation }) => {
           Welcome
         </Text>
       </View>
+      <GoogleSignin/>
 
       <View style={styles.buttonContainer}>
         <LightColorfulButton

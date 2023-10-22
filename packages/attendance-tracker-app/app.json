@@ -1,5 +1,9 @@
 {
   "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "a0cd3719-afab-4d14-bd39-1baca66f6f2a"
+      },
     "name": "attendance-tracker",
     "slug": "attendance-tracker",
     "version": "1.0.0",
@@ -15,9 +19,12 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.hudsonh.attendance-tracker",
+      "scheme": "com.googleusercontent.apps.75204647996-o7dit9cetap20n7jilhbvm39mtp3oa09",
       "supportsTablet": true
     },
     "android": {
+      "package": "com.hudsonh.attendance-tracker",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -25,6 +32,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+
+    },
+    "scheme":"com.googleusercontent.apps.75204647996-o7dit9cetap20n7jilhbvm39mtp3oa09"
   }
+}
 }

@@ -1,11 +1,16 @@
 {
     "name": "attendance-tracker",
     "private": true,
-    
-        "workspaces": {
-          "packages": ["packages/*"],
-          "nohoist": ["**/expo", "**/expo/**"]
-        }
-      
-  }
-  
+    "workspaces": {
+        "packages": [
+            "packages/*"
+        ],
+        "nohoist": [
+            "**/expo",
+            "**/expo/**"
+        ]
+    },
+    "dependencies": {
+        "expo-application": "^5.4.0"
+    }
+}
