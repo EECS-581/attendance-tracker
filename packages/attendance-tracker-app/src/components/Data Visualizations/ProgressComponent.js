@@ -1,3 +1,32 @@
+/**
+ * CouponCard.js
+ *
+ * This component is a widget displaying progress towards a given marker
+ *
+ * Programmer: Emma Nasseri
+ * Created on: 10/20/2023
+ * Revised on: 10/20/2023
+ *
+ * Preconditions:
+ * - `currentAmount`
+ * - `amountRequired`
+ * - `companyName`
+ *
+ *
+ *
+ * Error and exception conditions:
+ * - N/A
+ *
+ * Side effects:
+ * - None.
+ *
+ * Invariants:
+ * -
+ *
+ * Known faults:
+ * - None.
+ */
+
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import globalStyles, { brightColors } from "../../styles/globalStyles";

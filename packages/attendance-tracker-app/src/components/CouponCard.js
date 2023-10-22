@@ -1,5 +1,5 @@
 /**
- * SimpleCard.js
+ * CouponCard.js
  *
  * This component is a widget to be displayed on the Dashboard with insights about the user's
  *
@@ -8,19 +8,24 @@
  * Revised on: 10/20/2023
  *
  * Preconditions:
- * - `style` prop should be a valid React Native style object.
+ * - `company`
+ * - `details`
+ * - `offer`
+ * - `expirydate`
+ * - `terms`
+ * - `logo`
+ * - `backgroundColor`
  *
- * Postconditions:
- * - None
+ *
  *
  * Error and exception conditions:
- * - If `navigation` or `style` prop is not provided, the component may not render correctly.
+ * - N/A
  *
  * Side effects:
  * - None.
  *
  * Invariants:
- * - The images used in this component should exist in the specified path.
+ * -
  *
  * Known faults:
  * - None.
