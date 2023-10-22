@@ -27,7 +27,13 @@ const Redeem = ({ navigation }) => {
   // Render the Progress screen UI
   return (
     <>
-      <CameraButton navigation={navigation} visible={true} />
+      <CameraButton
+        navigation={navigation}
+        visible={true}
+        onPress={() => {
+          navigation.navigate("Scan");
+        }}
+      />
       <View style={styles.container}>
         <Text style={[globalStyles.defaultFont, { fontSize: 24 }]}>Redeem</Text>
         <FlatList

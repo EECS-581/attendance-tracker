@@ -1,3 +1,30 @@
+/**
+ * AttendanceGraphComponent.js
+ *
+ * This component is a widget to visualize attendance data
+ *
+ * Programmer: Emma Nasseri
+ * Created on: 10/20/2023
+ * Revised on: 10/20/2023
+ *
+ * Preconditions:
+ * -
+ *
+ *
+ *
+ * Error and exception conditions:
+ * - N/A
+ *
+ * Side effects:
+ * - None.
+ *
+ * Invariants:
+ * -
+ *
+ * Known faults:
+ * - None.
+ */
+
 import React from "react";
 import { View, Text, Dimensions } from "react-native";
 import { LineChart } from "react-native-chart-kit";

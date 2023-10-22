@@ -30,7 +30,13 @@ const Dashboard = ({ navigation }) => {
 
   return (
     <>
-      <CameraButton navigation={navigation} visible={true} />
+      <CameraButton
+        navigation={navigation}
+        visible={true}
+        onPress={() => {
+          navigation.navigate("Scan");
+        }}
+      />
       <View style={globalStyles.container}>
         <QRScanner navigation={navigation} style={globalStyles.widgetStyle} />
 
