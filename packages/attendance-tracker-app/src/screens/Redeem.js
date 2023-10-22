@@ -16,11 +16,12 @@
  * Invariants: N/A
  * Any known faults: N/A
  */
-
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, FlatList } from "react-native";
 import globalStyles from "../styles/globalStyles"; // Importing global styles
 import CameraButton from "../components/CameraButton";
+import CouponCard from "../components/CouponCard"; // Assuming you have this component
+import TempCouponData from "../components/TempCouponData";
 
 const Redeem = ({ navigation }) => {
   // Render the Progress screen UI
@@ -29,9 +30,19 @@ const Redeem = ({ navigation }) => {
       <CameraButton navigation={navigation} visible={true} />
       <View style={styles.container}>
         <Text style={[globalStyles.defaultFont, { fontSize: 24 }]}>Redeem</Text>
-        <Image
-          source={require("../../assets/images/redeemtemp.png")}
-          style={styles.image}
+        <FlatList
+          data={TempCouponData}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <CouponCard
+              company={item.company}
+              details={item.details}
+              offer={item.offer}
+              expiryDate={item.expiryDate}
+              terms={item.terms}
+              logo={item.logo}
+            />
+          )}
         />
       </View>
     </>

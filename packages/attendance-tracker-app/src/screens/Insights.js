@@ -18,47 +18,71 @@
  */
 
 import React from "react";
-import { View, Text, StyleSheet, Button, Image } from "react-native";
-import globalStyles from "../styles/globalStyles"; // Importing global styles
+import { View, Text, StyleSheet, ScrollView } from "react-native";
+import globalStyles from "../styles/globalStyles";
 import SimpleCard from "../components/SimpleCard";
 import CameraButton from "../components/CameraButton";
 import { useWeb3ContextApp } from "../../../shared/contexts/web3ContextApp";
+import AttendanceGraphComponent from "../components/Data Visualizations/AttendanceGraphComponent";
+import DiffClassesPieChartComponent from "../components/Data Visualizations/DiffClassesPieChartComponent";
+import ProgressComponent from "../components/Data Visualizations/ProgressComponent";
 
 const Insights = ({ navigation }) => {
-  const {balance}= useWeb3ContextApp()
-  // Render the Insights screen UI
+  const { balance } = useWeb3ContextApp();
+
   return (
     <>
       <CameraButton navigation={navigation} visible={true} />
-      <View style={styles.container}>
-        <CameraButton navigation={navigation} visible={true} />
-        <SimpleCard backgroundColor="antiquewhite">
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.contentContainer}
+      >
+        <SimpleCard backgroundColor="lightblue">
           <Text style={[globalStyles.defaultFont, { fontSize: 20 }]}>
-            Current token count: {balance}
+            You currently have {balance} tokens.
           </Text>
         </SimpleCard>
 
-        <Image
-          source={require("../../assets/images/tempinsight1.png")}
-          style={styles.image}
+        <AttendanceGraphComponent />
+        <DiffClassesPieChartComponent />
+        <ProgressComponent
+          currentAmount={balance}
+          amountRequired={5}
+          companyName={"Nike"}
         />
-
-        <Image
-          source={require("../../assets/images/tempinsight2.png")}
-          style={styles.image}
+        <ProgressComponent
+          currentAmount={balance}
+          amountRequired={10}
+          companyName={"Starbucks"}
         />
-      </View>
+        <ProgressComponent
+          currentAmount={balance}
+          amountRequired={20}
+          companyName={"McLains"}
+        />
+        <ProgressComponent
+          currentAmount={balance}
+          amountRequired={10}
+          companyName={"Subway"}
+        />
+        <ProgressComponent
+          currentAmount={balance}
+          amountRequired={20}
+          companyName={"Spotify"}
+        />
+      </ScrollView>
     </>
   );
 };
 
-// Styling for the Insights component
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#f5f5f5",
+  },
+  contentContainer: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f5f5f5",
   },
   title: {
     fontSize: 24,

@@ -33,12 +33,14 @@
  * 
  */
 
-import {ethers } from 'ethers'; // Importing necessary components and functions from ethers.js
- // Loading environment variables
+import { ethers } from "ethers"; // Importing necessary components and functions from ethers.js
+// Loading environment variables
+
 
 import { createContext, useContext, useState, useEffect, useCallback } from 'react'; // Importing React hooks: createContext, useContext, useState, useEffect, useCallback
 const AttendanceToken = require('../abi/AttendanceToken.json'); // Importing ABI of AttendanceToken contract
 const Classes = require('../abi/Classes.json'); // Importing ABI of Classes contract
+
 
 const Web3Context = createContext(); // Creating a new React context named Web3Context.
 
@@ -49,20 +51,21 @@ export const useWeb3Context = () => {
 
 // Web3Provider component provides the Web3Context to its children components.
 export const Web3Provider = ({ children }) => {
-    // Initializing states.
-    const [provider, setProvider] = useState(
-      process.env.NEXT_PUBLIC_INFURA_URL 
-        ? new ethers.providers.JsonRpcProvider(process.env.NEXT_PUBLIC_INFURA_URL)
-        : null
-    );
-    
-    const [signer, setSigner] = useState(
-      process.env.NEXT_PUBLIC_PRIVATE_KEY && provider 
-        ? new ethers.Wallet(process.env.NEXT_PUBLIC_PRIVATE_KEY, provider)
-        : null
-    );
-    const [AttendanceTokenContract, setAttendanceTokenContract] = useState(null);
-    const [balance, setBalance] = useState('loading...');
+  // Initializing states.
+  const [provider, setProvider] = useState(
+    process.env.NEXT_PUBLIC_INFURA_URL
+      ? new ethers.providers.JsonRpcProvider(process.env.NEXT_PUBLIC_INFURA_URL)
+      : null
+  );
+
+  const [signer, setSigner] = useState(
+    process.env.NEXT_PUBLIC_PRIVATE_KEY && provider
+      ? new ethers.Wallet(process.env.NEXT_PUBLIC_PRIVATE_KEY, provider)
+      : null
+  );
+  const [AttendanceTokenContract, setAttendanceTokenContract] = useState(null);
+  const [balance, setBalance] = useState("loading...");
+
 
     const attendeesAddress ="0xFb8e15EdE3a4013Bb3d0b92b00505eB7c0a49EE5"
     

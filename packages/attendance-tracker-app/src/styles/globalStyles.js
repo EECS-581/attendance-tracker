@@ -31,7 +31,7 @@ const globalStyles = StyleSheet.create({
   cardStyle: {
     padding: 10,
     borderRadius: 5,
-    borderWidth: 2,
+    borderWidth: 3,
     borderColor: "black",
     marginBottom: 10,
     width: "90%",
@@ -41,6 +41,36 @@ const globalStyles = StyleSheet.create({
     borderRadius: 10,
     flexDirection: "row",
   },
+
+  dataVisualizationStyle: {
+    padding: 10,
+    borderRadius: 5,
+    borderWidth: 5,
+    borderColor: "skyblue",
+    marginBottom: 10,
+    width: "90%",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 10,
+  },
 });
 
+export const themeColors = [
+  "powderblue",
+  "lightblue",
+  "lavender",
+  "antiquewhite",
+  "lightpink",
+  "lightcyan",
+  "lightsteelblue",
+];
+
+export const brightColors = [
+  "slateblue",
+  "paleturquoise",
+  "mediumaquamarine",
+  "plum",
+  "palegreen",
+  "mediumorchid",
+];
 export default globalStyles;
