@@ -32,7 +32,13 @@ const Insights = ({ navigation }) => {
 
   return (
     <>
-      <CameraButton navigation={navigation} visible={true} />
+      <CameraButton
+        navigation={navigation}
+        visible={true}
+        onPress={() => {
+          navigation.navigate("Scan");
+        }}
+      />
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
