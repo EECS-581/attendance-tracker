@@ -1,21 +1,37 @@
 import React, { useState } from 'react';
 import QRCode from 'qrcode.react';
+import { useWeb3Context } from '../../../shared/contexts/web3Context';
 
-const generateURLWithClassID = (classId) => {
-    
-    return `localhost:3000/attend?classId=${classId}`;
+const generateURLWithSessionID = (sessionId) => {
+    return `localhost:3000/attend?sessionId=${sessionId}`;
 }
 
 function QRComponent() {
+    const {createClassSession, createClass} = useWeb3Context();
     const [classId, setClassId] = useState(''); 
+    const [className, setClassName] = useState('');
+    const [sessionId, setSessionId] = useState('');
     const [url, setUrl] = useState(''); 
 
     const handleClassIdChange = (event) => {
         setClassId(event.target.value);
     }
 
-    const handleGenerateQR = () => {
-        const generatedUrl = generateURLWithClassID(classId);
+    const handleClassNameChange = (event) => {
+        setClassName(event.target.value);
+    }
+
+    const handleSessionIdChange = (event) => {
+        setSessionId(event.target.value);
+    }
+
+    const handleCreateClass = async () => {
+        await createClass(className, classId);
+    }
+
+    const handleCreateSession = async () => {
+        await createClassSession(className, sessionId);
+        const generatedUrl = generateURLWithSessionID(sessionId);
         console.log(generatedUrl);
         setUrl(generatedUrl);
     }
@@ -23,6 +39,13 @@ function QRComponent() {
     return (
         <div>
             <div>
+                <label htmlFor="className">Enter Class Name: </label>
+                <input
+                    type="text"
+                    id="className"
+                    value={className}
+                    onChange={handleClassNameChange}
+                />
                 <label htmlFor="classId">Enter Class ID: </label>
                 <input
                     type="text"
@@ -30,7 +53,16 @@ function QRComponent() {
                     value={classId}
                     onChange={handleClassIdChange}
                 />
-                <button onClick={handleGenerateQR}>Generate QR Code</button>
+                <button onClick={handleCreateClass}>Create Class</button>
+
+                <label htmlFor="sessionId">Enter Session ID: </label>
+                <input
+                    type="text"
+                    id="sessionId"
+                    value={sessionId}
+                    onChange={handleSessionIdChange}
+                />
+                <button onClick={handleCreateSession}>Create Session & Generate QR Code</button>
             </div>
             {url && (
                 <>

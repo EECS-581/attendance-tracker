@@ -2,6 +2,7 @@
 // This code creates the Business Dashboard Page for the website
 // Programmers name: Libby Miller
 // Date: 09/24/2023
+// Updated: 10/17/2023, Requirement 36.7 - CSS styling version 1 - added tailwind css classes for styling
 // This pages sets up the UI, there are no pre or post conditions, and no inputs to this page
 
 // import necessary components
@@ -15,24 +16,33 @@ import SolidColorButton from "@/components/SolidColorButton";
 export default function Business_dashboard() {
   return (
     // create main html to hold the page
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      {/* create an instance of Navbar */}
-      <Navbar />
-      {/* create a container to hold the dropdown for the organizations */}
-      <div className="">
-        {/* creates a label for the dropdown */}
-        <label for="orgs">View Organizations: </label>
-        {/* creates the dropdown items, this will eventually be pulled in  */}
-        <select className="block mt-4" name="orgs">
-          <option value="ku">University of Kansas</option>
-          <option value="">Lawrence Public Schools</option>
-          <option value="">Others</option>
-        </select>
+    <main className="w-full overflow-hidden">
+      <div className="py-6">
+        <div className="container mx-auto">
+        {/* This adds the navbar component to the page */}
+          <Navbar />
+        </div>
       </div>
-
-      <SolidColorButton title="Manage Coupons" link="/" />
-      {/* creates an instance of the footer component */}
-      <Footer />
+      {/* create a container to hold the dropdown for the organizations */}
+      <div className="container mx-auto mt-6 px-4">
+        <h1 className="text-3xl md:text-4xl font-semibold text-gray-900 text-center my-4">Business Dashboard</h1>
+        <div className="mb-4 max-w-sm">
+          {/* creates a label for the dropdown */}
+          <label htmlFor="orgs" className="text-lg font-semibold">View Organizations: </label>
+          {/* creates the dropdown items, this will eventually be pulled in  */}
+          <select className="block mt-2 border border-gray-300 rounded p-2 w-full" name="orgs" id="orgs">
+            <option value="ku">University of Kansas</option>
+            <option value="lps">Lawrence Public Schools</option>
+            <option value="others">Others</option>
+          </select>
+        </div>
+      <SolidColorButton title="Manage Coupons" link="/business_dashboard/manage_coupons" />
+      </div>
+      {/* This section creates a container to hold the footer */}
+      <div className="py-4 text-center text-sm text-gray-600">
+        {/* This creates an instance of the footer component */}
+        <Footer />
+      </div> 
     </main>
   );
 }

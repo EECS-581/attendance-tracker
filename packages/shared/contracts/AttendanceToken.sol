@@ -14,7 +14,7 @@ contract AttendanceToken is ERC20 {
     address public owner;
 
     // Define an event for token minting
-    event TokensMinted(address indexed to, uint256 amount, uint256 time);
+    event TokensMinted(address indexed to, uint256 amount, uint256 time, uint256 classSessionID);
 
     // Constructor: AttendanceToken
     // Description: Initializes the contract and sets the owner to the sender's address.
@@ -41,10 +41,10 @@ contract AttendanceToken is ERC20 {
     // Return: True if the minting is successful
     // Error and Exception Conditions: Throws an error if _to is the zero address.
     // Side Effects: Minting new tokens
-    function mint(address _to, uint256 _amount) public onlyOwner returns (bool) {
+    function mint(address _to, uint256 _amount, uint256 _classSessionID) public onlyOwner returns (bool) {
         require(_to != address(0), "Cannot mint to account 0x"); //require statement
         _mint(_to, _amount); //mints to the amount
-        emit TokensMinted(_to, _amount, block.timestamp); // Emit the TokensMinted event
+        emit TokensMinted(_to, _amount, block.timestamp, _classSessionID); // Emit the TokensMinted event
         return true; //return true if successful
     }
 

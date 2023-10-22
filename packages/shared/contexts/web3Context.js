@@ -36,14 +36,11 @@
 import { ethers } from "ethers"; // Importing necessary components and functions from ethers.js
 // Loading environment variables
 
-import {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  useCallback,
-} from "react"; // Importing React hooks: createContext, useContext, useState, useEffect, useCallback
-const AttendanceToken = require("../abi/AttendanceToken.json"); // Importing ABI of AttendanceToken contract
+
+import { createContext, useContext, useState, useEffect, useCallback } from 'react'; // Importing React hooks: createContext, useContext, useState, useEffect, useCallback
+const AttendanceToken = require('../abi/AttendanceToken.json'); // Importing ABI of AttendanceToken contract
+const Classes = require('../abi/Classes.json'); // Importing ABI of Classes contract
+
 
 const Web3Context = createContext(); // Creating a new React context named Web3Context.
 
@@ -69,62 +66,84 @@ export const Web3Provider = ({ children }) => {
   const [AttendanceTokenContract, setAttendanceTokenContract] = useState(null);
   const [balance, setBalance] = useState("loading...");
 
-  const attendeesAddress = "0xFb8e15EdE3a4013Bb3d0b92b00505eB7c0a49EE5";
 
-  // Define an asynchronous function to get the balance of the AttendanceToken.
-  async function getAttendanceBalance(address) {
-    let AttendanceTokenContract = new ethers.Contract(
-      "0x0B8788aFe6b45B2D9e71534770c403cA84a51359",
-      AttendanceToken.abi,
-      signer
-    );
-    const balance = await AttendanceTokenContract.balanceOf(address); // Fetching balance of an address
-    let formattedBalance = parseFloat(balance);
-    console.log(formattedBalance);
-    setBalance(formattedBalance); // Setting balance state.
-  }
+    const attendeesAddress ="0xFb8e15EdE3a4013Bb3d0b92b00505eB7c0a49EE5"
+    
+    // Define an asynchronous function to get the balance of the AttendanceToken.
+    async function getAttendanceBalance(address) {
+      let AttendanceTokenContract= new ethers.Contract('0x918C774D35e53e826fdF5cF8d6fCc898FDA8b1A6', AttendanceToken.abi, signer);
+      const balance = await AttendanceTokenContract.balanceOf(address); // Fetching balance of an address
+      let formattedBalance= parseFloat(balance)
+      console.log(formattedBalance)
+      setBalance(formattedBalance); // Setting balance state.
+    }
+    
+    // Define an asynchronous function to mint AttendanceToken.
+    async function mintAttendanceToken(address, amount, classSessionID) {
+      // Creating a contract instance.
+      let AttendanceTokenContract= new ethers.Contract('0x918C774D35e53e826fdF5cF8d6fCc898FDA8b1A6', AttendanceToken.abi, signer);
+      setAttendanceTokenContract(AttendanceTokenContract); // Setting the AttendanceTokenContract state.
+      
+      console.log("Minting Attendance Token"); // Logging the start of the minting process.
+    
+      const tx = await AttendanceTokenContract.mint(address, amount, classSessionID); // Minting tokens.
+      
+      console.log(tx); // Logging transaction object.
+      await tx.wait(); // Waiting for the transaction to be mined.
+      
+      console.log("Minted Attendance Token"); // Logging the end of the minting process.
+    }
+    
+    // Define an asynchronous function as a test function to perform minting and fetching balance.
+    async function mintTest() {
+      console.log(provider, signer, AttendanceTokenContract); // Logging provider, signer, and AttendanceTokenContract states.
+      // Minting tokens and fetching the balance for a specific address.
+      await mintAttendanceToken('0x06e6620C67255d308A466293070206176288A67B', 100, 100); 
+      await getAttendanceBalance('0x06e6620C67255d308A466293070206176288A67B');
+    }
 
-  // Define an asynchronous function to mint AttendanceToken.
-  async function mintAttendanceToken(address, amount) {
-    // Creating a contract instance.
-    let AttendanceTokenContract = new ethers.Contract(
-      "0x0B8788aFe6b45B2D9e71534770c403cA84a51359",
-      AttendanceToken.abi,
-      signer
-    );
-    setAttendanceTokenContract(AttendanceTokenContract); // Setting the AttendanceTokenContract state.
+    async function createClass(className, classId) {
+      // Creating a contract instance.
+      let ClassesContract= new ethers.Contract('0x1d382F4583A1C14A4b960FB32A0722AE7f05b3fd', Classes.abi, signer);
+      
+      console.log("Creating Class"); // Logging the start of the minting process.
+    
+      const tx = await ClassesContract.enrollClass(className, classId); // Minting tokens.
+      
+      console.log(tx); // Logging transaction object.
+      await tx.wait(); // Waiting for the transaction to be mined.
+      
+      console.log("Created Class"); // Logging the end of the minting process.
 
-    console.log("Minting Attendance Token"); // Logging the start of the minting process.
+    }
 
-    const tx = await AttendanceTokenContract.mint(address, amount); // Minting tokens.
+    async function createClassSession(className, sessionId) {
+      // Creating a contract instance.
+      let ClassesContract= new ethers.Contract('0x1d382F4583A1C14A4b960FB32A0722AE7f05b3fd', Classes.abi, signer);
+      
+      console.log("Creating Class Session"); // Logging the start of the minting process.
+    
+      const tx = await ClassesContract.enrollClassSession(className, sessionId); // Minting tokens.
+      
+      console.log(tx); // Logging transaction object.
+      await tx.wait(); // Waiting for the transaction to be mined.
+      
+      console.log("Created Class Session"); // Logging the end of the minting process.
 
-    console.log(tx); // Logging transaction object.
-    await tx.wait(); // Waiting for the transaction to be mined.
-
-    console.log("Minted Attendance Token"); // Logging the end of the minting process.
-  }
-
-  // Define an asynchronous function as a test function to perform minting and fetching balance.
-  async function mintTest() {
-    console.log(provider, signer, AttendanceTokenContract); // Logging provider, signer, and AttendanceTokenContract states.
-    // Minting tokens and fetching the balance for a specific address.
-    await mintAttendanceToken(
-      "0x06e6620C67255d308A466293070206176288A67B",
-      100
-    );
-    await getAttendanceBalance("0x06e6620C67255d308A466293070206176288A67B");
-  }
-
-  // Defining the context value.
-  const value = {
-    provider,
-    signer,
-    getAttendanceBalance,
-    mintTest,
-    balance,
-    mintAttendanceToken,
-  };
-
-  // Returning the Web3Context.Provider with value and children props.
-  return <Web3Context.Provider value={value}>{children}</Web3Context.Provider>;
+    }
+    
+    // Defining the context value.
+    const value = {
+      provider,
+      signer,
+      getAttendanceBalance,
+      mintTest,
+      balance,
+      mintAttendanceToken,
+      createClassSession,
+      createClass,
+    };
+    
+    // Returning the Web3Context.Provider with value and children props.
+    return <Web3Context.Provider value={value}>{children}</Web3Context.Provider>;
 };

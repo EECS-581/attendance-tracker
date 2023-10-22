@@ -53,7 +53,9 @@ contract Wallet {
     }
 
     function buyCoupon(uint256 _couponID) public approvedsigner returns(bool){
-        (, uint256 price, , ) = businessesContract.getCouponDetails(_couponID);
+
+        (, uint256 price, , ) = businessesContract.getCouponDetails(_couponID); // Gets the coupon
+
         tokenContract.approve(address(businessesContract), price);
         businessesContract.buyCoupon(_couponID);
         return true;    
