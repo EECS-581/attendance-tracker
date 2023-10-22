@@ -117,7 +117,9 @@ contract Attendees {
         return true; //returns true if successful 
     }
 
-    function getOrganizationToId(string memory _name)public view returns(uint256){
-        return organizationToID[_name];
-    }
+    // Function to retrieve the unique identifier (ID) associated with an organization's name
+function getOrganizationToId(string memory _name) public view returns (uint256) {
+    return organizationToID[_name]; // Returns the ID corresponding to the provided organization name
+}
+
 }

@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: MIT
+// Specifies the Solidity compiler version to be used (greater than or equal to 0.8.0)
 pragma solidity ^0.8.0;
 
 // Import interfaces
-import "./IAttendanceToken.sol";
-import "./IAttendees.sol";
+import "./IAttendanceToken.sol"; // Import the IAttendanceToken interface
+import "./IAttendees.sol"; // Import the IAttendees interface
 
-
+// Define a contract named "Businesses"
 contract Businesses {
     // State variables
     address public owner; // Stores the owner's Ethereum address
@@ -25,17 +26,20 @@ contract Businesses {
     // Define an event for coupon purchase
     event CouponPurchased(uint256 couponID, address buyer, uint256 time);
 
+    // Constructor function with parameters to initialize contract state
     constructor(address _addressToken, address _addressAttendee) {
         owner = msg.sender; // Sets the contract creator as the owner
         attendanceTokenContract = IAttendanceToken(_addressToken); // Creates a callable contract instance for Attendance Token
         attendeesContract = IAttendees(_addressAttendee); // Creates a callable contract instance for Attendees
     }
 
+    // Modifier to restrict certain functions to be callable only by the owner
     modifier onlyOwner() {
         require(msg.sender == owner, "You are not the owner of this contract"); // Requires the caller to be the owner
         _; // Continue execution
     }
 
+    // Struct to represent a coupon
     struct Coupon {
         uint256 couponID;
         uint256 price;
@@ -44,27 +48,35 @@ contract Businesses {
         mapping(uint256 => bool) organizationBanList;
     }
 
+    // Counter to keep track of business ID
     uint256 public idCounter = 1;
 
+    // Counter to keep track of coupon IDs
     uint256 couponIDCounter = 1;
 
+    // Mapping of business name to business ID
     mapping(string => uint256) private businessToID;
 
+    // Mapping of business ID to coupon IDs
     mapping(uint256 => uint256[]) private businessToCouponIDs;
 
+    // Mapping of attendee address to coupon IDs
     mapping(address => uint256[]) private attendeeToCouponIDs;
 
+    // Mapping of coupon ID to coupon struct
     mapping(uint256 => Coupon) private couponIDToCoupon;
 
+    // Function to enroll a business
     function enrollBusiness(string memory _businessName) onlyOwner public returns (uint256) {
         require(businessToID[_businessName] == 0, "This business has already been enrolled");
         businessToID[_businessName] = idCounter; // Sets the ID for the business
-        BusinessesList.push(_businessName); //adds to lists of businesses
+        BusinessesList.push(_businessName); // Adds to the list of businesses
         idCounter++; // Increments the counter for the next business
         emit BusinessEnrolled(_businessName, businessToID[_businessName], block.timestamp); // Emit the BusinessEnrolled event
         return businessToID[_businessName]; // Return the business ID
     }
 
+    // Function to create a coupon
     function createCoupon(string memory _businessName, uint256 _price, uint256 _supply, string memory _description, string[] memory _banList) onlyOwner public returns (uint256) {
         uint256 businessID = businessToID[_businessName]; // Gets the business ID
         require(businessID != 0, "This business has not been registered");
@@ -84,46 +96,53 @@ contract Businesses {
         return coupon.couponID; // Return the coupon ID
     }
 
+    // Function to change the Attendee contract address
     function changeAttendeeContract(address _newaddress) public onlyOwner returns (bool) {
         IAttendees newContract = IAttendees(_newaddress); // Creates a new contract instance
         attendeesContract = newContract; // Updates the Attendees contract address
         return true; // Returns true to indicate success
     }
 
+    // Function to change the Attendance Token contract address
     function changeTokenContract(address _newaddress) public onlyOwner returns (bool) {
         IAttendanceToken newContract = IAttendanceToken(_newaddress); // Creates a new contract instance
         attendanceTokenContract = newContract; // Updates the Attendance Token contract address
         return true; // Returns true to indicate success
     }
 
+    // Function to get coupon IDs associated with a business
     function getBusinessCoupons(string memory _businessname) public view returns (uint[] memory) {
         uint256 id = businessToID[_businessname]; // Gets the business ID
         return businessToCouponIDs[id]; // Returns an array of coupon IDs associated with the business
     }
 
-    function getBusinessesList()public view returns(string[] memory){
+    // Function to get the list of enrolled businesses
+    function getBusinessesList() public view returns (string[] memory) {
         return BusinessesList;
     }
 
+    // Function to get the business ID by business name
     function getBusinessToID(string memory _businessName) public view returns (uint256) {
         return businessToID[_businessName];
     }
 
+    // Function to get coupon IDs associated with a business by business ID
     function getBusinessToCouponIDs(uint256 _businessID) public view returns (uint256[] memory) {
         return businessToCouponIDs[_businessID];
     }
 
+    // Function to get coupon IDs associated with an attendee by address
     function getAttendeeToCouponIDs(address _address) public view returns (uint256[] memory) {
         return attendeeToCouponIDs[_address];
     }
 
+    // Function to get coupon details by coupon ID
     function getCouponIDToCoupon(uint256 _couponID) public view returns (uint256, uint256, string memory, uint256) {
         Coupon storage coupon = couponIDToCoupon[_couponID];
         return (coupon.couponID, coupon.price, coupon.description, coupon.supplyLeft);
     }
 
- 
-
+    // Function to buy a coupon
     function buyCoupon(uint256 _couponID) public returns (bool) {
         Coupon storage coupon = couponIDToCoupon[_couponID]; // Gets the coupon
         uint256 price = coupon.price; // Gets the coupon price
@@ -140,6 +159,7 @@ contract Businesses {
         return true; // Returns true to indicate success
     }
 
+    // Function to redeem a coupon
     function redeemCoupon(uint256 _couponID) public returns (bool) {
         uint256[] storage usersCoupons = attendeeToCouponIDs[msg.sender]; // Gets the caller's coupon IDs
         for (uint256 i = 0; i < usersCoupons.length; i++) {
@@ -156,11 +176,9 @@ contract Businesses {
         return false; // Returns false to indicate failure
     }
 
-
+    // Function to get coupon details by coupon ID
     function getCouponDetails(uint256 _couponID) public view returns (uint256, uint256, uint256, string memory) {
         Coupon storage coupon = couponIDToCoupon[_couponID];
         return (coupon.couponID, coupon.price, coupon.supplyLeft, coupon.description);
     }
-
-
 }
