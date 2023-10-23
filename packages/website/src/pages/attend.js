@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useWeb3Context } from '../../../shared/contexts/web3Context';
-import {useGraphContext} from "../../../shared/contexts/graphContext"
+import { useWeb3Context } from '../contexts/web3Context';
+import {useGraphContext} from "../contexts/graphContext"
 
 function AttendPage() {
   const router = useRouter();

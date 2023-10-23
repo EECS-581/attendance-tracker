@@ -32,7 +32,7 @@ import { createContext, useContext, useState, useEffect } from "react"; // Impor
 
 import { Web3Context, useWeb3Context } from "./web3Context"; // Importing Web3Context and useWeb3Context from web3Context file.
 import { ethers } from "ethers"; // Importing ethers from ethers.js library.
-import { ipfs } from "../db/ipfs.js"; // Importing IPFS instance from local file.
+import { ipfs } from "../db/ipfs"; // Importing IPFS instance from local file.
 
 export const useDbContext = () => {
   return useContext(dbContext); // Using React's useContext hook to provide dbContext.
