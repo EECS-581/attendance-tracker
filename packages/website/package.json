@@ -13,7 +13,6 @@
     "dotenv": "^16.3.1",
     "ethers": "^6.7.1",
     "ipfs-http-client": "^60.0.1",
-    "lottie-web": "^5.12.2",
     "next": "13.4.19",
     "postcss": "8.4.29",
     "qrcode.react": "^3.1.0",
