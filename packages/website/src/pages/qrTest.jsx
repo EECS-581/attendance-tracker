@@ -13,6 +13,7 @@ function QRComponent() {
     const [sessionId, setSessionId] = useState('');
     const [url, setUrl] = useState(''); 
 
+
     const handleClassIdChange = (event) => {
         setClassId(event.target.value);
     }

@@ -40,8 +40,7 @@
  */
 
 import React from "react"; // Importing React from react.
-import Lottie from "react-lottie"; // Importing Lottie for rendering animations.
-import generalLoading from "../../assets/generalLoading.json"; // Importing the animation data.
+// Importing the animation data.
 
 function Loading() {
   // Setting up default options for the Lottie animation.
@@ -71,7 +70,6 @@ function Loading() {
   // Rendering the Lottie animation inside a styled container.
   return (
     <div style={containerStyle}>
-      <Lottie options={defaultOptions} height={200} width={200} />
     </div>
   );
 }

@@ -33,7 +33,7 @@
  * 
  */
 
-import { ethers } from "ethers"; // Importing necessary components and functions from ethers.js
+import { ethers, providers } from "ethers"; // Importing necessary components and functions from ethers.js
 // Loading environment variables
 
 
@@ -104,6 +104,7 @@ export const Web3Provider = ({ children }) => {
 
     async function createClass(className, classId) {
       // Creating a contract instance.
+      console.log(signer)
       let ClassesContract= new ethers.Contract('0x1d382F4583A1C14A4b960FB32A0722AE7f05b3fd', Classes.abi, signer);
       
       console.log("Creating Class"); // Logging the start of the minting process.
