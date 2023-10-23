@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import QRCode from 'qrcode.react';
-import { useWeb3Context } from '../../../shared/contexts/web3Context';
+import { useWeb3Context } from '../contexts/web3Context';
 
 const generateURLWithSessionID = (sessionId) => {
     return `localhost:3000/attend?sessionId=${sessionId}`;
@@ -12,6 +12,7 @@ function QRComponent() {
     const [className, setClassName] = useState('');
     const [sessionId, setSessionId] = useState('');
     const [url, setUrl] = useState(''); 
+
 
     const handleClassIdChange = (event) => {
         setClassId(event.target.value);

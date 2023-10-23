@@ -35,10 +35,10 @@ import * as React from "react"; // Importing everything as React from react
 import { useRouter } from "next/router"; // Importing useRouter hook from next/router
 
 import "@/styles/globals.css"; // Importing global styles
-import { Web3Provider } from "@shared/contexts/web3Context.js"; // Importing Web3Provider from the shared contexts
-import { DbProvider } from "@shared/contexts/dbContext.js"; // Importing DbProvider from the shared contexts
-import LoadingProvider from "@/contexts/LoadingProvider";
-import {GraphProvider} from "@shared/contexts/graphContext.js"
+import { Web3Provider } from "../contexts/web3Context.js"; // Importing Web3Provider from the shared contexts
+import { DbProvider } from "../contexts/dbContext" // Importing DbProvider from the shared contexts
+import LoadingProvider from "../contexts/LoadingProvider";
+import {GraphProvider} from "../contexts/graphContext.js"
 
 // The MyApp component which receives Component and pageProps as props.
 function MyApp({ Component, pageProps }) {
