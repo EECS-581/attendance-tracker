@@ -3,6 +3,7 @@ const path = require('path');
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  trailingSlash: true,
   webpack: (config, { defaultLoaders }) => {
     config.resolve.alias['@shared'] = path.join(__dirname, '../shared');
 
