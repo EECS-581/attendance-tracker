@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import QRCode from 'qrcode.react';
 import { useWeb3Context } from '../contexts/web3Context';
 
+import GoogleSigninButton from '../components/GoogleSigninButton';
+
+
 const generateURLWithSessionID = (sessionId) => {
     return `localhost:3000/attend?sessionId=${sessionId}`;
 }
@@ -38,8 +41,13 @@ function QRComponent() {
     }
 
     return (
+        <>
+        
+       
         <div>
+        <GoogleSigninButton />
             <div>
+                
                 <label htmlFor="className">Enter Class Name: </label>
                 <input
                     type="text"
@@ -72,7 +80,9 @@ function QRComponent() {
                 </>
             )}
         </div>
+        </>
     );
+    
 }
 
 export default QRComponent;
