@@ -22,6 +22,7 @@ type Class @entity {
   name: String!
   classId: BigInt!
   timestamp: Int!
+  teacher: Bytes!
 }
 
 type ClassSession @entity {
@@ -30,12 +31,14 @@ type ClassSession @entity {
   classId: BigInt!
   sessionId: BigInt!
   timestamp: Int!
+  teacher: Bytes!
 }
 
 type Wallet @entity {
     id: ID!            
     timestamp: BigInt!           
-    authId: String!             
+    authId: String!
+    userType: String!             
 }
 
 

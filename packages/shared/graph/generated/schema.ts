@@ -301,6 +301,19 @@ export class Class extends Entity {
   set timestamp(value: i32) {
     this.set("timestamp", Value.fromI32(value));
   }
+
+  get teacher(): Bytes {
+    let value = this.get("teacher");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set teacher(value: Bytes) {
+    this.set("teacher", Value.fromBytes(value));
+  }
 }
 
 export class ClassSession extends Entity {
@@ -395,6 +408,19 @@ export class ClassSession extends Entity {
   set timestamp(value: i32) {
     this.set("timestamp", Value.fromI32(value));
   }
+
+  get teacher(): Bytes {
+    let value = this.get("teacher");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set teacher(value: Bytes) {
+    this.set("teacher", Value.fromBytes(value));
+  }
 }
 
 export class Wallet extends Entity {
@@ -460,5 +486,18 @@ export class Wallet extends Entity {
 
   set authId(value: string) {
     this.set("authId", Value.fromString(value));
+  }
+
+  get userType(): string {
+    let value = this.get("userType");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
+  }
+
+  set userType(value: string) {
+    this.set("userType", Value.fromString(value));
   }
 }

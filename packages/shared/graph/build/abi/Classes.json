@@ -24,6 +24,12 @@
         "internalType": "uint256",
         "name": "time",
         "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "teacher",
+        "type": "address"
       }
     ],
     "name": "EnrolledClass",
@@ -55,6 +61,12 @@
         "internalType": "uint256",
         "name": "time",
         "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "teacher",
+        "type": "address"
       }
     ],
     "name": "EnrolledClassSession",
@@ -90,6 +102,11 @@
         "internalType": "uint256",
         "name": "_id",
         "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_teacher",
+        "type": "address"
       }
     ],
     "name": "enrollClass",
@@ -114,6 +131,11 @@
         "internalType": "uint256",
         "name": "_sessionId",
         "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_teacher",
+        "type": "address"
       }
     ],
     "name": "enrollClassSession",

@@ -14,11 +14,11 @@ import React, { useState } from "react";
 // This represents each link in the navbar
 const MENU_LIST = [
   { text: "Home", href: "/" },
-  { text: "About Us", href: "/about" },
   { text: "Instructor Dashboard", href: "/instructor_dashboard" },
   { text: "Business Dashboard", href: "/business_dashboard" },
+  { text: "About Us", href: "/about" },
   { text: "Login", href: "/login" },
-  { text: "Create Account", href: "/create_account"}
+  //{ text: "Create Account", href: "/create_account"}
 ];
 
 // creates the navbar component which is exported from this file

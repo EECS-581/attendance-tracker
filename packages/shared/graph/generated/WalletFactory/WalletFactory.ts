@@ -34,6 +34,10 @@ export class WalletCreated__Params {
   get _address(): Address {
     return this._event.parameters[2].value.toAddress();
   }
+
+  get _userType(): string {
+    return this._event.parameters[3].value.toString();
+  }
 }
 
 export class WalletFactory extends ethereum.SmartContract {
@@ -60,11 +64,15 @@ export class WalletFactory extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  createWallet(_owner: Address, _authId: string): boolean {
+  createWallet(_owner: Address, _authId: string, _userType: string): boolean {
     let result = super.call(
       "createWallet",
-      "createWallet(address,string):(bool)",
-      [ethereum.Value.fromAddress(_owner), ethereum.Value.fromString(_authId)]
+      "createWallet(address,string,string):(bool)",
+      [
+        ethereum.Value.fromAddress(_owner),
+        ethereum.Value.fromString(_authId),
+        ethereum.Value.fromString(_userType)
+      ]
     );
 
     return result[0].toBoolean();
@@ -72,12 +80,17 @@ export class WalletFactory extends ethereum.SmartContract {
 
   try_createWallet(
     _owner: Address,
-    _authId: string
+    _authId: string,
+    _userType: string
   ): ethereum.CallResult<boolean> {
     let result = super.tryCall(
       "createWallet",
-      "createWallet(address,string):(bool)",
-      [ethereum.Value.fromAddress(_owner), ethereum.Value.fromString(_authId)]
+      "createWallet(address,string,string):(bool)",
+      [
+        ethereum.Value.fromAddress(_owner),
+        ethereum.Value.fromString(_authId),
+        ethereum.Value.fromString(_userType)
+      ]
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -151,6 +164,10 @@ export class CreateWalletCall__Inputs {
 
   get _authId(): string {
     return this._call.inputValues[1].value.toString();
+  }
+
+  get _userType(): string {
+    return this._call.inputValues[2].value.toString();
   }
 }
 

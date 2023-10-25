@@ -21,18 +21,18 @@ async function main() {
   console.log(`Contract deployed at address: ${contract.address}`);
 
   // Generate random IDs for class and session.
-  const classId = Math.floor(Math.random() * 1000000) + 1; // Random number between 1 and 1000000
-  const sessionId = Math.floor(Math.random() * 1000000) + 1;
+  // const classId = Math.floor(Math.random() * 1000000) + 1; // Random number between 1 and 1000000
+  // const sessionId = Math.floor(Math.random() * 1000000) + 1;
 
-  // Enroll a class with the random ID.
-  const className = "Sample";
-  const enrollClassTx = await contract.enrollClass(className, classId);
-  await enrollClassTx.wait(); // Waiting for the enrollClass transaction to be mined
-  console.log(`Enrolled class: ${className} with ID: ${classId}`);
+  // // Enroll a class with the random ID.
+  // const className = "Sample";
+  // const enrollClassTx = await contract.enrollClass(className, classId);
+  // await enrollClassTx.wait(); // Waiting for the enrollClass transaction to be mined
+  // console.log(`Enrolled class: ${className} with ID: ${classId}`);
 
-  // Enroll a session for the class with the random session ID.
-  await contract.enrollClassSession(className, sessionId);
-  console.log(`Enrolled session for class: ${className} with session ID: ${sessionId}`);
+  // // Enroll a session for the class with the random session ID.
+  // await contract.enrollClassSession(className, sessionId);
+  // console.log(`Enrolled session for class: ${className} with session ID: ${sessionId}`);
 }
 
 main()

@@ -24,6 +24,12 @@
         "internalType": "address",
         "name": "_address",
         "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "_userType",
+        "type": "string"
       }
     ],
     "name": "WalletCreated",
@@ -58,6 +64,11 @@
       {
         "internalType": "string",
         "name": "_authId",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_userType",
         "type": "string"
       }
     ],

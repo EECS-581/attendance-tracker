@@ -1,3 +1,17 @@
+// Code Requirement 36.6 - Login page - should work for instructors and business admin
+// This code will need to be refactored once authentication is set up.
+// This code creates the Login Page for the website with Google Sign-In
+// Programmer's name: Libby Miller
+// Date: 10/17/2023
+// This page sets up the UI; there are no pre or post conditions to this page.
+// Inputs to this page are handled by the Google Sign-In component.
+
+import React from 'react';
+import Navbar from "@/components/navbar"; // Import Navbar component
+import Footer from "@/components/footer"; // Import footer component
+import GoogleSigninButton from "@/components/GoogleSigninButton"; // Import Google Sign-In Button
+
+
 import React, { useState } from 'react';
 import Navbar from "@/components/navbar"; // Import Navbar component
 import Footer from "@/components/footer"; // Import footer component
