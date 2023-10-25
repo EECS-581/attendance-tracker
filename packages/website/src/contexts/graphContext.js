@@ -70,6 +70,28 @@ export const GraphProvider = ({ children }) => {
         }
     }
 
+    async function queryAccountAdress(hashedTokenID){
+        // finds generated wallet adress for a given users google tokenID
+        const ACCOUNT_QUERY = `
+        {
+            accounts(where: {hashedTokenID: "${hashedTokenID}"}) {
+              id
+            }
+        }
+        `;
+
+        const data = await querySubgraph(ACCOUNT_QUERY);
+
+        if (data.accounts.length > 0) {
+            return data.accounts[0].id;
+        }
+        else {
+            return false;
+        }
+    }
+
+
+
 
     const value = {
         queryClassAttendance,

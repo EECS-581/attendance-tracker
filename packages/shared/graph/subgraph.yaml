@@ -5,6 +5,26 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
+    name: WalletFactory
+    network: mumbai
+    source:
+      address: "0xA3A003FC5BF0A201b2A724Eaf6Ebf0A03D10dD53"
+      abi: WalletFactory
+      startBlock: 41614241
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Wallet
+      abis:
+        - name: WalletFactory
+          file: ../abi/WalletFactory.json
+      eventHandlers:
+        - event: WalletCreated(string,uint256,address)
+          handler: handleWalletCreated
+      file: ./mapping.ts
+  - kind: ethereum/contract
     name: Classes
     network: mumbai
     source:

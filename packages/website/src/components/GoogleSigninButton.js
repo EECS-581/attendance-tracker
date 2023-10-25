@@ -72,7 +72,7 @@ function GoogleSigninButton() {
       {!isSignedIn ? (
         <div id="buttonDiv"></div>
       ) : (
-        <p>User signed in with hashed Google ID: {hashedUserId}</p>
+        <p>User signed in!</p>
       )}
     </div>
   );
