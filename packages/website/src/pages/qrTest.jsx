@@ -12,7 +12,7 @@ const generateURLWithSessionID = (sessionId) => {
 }
 
 function QRComponent() {
-    const {createClassSession, createClass} = useWeb3Context();
+    const {createClassSession, createClass, userWallet} = useWeb3Context();
     const [classId, setClassId] = useState(''); 
     const [className, setClassName] = useState('');
     const [sessionId, setSessionId] = useState('');
@@ -32,11 +32,12 @@ function QRComponent() {
     }
 
     const handleCreateClass = async () => {
-        await createClass(className, classId);
+        console.log(userWallet)
+        await createClass(className, classId, userWallet);
     }
 
     const handleCreateSession = async () => {
-        await createClassSession(className, sessionId);
+        await createClassSession(className, sessionId, userWallet);
         const generatedUrl = generateURLWithSessionID(sessionId);
         console.log(generatedUrl);
         setUrl(generatedUrl);
