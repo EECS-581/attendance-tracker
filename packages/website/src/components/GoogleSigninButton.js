@@ -5,7 +5,7 @@ import { useWeb3Context } from '@/contexts/web3Context';
 function GoogleSigninButton() {
 
   const { queryAccountAdress } = useGraphContext();
-  const {createWallet} = useWeb3Context();
+  const {createWallet,  setUserWallet} = useWeb3Context();
 
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [hashedUserId, setHashedUserId] = useState(null);
@@ -46,11 +46,14 @@ function GoogleSigninButton() {
     else{
       console.log("Wallet already exists")
       console.log(check)
+      setUserWallet(check)
+
     }
 
 
     console.log("Hashed User's Google ID:", hashedId);
     setIsSignedIn(true);
+    
   };
 
   useEffect(() => {

@@ -67,6 +67,8 @@ export const Web3Provider = ({ children }) => {
   const [AttendanceTokenContract, setAttendanceTokenContract] = useState(null);
   const [balance, setBalance] = useState("loading...");
 
+  const [userWallet, setUserWallet] = useState(null);
+
 
     const attendeesAddress ="0xFb8e15EdE3a4013Bb3d0b92b00505eB7c0a49EE5"
 
@@ -162,7 +164,8 @@ export const Web3Provider = ({ children }) => {
       mintAttendanceToken,
       createClassSession,
       createClass,
-      createWallet
+      createWallet,
+      setUserWallet
     };
     
     // Returning the Web3Context.Provider with value and children props.
