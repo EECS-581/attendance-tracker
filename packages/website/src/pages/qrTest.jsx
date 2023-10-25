@@ -6,7 +6,9 @@ import GoogleSigninButton from '../components/GoogleSigninButton';
 
 
 const generateURLWithSessionID = (sessionId) => {
-    return `localhost:3000/attend?sessionId=${sessionId}`;
+    const { hostname, port } = window.location;
+    const base = (hostname === "localhost" && port) ? `localhost:${port}` : hostname;
+    return `${base}/attend?sessionId=${sessionId}`;
 }
 
 function QRComponent() {

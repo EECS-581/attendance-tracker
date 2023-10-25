@@ -31,3 +31,12 @@ type ClassSession @entity {
   sessionId: BigInt!
   timestamp: Int!
 }
+
+type Wallet @entity {
+    id: ID!            
+    timestamp: BigInt!           
+    authId: String!             
+}
+
+
+

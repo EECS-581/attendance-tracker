@@ -6,9 +6,9 @@
 pragma solidity ^0.8.0;
 
 // Importing required contracts
-import "./IAttendees.sol";
-import "./IAttendanceToken.sol";
-import "./Businesses.sol";
+// import "./IAttendees.sol";
+// import "./IAttendanceToken.sol";
+// import "./Businesses.sol";
 
 // Declaration of the Wallet contract
 contract Wallet {
@@ -17,12 +17,13 @@ contract Wallet {
     address public owner;
     
     // Contract instances for Attendees, AttendanceToken, and Businesses
-    IAttendees attendeesContract;
-    IAttendanceToken tokenContract;
-    Businesses businessesContract;
+    // IAttendees attendeesContract;
+    // IAttendanceToken tokenContract;
+    // Businesses businessesContract;
     
     // Mapping to track approved signers
     mapping(address => bool) approvedSigners;
+    
 
     // Struct to represent a coupon
     struct Coupon {
@@ -33,7 +34,7 @@ contract Wallet {
         mapping(uint256 => bool) organizationBanList;
     }
 
-    /**
+    /*
      * @dev Constructor to initialize the Wallet contract.
      * @param _owner The address of the wallet owner.
      * @param _attendees The address of the Attendees contract.
@@ -44,20 +45,21 @@ contract Wallet {
      * @param _organization The organization associated with the wallet owner.
      */
     constructor(
-        address _owner,
-        address _attendees,
-        address _token,
-        address _businesses,
-        string memory _firstName,
-        string memory _lastName,
-        string memory _organization
+        address _owner
+        //string memory _id,
+        // address _attendees,
+        // address _token
+        // address _businesses,
+        // string memory _firstName,
+        // string memory _lastName,
+        // string memory _organization
     ) {
-        attendeesContract = IAttendees(_attendees);
-        tokenContract = IAttendanceToken(_token);
-        businessesContract = Businesses(_businesses);
+        // attendeesContract = IAttendees(_attendees);
+        // tokenContract = IAttendanceToken(_token);
+        // businessesContract = Businesses(_businesses);
         owner = _owner;
         approvedSigners[owner] = true;
-        attendeesContract.createAttendee(msg.sender, _firstName, _lastName, _organization);
+        //attendeesContract.createAttendee(msg.sender, _firstName, _lastName, _organization);
         // Additional functionality to enroll, etc.
     }
 
@@ -92,20 +94,20 @@ contract Wallet {
      * @param _couponID The ID of the coupon to be purchased.
      * @return A boolean indicating the success of the purchase.
      */
-    function buyCoupon(uint256 _couponID) public approvedsigner returns (bool) {
-        (, uint256 price, , ) = businessesContract.getCouponDetails(_couponID); // Gets the coupon
-        tokenContract.approve(address(businessesContract), price);
-        businessesContract.buyCoupon(_couponID);
-        return true;
-    }
+    // function buyCoupon(uint256 _couponID) public approvedsigner returns (bool) {
+    //     (, uint256 price, , ) = businessesContract.getCouponDetails(_couponID); // Gets the coupon
+    //     tokenContract.approve(address(businessesContract), price);
+    //     businessesContract.buyCoupon(_couponID);
+    //     return true;
+    // }
 
-    /**
-     * @dev Redeem a coupon with a given coupon ID.
-     * @param _couponID The ID of the coupon to be redeemed.
-     * @return A boolean indicating the success of the redemption.
-     */
-    function redeemCoupon(uint256 _couponID) public approvedsigner returns (bool) {
-        businessesContract.redeemCoupon(_couponID);
-        return true;
-    }
+    // /**
+    //  * @dev Redeem a coupon with a given coupon ID.
+    //  * @param _couponID The ID of the coupon to be redeemed.
+    //  * @return A boolean indicating the success of the redemption.
+    //  */
+    // function redeemCoupon(uint256 _couponID) public approvedsigner returns (bool) {
+    //     businessesContract.redeemCoupon(_couponID);
+    //     return true;
+    // }
 }

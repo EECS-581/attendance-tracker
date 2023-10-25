@@ -18,8 +18,9 @@ contract WalletFactory {
     address public owner;
 
     // Event declaration to notify when a wallet is created
-    event WalletCreated(string _firstName, string _lastName, string _organization, uint256 time, address _address);
-    
+    //event WalletCreated(string _firstName, string _lastName, string _organization, uint256 time, address _address);
+    event WalletCreated(string _authId, uint256 time, address _address);
+
     // Constructor to initialize the owner
     constructor() {
         owner = msg.sender;
@@ -31,7 +32,7 @@ contract WalletFactory {
         _;
     }
 
-    /**
+    /*
      * @dev Create a new wallet.
      * @param _owner The address of the wallet owner.
      * @param _attendees The address of attendees.
@@ -44,21 +45,22 @@ contract WalletFactory {
      */
     function createWallet(
         address _owner,
-        address _attendees,
-        address _token,
-        address _businesses,
-        string memory _firstName,
-        string memory _lastName,
-        string memory _organization
+        string memory _authId
+        // address _attendees,
+        // address _token,
+        // address _businesses,
+        // string memory _firstName,
+        // string memory _lastName,
+        // string memory _organization
     ) public onlyOwner returns (bool) {
         // Create a new Wallet contract instance
-        Wallet newWallet = new Wallet(_owner, _attendees, _token, _businesses, _firstName, _lastName, _organization);
+        Wallet newWallet = new Wallet(_owner/*, _attendees, _token, _businesses, _firstName, _lastName, _organization*/);
         
         // Add the address of the newly created wallet to the array
         Wallets.push(address(newWallet));
         
         // Emit an event to indicate the creation of the wallet
-        emit WalletCreated(_firstName, _lastName, _organization, block.timestamp, address(newWallet));
+        emit WalletCreated(_authId,/*_firstName, _lastName, _organization,*/ block.timestamp, address(newWallet));
         
         // Return true to indicate success
         return true;
