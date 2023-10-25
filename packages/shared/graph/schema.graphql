@@ -31,3 +31,10 @@ type ClassSession @entity {
   sessionId: BigInt!
   timestamp: Int!
 }
+
+// stores all accounts with there tokenid
+type Account @entity {
+  id: ID!
+  address: Bytes!
+  tokenId: BigInt!
+}
