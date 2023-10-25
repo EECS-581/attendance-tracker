@@ -89,12 +89,12 @@ export const GraphProvider = ({ children }) => {
 
         console.log(data)
 
-        // if (data.wallets.length > 0) {
-        //     return data.wallets[0].id;
-        // }
-        // else {
-        //     return null;
-        // }
+        if (data.wallets.length > 0) {
+             return data.wallets[0].id;
+         }
+         else {
+             return false;
+         }
 
 
     }

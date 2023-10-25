@@ -40,6 +40,7 @@ import { ethers, providers } from "ethers"; // Importing necessary components an
 import { createContext, useContext, useState, useEffect, useCallback } from 'react'; // Importing React hooks: createContext, useContext, useState, useEffect, useCallback
 const AttendanceToken = require('../abi/AttendanceToken.json'); // Importing ABI of AttendanceToken contract
 const Classes = require('../abi/Classes.json'); // Importing ABI of Classes contract
+const WalletFactory = require('../abi/WalletFactory.json'); // Importing ABI of WalletFactory contract
 
 
 const Web3Context = createContext(); // Creating a new React context named Web3Context.
@@ -68,6 +69,23 @@ export const Web3Provider = ({ children }) => {
 
 
     const attendeesAddress ="0xFb8e15EdE3a4013Bb3d0b92b00505eB7c0a49EE5"
+
+    async function createWallet(authId) {
+      // Creating a contract instance.
+      let WalletFactoryContract= new ethers.Contract('0x43820B6bf8bB6551f6C0857FEfBfA28AD65900A4', WalletFactory.abi, signer);
+      
+      console.log("Creating Wallet"); // Logging the start of the minting process.
+
+      const tx = await WalletFactoryContract.createWallet("0x06e6620C67255d308A466293070206176288A67B",authId); // Minting tokens.
+
+      console.log(tx); // Logging transaction object.
+      await tx.wait(); // Waiting for the transaction to be mined.
+
+      console.log(tx)
+
+      console.log("Created Wallet"); // Logging the end of the minting process.
+
+    }
     
     // Define an asynchronous function to get the balance of the AttendanceToken.
     async function getAttendanceBalance(address) {
@@ -114,6 +132,7 @@ export const Web3Provider = ({ children }) => {
       console.log(tx); // Logging transaction object.
       await tx.wait(); // Waiting for the transaction to be mined.
       
+      
       console.log("Created Class"); // Logging the end of the minting process.
 
     }
@@ -143,6 +162,7 @@ export const Web3Provider = ({ children }) => {
       mintAttendanceToken,
       createClassSession,
       createClass,
+      createWallet
     };
     
     // Returning the Web3Context.Provider with value and children props.
