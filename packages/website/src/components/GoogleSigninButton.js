@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
+import { useGraphContext } from '@/contexts/graphContext';
 
 function GoogleSigninButton() {
+
+  const { queryAccountAdress } = useGraphContext();
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [hashedUserId, setHashedUserId] = useState(null);
 
@@ -30,6 +33,13 @@ function GoogleSigninButton() {
     const userId = decodedToken.sub;
     const hashedId = await hashUserId(userId);
     setHashedUserId(hashedId);
+    const check =await queryAccountAdress(hashedId);
+
+    if (check) {
+      console.log("User already exists in the database.");
+    } else {
+      console.log("User does not exist in the database.");
+    }
 
     console.log("Hashed User's Google ID:", hashedId);
     setIsSignedIn(true);

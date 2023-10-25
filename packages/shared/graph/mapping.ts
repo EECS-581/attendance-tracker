@@ -12,7 +12,7 @@ import { Wallet } from "./generated/schema"
 export function handleWalletCreated(event: WalletCreated): void {
     let wallet = new Wallet(event.params._address.toHexString())
     wallet.timestamp = event.block.timestamp
-    wallet.authId = event.params._id
+    wallet.authId = event.params._authId.toString()
     wallet.save()
 }
 

@@ -8,9 +8,9 @@ dataSources:
     name: WalletFactory
     network: mumbai
     source:
-      address: "0xA3A003FC5BF0A201b2A724Eaf6Ebf0A03D10dD53"
+      address: "0x43820B6bf8bB6551f6C0857FEfBfA28AD65900A4"
       abi: WalletFactory
-      startBlock: 41614241
+      startBlock: 41614246
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6

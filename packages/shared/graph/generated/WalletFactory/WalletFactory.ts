@@ -23,7 +23,7 @@ export class WalletCreated__Params {
     this._event = event;
   }
 
-  get _id(): string {
+  get _authId(): string {
     return this._event.parameters[0].value.toString();
   }
 
@@ -60,21 +60,24 @@ export class WalletFactory extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  createWallet(_owner: Address, _id: string): boolean {
+  createWallet(_owner: Address, _authId: string): boolean {
     let result = super.call(
       "createWallet",
       "createWallet(address,string):(bool)",
-      [ethereum.Value.fromAddress(_owner), ethereum.Value.fromString(_id)]
+      [ethereum.Value.fromAddress(_owner), ethereum.Value.fromString(_authId)]
     );
 
     return result[0].toBoolean();
   }
 
-  try_createWallet(_owner: Address, _id: string): ethereum.CallResult<boolean> {
+  try_createWallet(
+    _owner: Address,
+    _authId: string
+  ): ethereum.CallResult<boolean> {
     let result = super.tryCall(
       "createWallet",
       "createWallet(address,string):(bool)",
-      [ethereum.Value.fromAddress(_owner), ethereum.Value.fromString(_id)]
+      [ethereum.Value.fromAddress(_owner), ethereum.Value.fromString(_authId)]
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -146,7 +149,7 @@ export class CreateWalletCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get _id(): string {
+  get _authId(): string {
     return this._call.inputValues[1].value.toString();
   }
 }

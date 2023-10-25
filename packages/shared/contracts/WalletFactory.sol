@@ -19,7 +19,7 @@ contract WalletFactory {
 
     // Event declaration to notify when a wallet is created
     //event WalletCreated(string _firstName, string _lastName, string _organization, uint256 time, address _address);
-    event WalletCreated(string _id, uint256 time, address _address);
+    event WalletCreated(string _authId, uint256 time, address _address);
 
     // Constructor to initialize the owner
     constructor() {
@@ -45,7 +45,7 @@ contract WalletFactory {
      */
     function createWallet(
         address _owner,
-        string memory _id
+        string memory _authId
         // address _attendees,
         // address _token,
         // address _businesses,
@@ -60,7 +60,7 @@ contract WalletFactory {
         Wallets.push(address(newWallet));
         
         // Emit an event to indicate the creation of the wallet
-        emit WalletCreated(_id,/*_firstName, _lastName, _organization,*/ block.timestamp, address(newWallet));
+        emit WalletCreated(_authId,/*_firstName, _lastName, _organization,*/ block.timestamp, address(newWallet));
         
         // Return true to indicate success
         return true;

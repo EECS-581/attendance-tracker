@@ -10,7 +10,7 @@
       {
         "indexed": false,
         "internalType": "string",
-        "name": "_id",
+        "name": "_authId",
         "type": "string"
       },
       {
@@ -57,7 +57,7 @@
       },
       {
         "internalType": "string",
-        "name": "_id",
+        "name": "_authId",
         "type": "string"
       }
     ],
