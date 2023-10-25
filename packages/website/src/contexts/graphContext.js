@@ -99,13 +99,29 @@ export const GraphProvider = ({ children }) => {
 
     }
 
+    async function queryClassesByTeacher(teacherAddress) {
+        const query = `
+            query {
+                classes(where: {teacher: "${teacherAddress}"}) {
+                    id
+                    name
+                    classId
+                    timestamp
+                }
+            }
+        `;
+        return querySubgraph(query);
+    }
+    
+
 
 
 
     const value = {
         queryClassAttendance,
         checkClassSessionExists,
-        queryAccountAdress
+        queryAccountAdress,
+        queryClassesByTeacher
     };
 
     return (

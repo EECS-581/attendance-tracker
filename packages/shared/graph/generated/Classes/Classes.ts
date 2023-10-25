@@ -34,6 +34,10 @@ export class EnrolledClass__Params {
   get time(): BigInt {
     return this._event.parameters[2].value.toBigInt();
   }
+
+  get teacher(): Address {
+    return this._event.parameters[3].value.toAddress();
+  }
 }
 
 export class EnrolledClassSession extends ethereum.Event {
@@ -64,6 +68,10 @@ export class EnrolledClassSession__Params {
   get time(): BigInt {
     return this._event.parameters[3].value.toBigInt();
   }
+
+  get teacher(): Address {
+    return this._event.parameters[4].value.toAddress();
+  }
 }
 
 export class Classes extends ethereum.SmartContract {
@@ -90,13 +98,14 @@ export class Classes extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  enrollClass(_className: string, _id: BigInt): boolean {
+  enrollClass(_className: string, _id: BigInt, _teacher: Address): boolean {
     let result = super.call(
       "enrollClass",
-      "enrollClass(string,uint256):(bool)",
+      "enrollClass(string,uint256,address):(bool)",
       [
         ethereum.Value.fromString(_className),
-        ethereum.Value.fromUnsignedBigInt(_id)
+        ethereum.Value.fromUnsignedBigInt(_id),
+        ethereum.Value.fromAddress(_teacher)
       ]
     );
 
@@ -105,14 +114,16 @@ export class Classes extends ethereum.SmartContract {
 
   try_enrollClass(
     _className: string,
-    _id: BigInt
+    _id: BigInt,
+    _teacher: Address
   ): ethereum.CallResult<boolean> {
     let result = super.tryCall(
       "enrollClass",
-      "enrollClass(string,uint256):(bool)",
+      "enrollClass(string,uint256,address):(bool)",
       [
         ethereum.Value.fromString(_className),
-        ethereum.Value.fromUnsignedBigInt(_id)
+        ethereum.Value.fromUnsignedBigInt(_id),
+        ethereum.Value.fromAddress(_teacher)
       ]
     );
     if (result.reverted) {
@@ -122,13 +133,18 @@ export class Classes extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  enrollClassSession(_className: string, _sessionId: BigInt): boolean {
+  enrollClassSession(
+    _className: string,
+    _sessionId: BigInt,
+    _teacher: Address
+  ): boolean {
     let result = super.call(
       "enrollClassSession",
-      "enrollClassSession(string,uint256):(bool)",
+      "enrollClassSession(string,uint256,address):(bool)",
       [
         ethereum.Value.fromString(_className),
-        ethereum.Value.fromUnsignedBigInt(_sessionId)
+        ethereum.Value.fromUnsignedBigInt(_sessionId),
+        ethereum.Value.fromAddress(_teacher)
       ]
     );
 
@@ -137,14 +153,16 @@ export class Classes extends ethereum.SmartContract {
 
   try_enrollClassSession(
     _className: string,
-    _sessionId: BigInt
+    _sessionId: BigInt,
+    _teacher: Address
   ): ethereum.CallResult<boolean> {
     let result = super.tryCall(
       "enrollClassSession",
-      "enrollClassSession(string,uint256):(bool)",
+      "enrollClassSession(string,uint256,address):(bool)",
       [
         ethereum.Value.fromString(_className),
-        ethereum.Value.fromUnsignedBigInt(_sessionId)
+        ethereum.Value.fromUnsignedBigInt(_sessionId),
+        ethereum.Value.fromAddress(_teacher)
       ]
     );
     if (result.reverted) {
@@ -310,6 +328,10 @@ export class EnrollClassCall__Inputs {
   get _id(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
   }
+
+  get _teacher(): Address {
+    return this._call.inputValues[2].value.toAddress();
+  }
 }
 
 export class EnrollClassCall__Outputs {
@@ -347,6 +369,10 @@ export class EnrollClassSessionCall__Inputs {
 
   get _sessionId(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get _teacher(): Address {
+    return this._call.inputValues[2].value.toAddress();
   }
 }
 

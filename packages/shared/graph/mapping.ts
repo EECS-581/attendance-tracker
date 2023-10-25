@@ -13,6 +13,7 @@ export function handleWalletCreated(event: WalletCreated): void {
     let wallet = new Wallet(event.params._address.toHexString())
     wallet.timestamp = event.block.timestamp
     wallet.authId = event.params._authId.toString()
+    wallet.userType = event.params._userType.toString()
     wallet.save()
 }
 
@@ -21,6 +22,7 @@ export function handleEnrolledClass(event: EnrolledClass): void {
   classEntity.name = event.params.className;
   classEntity.classId = event.params.classId;
   classEntity.timestamp = event.params.time.toI32();
+  classEntity.teacher = event.params.teacher;
   classEntity.save();
 }
 
@@ -30,6 +32,7 @@ export function handleEnrolledClassSession(event: EnrolledClassSession): void {
   sessionEntity.classId = event.params.classId;
   sessionEntity.sessionId = event.params.sessionId;
   sessionEntity.timestamp = event.params.time.toI32();
+  sessionEntity.teacher = event.params.teacher;
   sessionEntity.save();
 }
 

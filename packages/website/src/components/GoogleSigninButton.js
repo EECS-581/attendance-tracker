@@ -41,7 +41,7 @@ function GoogleSigninButton() {
     // if check is false, create wallet else display wallet adress
 
     if (check == false){
-      await createWallet(hashedId);
+      await createWallet(hashedId, "teacher");
     }
     else{
       console.log("Wallet already exists")

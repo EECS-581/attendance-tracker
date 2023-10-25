@@ -72,13 +72,13 @@ export const Web3Provider = ({ children }) => {
 
     const attendeesAddress ="0xFb8e15EdE3a4013Bb3d0b92b00505eB7c0a49EE5"
 
-    async function createWallet(authId) {
+    async function createWallet(authId, userType) {
       // Creating a contract instance.
-      let WalletFactoryContract= new ethers.Contract('0x43820B6bf8bB6551f6C0857FEfBfA28AD65900A4', WalletFactory.abi, signer);
+      let WalletFactoryContract= new ethers.Contract('0x44e3A12Ed8eC1ed5b70c3A344809122d7396DECe', WalletFactory.abi, signer);
       
       console.log("Creating Wallet"); // Logging the start of the minting process.
 
-      const tx = await WalletFactoryContract.createWallet("0x06e6620C67255d308A466293070206176288A67B",authId); // Minting tokens.
+      const tx = await WalletFactoryContract.createWallet("0x06e6620C67255d308A466293070206176288A67B",authId, userType); // Minting tokens.
 
       console.log(tx); // Logging transaction object.
       await tx.wait(); // Waiting for the transaction to be mined.
@@ -122,14 +122,14 @@ export const Web3Provider = ({ children }) => {
       await getAttendanceBalance('0x06e6620C67255d308A466293070206176288A67B');
     }
 
-    async function createClass(className, classId) {
+    async function createClass(className, classId, teacher) {
       // Creating a contract instance.
       console.log(signer)
-      let ClassesContract= new ethers.Contract('0x1d382F4583A1C14A4b960FB32A0722AE7f05b3fd', Classes.abi, signer);
+      let ClassesContract= new ethers.Contract('0xcDa8F1D34Cc07f6C2f351AB52b58Caf02CE7E443', Classes.abi, signer);
       
       console.log("Creating Class"); // Logging the start of the minting process.
     
-      const tx = await ClassesContract.enrollClass(className, classId); // Minting tokens.
+      const tx = await ClassesContract.enrollClass(className, classId, teacher); // Minting tokens.
       
       console.log(tx); // Logging transaction object.
       await tx.wait(); // Waiting for the transaction to be mined.
@@ -139,13 +139,13 @@ export const Web3Provider = ({ children }) => {
 
     }
 
-    async function createClassSession(className, sessionId) {
+    async function createClassSession(className, sessionId, teacher) {
       // Creating a contract instance.
-      let ClassesContract= new ethers.Contract('0x1d382F4583A1C14A4b960FB32A0722AE7f05b3fd', Classes.abi, signer);
+      let ClassesContract= new ethers.Contract('0xcDa8F1D34Cc07f6C2f351AB52b58Caf02CE7E443', Classes.abi, signer);
       
       console.log("Creating Class Session"); // Logging the start of the minting process.
     
-      const tx = await ClassesContract.enrollClassSession(className, sessionId); // Minting tokens.
+      const tx = await ClassesContract.enrollClassSession(className, sessionId, teacher); // Minting tokens.
       
       console.log(tx); // Logging transaction object.
       await tx.wait(); // Waiting for the transaction to be mined.
@@ -165,7 +165,8 @@ export const Web3Provider = ({ children }) => {
       createClassSession,
       createClass,
       createWallet,
-      setUserWallet
+      setUserWallet,
+      userWallet
     };
     
     // Returning the Web3Context.Provider with value and children props.

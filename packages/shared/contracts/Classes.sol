@@ -24,10 +24,10 @@ contract Classes {
     mapping(uint256 => bool) public takenClassSession;
 
     // Event emitted when a class is enrolled
-    event EnrolledClass(string className, uint256 classId, uint256 time);
+    event EnrolledClass(string className, uint256 classId, uint256 time, address teacher);
 
     // Event emitted when a class session is enrolled
-    event EnrolledClassSession(string className, uint256 classId, uint256 sessionId, uint256 time);
+    event EnrolledClassSession(string className, uint256 classId, uint256 sessionId, uint256 time, address teacher);
 
     // Constructor function runs when the contract is deployed
     constructor() {
@@ -43,7 +43,7 @@ contract Classes {
     }
 
     // Function to enroll a class, takes a class name and class ID as input
-    function enrollClass(string memory _className, uint256 _id) public onlyOwner returns (bool) {
+    function enrollClass(string memory _className, uint256 _id, address _teacher) public onlyOwner returns (bool) {
         // Check if the class ID has not been taken
         require(!takenClassIds[_id], "This class id has already been taken");
         // Check if the class name already has an associated ID
@@ -53,12 +53,12 @@ contract Classes {
         // Mark the class ID as taken
         takenClassIds[_id] = true;
         // Emit an event indicating class enrollment
-        emit EnrolledClass(_className, _id, block.timestamp);
+        emit EnrolledClass(_className, _id, block.timestamp, _teacher);
         return true; // Return true to indicate success
     }
 
     // Function to enroll a class session, takes a class name and session ID as input
-    function enrollClassSession(string memory _className, uint256 _sessionId) public onlyOwner returns (bool) {
+    function enrollClassSession(string memory _className, uint256 _sessionId, address _teacher) public onlyOwner returns (bool) {
         // Check if the class has been enrolled (associated with an ID)
         require(classToId[_className] != 0, "this class has not been enrolled");
         // Check if the session ID has not been taken
@@ -66,7 +66,7 @@ contract Classes {
         // Mark the session ID as valid
         validClassSession[_sessionId] = true;
         // Emit an event indicating class session enrollment
-        emit EnrolledClassSession(_className, classToId[_className], _sessionId, block.timestamp);
+        emit EnrolledClassSession(_className, classToId[_className], _sessionId, block.timestamp, _teacher);
         return true; // Return true to indicate success
     }
 

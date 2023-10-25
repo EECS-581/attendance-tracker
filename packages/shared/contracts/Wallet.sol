@@ -69,7 +69,7 @@ contract Wallet {
         _;
     }
 
-    /**
+    /*
      * @dev Add a signer to the approved signers mapping.
      * @param _address The address of the signer to be added.
      * @return A boolean indicating the success of the operation.
@@ -89,7 +89,7 @@ contract Wallet {
         return true;
     }
 
-    /**
+    /*
      * @dev Buy a coupon with a given coupon ID.
      * @param _couponID The ID of the coupon to be purchased.
      * @return A boolean indicating the success of the purchase.
