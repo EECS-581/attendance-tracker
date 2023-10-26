@@ -6,11 +6,6 @@
 // This page sets up the UI; there are no pre or post conditions to this page.
 // Inputs to this page are handled by the Google Sign-In component.
 
-import React from 'react';
-import Navbar from "@/components/navbar"; // Import Navbar component
-import Footer from "@/components/footer"; // Import footer component
-import GoogleSigninButton from "@/components/GoogleSigninButton"; // Import Google Sign-In Button
-
 
 import React, { useState } from 'react';
 import Navbar from "@/components/navbar"; // Import Navbar component
