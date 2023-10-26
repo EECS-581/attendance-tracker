@@ -36,8 +36,8 @@ import { useRouter } from "next/router"; // Importing useRouter hook from next/r
 
 import "@/styles/globals.css"; // Importing global styles
 import { Web3Provider } from "../contexts/web3Context.js"; // Importing Web3Provider from the shared contexts
-import { DbProvider } from "../contexts/dbContext" // Importing DbProvider from the shared contexts
-import LoadingProvider from "../contexts/LoadingProvider";
+import { DbProvider } from "../contexts/dbContext.js" // Importing DbProvider from the shared contexts
+import LoadingProvider from "../contexts/LoadingProvider.js";
 import {GraphProvider} from "../contexts/graphContext.js"
 
 // The MyApp component which receives Component and pageProps as props.
