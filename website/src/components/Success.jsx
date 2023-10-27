@@ -12,7 +12,7 @@ const Success = () => {
       console.log("Success component is active");
       const timer = setTimeout(() => {
         setShowState(false);
-      }, 3000); // Hide after 3 seconds
+      }, 2000); // Hide after 3 seconds
 
       return () => clearTimeout(timer);
     }
@@ -21,7 +21,13 @@ const Success = () => {
   if (!showState) return null;
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50">
+    <div
+      className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50"
+      style={{
+        backgroundColor: "rgba(0, 0, 0, 0.2)", // semi-transparent black
+        backdropFilter: "blur(3px)", // blur effect
+      }}
+    >
       <div className="p-4">
         <Image
           src="/assets/success.gif"
