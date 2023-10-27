@@ -41,6 +41,7 @@ import { createContext, useContext, useState, useEffect, useCallback } from 'rea
 const AttendanceToken = require('../abi/AttendanceToken.json'); // Importing ABI of AttendanceToken contract
 const Classes = require('../abi/Classes.json'); // Importing ABI of Classes contract
 const WalletFactory = require('../abi/WalletFactory.json'); // Importing ABI of WalletFactory contract
+const BusinessesABI = require("../abi/Businesses.json");
 
 
 const Web3Context = createContext(); // Creating a new React context named Web3Context.
@@ -153,7 +154,30 @@ export const Web3Provider = ({ children }) => {
       console.log("Created Class Session"); // Logging the end of the minting process.
 
     }
-    
+
+    async function EnrollBusiness(businessName) {
+      let BusinessesContract = new ethers.Contract(BusinessesContractAddress, BusinessesABI.abi, signer);
+
+      console.log("Enrolling Business");
+      const tx = await BusinessesContract.enrollBusiness(businessName)
+
+      console.log(tx)
+      await tx.wait()
+
+      console.log("Business Enrolled");
+    }
+
+    async function createCoupon(businessName, price, supply, description, banlis) {
+      let BusinessesContract = new ethers.Contract(BusinessesContractAddress, BusinessesABI.abi, signer);
+      console.log("Creating Coupon");
+      const tx = await BusinessesContract.createCoupon(businessName, price, supply, description, banlis);
+
+      console.log(tx);
+      await tx.wait()
+
+      console.log("Coupon Created");
+    }
+        
     // Defining the context value.
     const value = {
       provider,
@@ -166,7 +190,8 @@ export const Web3Provider = ({ children }) => {
       createClass,
       createWallet,
       setUserWallet,
-      userWallet
+      userWallet,
+      EnrollBusiness
     };
     
     // Returning the Web3Context.Provider with value and children props.

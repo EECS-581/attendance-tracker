@@ -5,6 +5,9 @@ import { NEXT_PUBLIC_INFURA_URL, NEXT_PUBLIC_PRIVATE_KEY, TEST } from "@env";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 const AttendanceTokenABI = require("../abi/AttendanceToken.json");
+const WalletFactoryABI = require("../abi/WalletFactory.json");
+const WalletABI = require("../abi/Wallet.json");
+const buisnessesABI = require("../abi/Businesses.json");
 
 const Web3ContextApp = createContext();
 
@@ -23,6 +26,16 @@ export const Web3ProviderApp = ({ children }) => {
   const [balance, setBalance] = useState("0");
 
   const attendeesAddress = "0xFb8e15EdE3a4013Bb3d0b92b00505eB7c0a49EE5";
+
+  const [WalletFactoryContract, setWalletFactoryContract] = useState(null);
+  const walletFactoryAddress = "0x44e3A12Ed8eC1ed5b70c3A344809122d7396DECe";
+
+  const [Wallet, setWalletContract] = useState(null);
+  
+  const createInstance = (ContractAddress, ABI, _signer) => {
+    const ContractInstance = new ethers.Contract(ContractAddress, ABI, _signer);
+    return ContractInstance
+  }
 
   const getAttendanceBalance = async (address) => {
     const AttendanceTokenContractInstance = new ethers.Contract(
@@ -45,6 +58,66 @@ export const Web3ProviderApp = ({ children }) => {
     setBalance(balanceNumber);
     console.log(balanceNumber);
   };
+
+  const createWalllet = async (owner, authId, userType, attendeesAddress, tokenAddress, businessesAddress, firstName, lastName, organization) => {
+    const WalletFactoryInstance = createInstance(walletFactoryAddress, WalletFactoryABI, signer)
+    setWalletFactoryContract(WalletFactoryInstance);
+
+    console.log("Generating Wallet");
+    const tx = await WalletFactoryInstance.createWalllet(owner, authId, userType, attendeesAddress, tokenAddress, businessesAddress, firstName, lastName, organization);
+
+    console.log(tx)
+    await tx.wait()
+    console.log("Wallet generated");
+  }
+
+  const buyCoupon = async (WalletAddress ,couponId) => {
+    const WalletInstance = createInstance(WalletAddress, WalletABI, signer)
+    setWalletContract(WalletInstance);
+    console.log("Buying coupon");
+    const tx = await WalletInstance.buyCoupon(couponId);
+    console.log(tx);
+
+    await tx.wait();
+    console.log("Coupon bought");
+
+  }
+
+  const redeemCoupon = async (WalletAddress, couponId) => {
+    const WalletInstance = createInstance(WalletAddress, WalletABI, signer)
+    setWalletContract(WalletInstance);
+    console.log("Redeeming Coupon");
+    const tx = await WalletInstance.redeemCoupon(couponId);
+    console.log(tx);
+
+    await txt.wait();
+    console.log("Coupon burned");
+
+  }
+
+  const addSigner = async (WalletAddress, address) => {
+    const WalletInstance = createInstance(WalletAddress, WalletABI, signer)
+    setWalletContract(WalletInstance);
+    console.log("Adding signer");
+    const tx = await WalletInstance.addSigner(address);
+    console.log(tx);
+
+    await tx.wait();
+    console.log("Signer added");
+
+  }
+
+  const removeSigner = async (WalletAddress, address) => {
+    const WalletInstance = createInstance(WalletAddress, WalletABI, signer);
+    setWalletContract(WalletInstance);
+    const tx = WalletInstance.removeSigner(address);
+    console.log("Removing Signer");
+
+    await tx.wait();
+    console.log("Signer Removed");
+
+  }
+
 
   const mintAttendanceToken = async (address, amount) => {
     const AttendanceTokenContractInstance = new ethers.Contract(
@@ -92,6 +165,11 @@ export const Web3ProviderApp = ({ children }) => {
     getAttendanceBalance,
     mintTest,
     balance,
+    createWalllet,
+    buyCoupon,
+    redeemCoupon,
+    addSigner,
+    removeSigner
   };
 
   return (
