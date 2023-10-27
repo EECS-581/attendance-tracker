@@ -18,17 +18,25 @@
  */
 
 import React from "react";
+import { useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import globalStyles from "../styles/globalStyles";
 import SimpleCard from "../components/SimpleCard";
 import CameraButton from "../components/CameraButton";
-import { useWeb3ContextApp } from "../contexts/web3ContextApp";
+import { useWeb3Context } from "../contexts/web3ContextApp";
 import AttendanceGraphComponent from "../components/Data Visualizations/AttendanceGraphComponent";
 import DiffClassesPieChartComponent from "../components/Data Visualizations/DiffClassesPieChartComponent";
 import ProgressComponent from "../components/Data Visualizations/ProgressComponent";
 
 const Insights = ({ navigation }) => {
-  const { balance } = useWeb3ContextApp();
+  const { balance } = useWeb3Context();
+  let updatedBalance = balance
+
+  useEffect(() => {
+    console.log("balance", balance)
+    updatedBalance = balance
+  }, [])
+
 
   return (
     <>
@@ -45,7 +53,7 @@ const Insights = ({ navigation }) => {
       >
         <SimpleCard backgroundColor="lightblue">
           <Text style={[globalStyles.defaultFont, { fontSize: 20 }]}>
-            You currently have {balance} tokens.
+            You currently have {updatedBalance} tokens.
           </Text>
         </SimpleCard>
 

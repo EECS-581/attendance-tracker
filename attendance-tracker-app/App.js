@@ -40,7 +40,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import CameraButtonContext from "./src/contexts/CameraButtonContext.js";
 import { LoadingProvider } from "./src/contexts/Loading/LoadingContext.js";
 
-import { Web3ProviderApp } from "./src/contexts/web3ContextApp.js";
+import { Web3Provider } from "./src/contexts/web3ContextApp.js";
+import { GraphProvider } from "./src/contexts/graphContextApp.js";
 
 // This might also be required for crypto operations
 
@@ -84,7 +85,8 @@ export default function App() {
 
   // Render the main navigation of the app
   return (
-    <Web3ProviderApp>
+    <GraphProvider>
+    <Web3Provider>
       <LoadingProvider>
         <CameraButtonContext.Provider
           value={{ showCameraButton, setShowCameraButton }}
@@ -95,7 +97,8 @@ export default function App() {
           </NavigationContainer>
         </CameraButtonContext.Provider>
       </LoadingProvider>
-    </Web3ProviderApp>
+    </Web3Provider>
+    </GraphProvider>
   );
 }
 
