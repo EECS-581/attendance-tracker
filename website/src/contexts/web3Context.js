@@ -69,6 +69,16 @@ export const Web3Provider = ({ children }) => {
 
   const [userWallet, setUserWallet] = useState(null);
 
+  useEffect(() => {
+    // Retrieve userWallet from localStorage when the component mounts, if running on client side
+    if (typeof window !== 'undefined') {
+      const savedUserWallet = localStorage.getItem('userWallet');
+      if (savedUserWallet) {
+        setUserWallet(JSON.parse(savedUserWallet));
+      }
+    }
+  }, []);
+
 
     const attendeesAddress ="0xFb8e15EdE3a4013Bb3d0b92b00505eB7c0a49EE5"
 
