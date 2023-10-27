@@ -123,9 +123,9 @@ export const GraphProvider = ({ children }) => {
     };
 
     return (
-        <graphContext.Provider value={value}>
+        <GraphContext.Provider value={value}>
             {children}
-        </graphContext.Provider>
+        </GraphContext.Provider>
     );
 
 }

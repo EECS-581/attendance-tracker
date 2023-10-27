@@ -22,13 +22,13 @@ import { View, Text, StyleSheet, ScrollView } from "react-native";
 import globalStyles from "../styles/globalStyles";
 import SimpleCard from "../components/SimpleCard";
 import CameraButton from "../components/CameraButton";
-import { useWeb3ContextApp } from "../contexts/web3ContextApp";
+import { useWeb3Context } from "../contexts/web3ContextApp";
 import AttendanceGraphComponent from "../components/Data Visualizations/AttendanceGraphComponent";
 import DiffClassesPieChartComponent from "../components/Data Visualizations/DiffClassesPieChartComponent";
 import ProgressComponent from "../components/Data Visualizations/ProgressComponent";
 
 const Insights = ({ navigation }) => {
-  const { balance } = useWeb3ContextApp();
+  const { balance } = useWeb3Context();
 
   return (
     <>

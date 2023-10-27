@@ -1,5 +1,4 @@
 import "@ethersproject/shims";
-import { ethers } from "ethers";
 import { NEXT_PUBLIC_INFURA_URL, NEXT_PUBLIC_PRIVATE_KEY, TEST } from "@env";
 
 import { ethers, providers } from "ethers"; // Importing necessary components and functions from ethers.js

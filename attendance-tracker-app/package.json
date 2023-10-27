@@ -23,6 +23,7 @@
     "ethers": "5.7.2",
     "expo": "^49.0.10",
     "expo-app-loading": "^2.1.1",
+    "expo-auth-session": "~5.0.2",
     "expo-barcode-scanner": "~12.5.3",
     "expo-camera": "~13.4.4",
     "expo-constants": "~14.4.2",
