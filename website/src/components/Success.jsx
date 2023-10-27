@@ -4,20 +4,21 @@ import Image from "next/image";
 const SuccessContext = createContext();
 
 const Success = () => {
-  const [show, setShow] = useState(false);
+  const context = useContext(SuccessContext);
+  const { showState, setShowState } = context;
 
   useEffect(() => {
-    if (show) {
+    if (showState) {
       console.log("Success component is active");
       const timer = setTimeout(() => {
-        setShow(false);
+        setShowState(false);
       }, 3000); // Hide after 3 seconds
 
       return () => clearTimeout(timer);
     }
-  }, [show]);
+  }, [showState]);
 
-  if (!show) return null;
+  if (!showState) return null;
 
   return (
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50">
@@ -39,12 +40,12 @@ export const useSuccess = () => {
     throw new Error("useSuccess must be used within a SuccessProvider");
   }
 
-  const { show } = context;
+  const { setShowState } = context;
 
   const trigger = () => {
-    show(true);
+    setShowState(true);
   };
-  console.log("returning trig");
+
   return trigger;
 };
 
@@ -55,8 +56,8 @@ export const SuccessProvider = ({ children }) => {
   }, [showState]);
 
   return (
-    <SuccessContext.Provider value={{ show: setShowState }}>
-      <Success />
+    <SuccessContext.Provider value={{ showState, setShowState }}>
+      <Success key={showState ? "visible" : "hidden"} />
       {children}
     </SuccessContext.Provider>
   );
