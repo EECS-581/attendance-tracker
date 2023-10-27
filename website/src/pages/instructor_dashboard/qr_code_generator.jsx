@@ -4,8 +4,10 @@ import { useWeb3Context } from "../../contexts/web3Context";
 import { useGraphContext } from "../../contexts/graphContext"; // Import your GraphContext
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import { useSuccess } from "@/components/Success";
 
 export default function QrCodeGenerator() {
+  const triggerSuccess = useSuccess();
   const { createClassSession, createClass, userWallet } = useWeb3Context();
   const { queryClassesByTeacher } = useGraphContext(); // Use the queryClassesByTeacher function
   const [classes, setClasses] = useState([]); // State to store the fetched classes
@@ -44,6 +46,7 @@ export default function QrCodeGenerator() {
     const { hostname, port } = window.location;
     const base = (hostname === "localhost" && port) ? `localhost:${port}` : hostname;
     return `${window.location.protocol}//${base}/attend?sessionId=${sessionId}&userWallet=${userWallet}`;
+    triggerSuccess();
   }
 
   return (
