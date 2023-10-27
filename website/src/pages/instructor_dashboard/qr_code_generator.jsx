@@ -28,7 +28,7 @@ const classOptions = [
 
 // creates the insights page
 export default function qr_code_generator() {
-  const show = useSuccess();
+  const triggerSuccess = useSuccess();
   // create variables to track the value that the user selects from the dropdown list
   const [selectedValue, setSelectedValue] = useState("default"); // default value for the select
   // create variables to hold and set the data for the qr code to be generated with
@@ -67,7 +67,7 @@ export default function qr_code_generator() {
       }
       // set the value of the global variable with qrData
       setQRData(qrData);
-      show();
+      triggerSuccess();
     } catch (error) {
       console.error("Error generating QR code:", error);
     }

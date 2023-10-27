@@ -8,7 +8,7 @@ const Success = () => {
 
   useEffect(() => {
     if (show) {
-      console.log("showing");
+      console.log("Success component is active");
       const timer = setTimeout(() => {
         setShow(false);
       }, 3000); // Hide after 3 seconds
@@ -21,7 +21,7 @@ const Success = () => {
 
   return (
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50">
-      <div className="bg-white p-4 rounded shadow-lg">
+      <div className="p-4">
         <Image
           src="/assets/success.gif"
           alt="Success"
@@ -38,14 +38,24 @@ export const useSuccess = () => {
   if (!context) {
     throw new Error("useSuccess must be used within a SuccessProvider");
   }
-  return context;
+
+  const { show } = context;
+
+  const trigger = () => {
+    show(true);
+  };
+  console.log("returning trig");
+  return trigger;
 };
 
 export const SuccessProvider = ({ children }) => {
-  const [show, setShow] = useState(false);
+  const [showState, setShowState] = useState(false);
+  useEffect(() => {
+    console.log("Show state is:", showState);
+  }, [showState]);
 
   return (
-    <SuccessContext.Provider value={{ show: setShow }}>
+    <SuccessContext.Provider value={{ show: setShowState }}>
       <Success />
       {children}
     </SuccessContext.Provider>
