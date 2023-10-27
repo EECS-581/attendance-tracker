@@ -7,7 +7,7 @@ import Footer from "@/components/footer";
 import { useSuccess } from "@/components/Success";
 
 export default function QrCodeGenerator() {
-  const triggerSuccess = useSuccess();
+  const {triggerSuccess} = useSuccess();
   const { createClassSession, createClass, userWallet } = useWeb3Context();
   const { queryClassesByTeacher } = useGraphContext(); // Use the queryClassesByTeacher function
   const [classes, setClasses] = useState([]); // State to store the fetched classes
@@ -16,12 +16,18 @@ export default function QrCodeGenerator() {
   const [url, setUrl] = useState("");
   const qrCodeRef = useRef(null);
 
+  const [loadingClasses, setLoadingClasses] = useState(true);
+
   // Fetch classes when the component mounts
   useEffect(() => {
     console.log(userWallet);
     async function fetchClasses() {
       const classes = await queryClassesByTeacher(userWallet);
-      setClasses(classes);
+      if(classes) {
+        setClasses(classes);
+        setLoadingClasses(false);
+      }
+      
     }
 
     fetchClasses();
@@ -67,20 +73,26 @@ export default function QrCodeGenerator() {
               <label htmlFor="orgs" className="text-lg font-semibold">
                 Classes:
               </label>
-              <select
-                value={selectedClass}
-                onChange={handleClassChange}
-                className="block mt-2 border border-gray-300 rounded p-2 w-full"
-                name="orgs"
-                id="orgs"
-              >
-                <option value="">Please select</option>
-                {classes.map((classItem) => (
-                  <option key={classItem.id} value={classItem.id}>
-                    {classItem.name}
-                  </option>
-                ))}
-              </select>
+              {loadingClasses ? (
+                <p>Loading classes...</p> // Loading indicator
+              ) : classes.length > 0 ? (
+                <select
+                  value={selectedClass}
+                  onChange={handleClassChange}
+                  className="block mt-2 border border-gray-300 rounded p-2 w-full"
+                  name="orgs"
+                  id="orgs"
+                >
+                  <option value="">Please select</option>
+                  {classes.map((classItem) => (
+                    <option key={classItem.id} value={classItem.id}>
+                      {classItem.name}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <p>No classes available</p> // Message when no classes are available
+              )}
               <label htmlFor="sessionId">Enter Session ID:</label>
               <input
                 type="text"
@@ -117,4 +129,5 @@ export default function QrCodeGenerator() {
       </div>
     </main>
   );
+  
 }

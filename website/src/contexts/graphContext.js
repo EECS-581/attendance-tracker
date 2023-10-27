@@ -107,12 +107,17 @@ export const GraphProvider = ({ children }) => {
                 }
             }
         `;
-        console.log(teacherAddress)
+        if(!teacherAddress){
+            return false;
+        }
 
         
         const data = await querySubgraph(query);
-
         console.log(data)
+
+  
+
+
 
         if(data.classes.length > 0) {
             return data.classes;
