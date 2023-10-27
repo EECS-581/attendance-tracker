@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from 'react-native';
 import * as Google from 'expo-auth-session/providers/google';
-import { useGraphContext } from '@/contexts/graphContext'; // Adjust the import path as needed
-import { useWeb3Context } from '@/contexts/web3Context'; // Adjust the import path as needed
+import { useGraphContext } from '../contexts/graphContextApp'; // Adjust the import path as needed
+import { useWeb3Context } from '../contexts/web3ContextApp'; // Adjust the import path as needed
 
 export default function GoogleSignInButton() {
   const [request, response, promptAsync] = Google.useAuthRequest({
-    androidClientId: "<your-android-client-id>",
-    iosClientId: "<your-ios-client-id>",
-    webClientId: "<your-web-client-id>",
+    androidClientId: "75204647996-p8e44f84o1stmv4sk59dkpsgh3633k45.apps.googleusercontent.com",
+    iosClientId: "75204647996-7416e25bb1ab6ug17qujdjbjjdvrb0ok.apps.googleusercontent.com",
+    webClientId: "75204647996-cfnhvg4vlh0agq5llgeb36e3mv6lolbr.apps.googleusercontent.com",
   });
 
   const [isSignedIn, setIsSignedIn] = useState(false);
