@@ -4,12 +4,13 @@ import { useWeb3Context } from "../contexts/web3Context";
 
 import GoogleSigninButton from "../components/GoogleSigninButton";
 
-const generateURLWithSessionID = (sessionId) => {
-  const { hostname, port } = window.location;
-  const base =
-    hostname === "localhost" && port ? `localhost:${port}` : hostname;
-  return `${base}/attend?sessionId=${sessionId}`;
-};
+
+const generateURLWithSessionID = (sessionId, userWallet) => {
+    const { hostname, port } = window.location;
+    const base = (hostname === "localhost" && port) ? `localhost:${port}` : hostname;
+    return `${window.location.protocol}//${base}/attend?sessionId=${sessionId}&userWallet=${userWallet}`;
+}
+
 
 function QRComponent() {
   const { createClassSession, createClass, userWallet } = useWeb3Context();
@@ -35,12 +36,14 @@ function QRComponent() {
     await createClass(className, classId, userWallet);
   };
 
-  const handleCreateSession = async () => {
-    await createClassSession(className, sessionId, userWallet);
-    const generatedUrl = generateURLWithSessionID(sessionId);
-    console.log(generatedUrl);
-    setUrl(generatedUrl);
-  };
+
+    const handleCreateSession = async () => {
+        await createClassSession(className, sessionId, userWallet);
+        const generatedUrl = generateURLWithSessionID(sessionId, userWallet);
+        console.log(generatedUrl);
+        setUrl(generatedUrl);
+    }
+
 
   return (
     <>
