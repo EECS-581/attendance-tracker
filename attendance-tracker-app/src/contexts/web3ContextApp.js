@@ -68,7 +68,7 @@ export const Web3Provider = ({ children }) => {
     }
 
     useEffect(() => {
-      if (userWallet != "loading..."){
+      if (userWallet != null){
         getAttendanceBalance(userWallet)
       }
 

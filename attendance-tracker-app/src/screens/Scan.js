@@ -1,45 +1,26 @@
-/**
- * Name of code artifact: Scan Component
- * Brief description: This component provides functionality to scan QR codes using the device's camera.
- * Programmer’s name: Emma Nasseri
- * Date the code was created: 9/24/23
- * Dates the code was revised: N/A
- * Brief description of each revision & author: N/A
- * Preconditions:
- * - Camera access permission is required.
- * Acceptable and unacceptable input values or types: N/A
- * Postconditions: Renders the QR code scanner or appropriate messages based on camera permissions.
- * Return values or types: JSX elements (React components)
- * Error and exception condition values or types that can occur:
- * - Camera permission not granted.
- * Side effects:
- * - Requests camera permission on component mount.
- * Invariants: N/A
- * Any known faults: N/A
- */
-
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { Text, View, StyleSheet, Button, Alert } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import CameraButtonContext from "../contexts/CameraButtonContext";
-//import LottieView from "lottie-react-native";
+import { useWeb3Context } from '../contexts/web3ContextApp';
+import { useGraphContext } from "../contexts/graphContextApp";
 
 export default function Scan() {
-  // State to manage camera permission and scan status
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const { setShowCameraButton } = useContext(CameraButtonContext);
+  const { mintAttendanceToken, getAttendanceBalance, balance, userWallet } = useWeb3Context();
+  const { queryClassAttendance, checkClassSessionExists } = useGraphContext();
   const [showMintingAnimation, setShowMintingAnimation] = useState(false);
   const [showSuccessAnimation, setShowSuccessAnimation] = useState(false);
-  useEffect(() => {
-    setShowCameraButton(false); // Hide the camera button
 
+  useEffect(() => {
+    setShowCameraButton(false);
     return () => {
-      setShowCameraButton(true); // Show the camera button when leaving the screen
+      setShowCameraButton(true);
     };
   }, []);
 
-  // Effect hook to request camera permission on component mount
   useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -47,32 +28,83 @@ export default function Scan() {
     })();
   }, []);
 
-  // Handler for when a QR code is scanned
-  const handleBarCodeScanned = ({ type, data }) => {
-    setShowMintingAnimation(true);
-
-    setTimeout(() => {
-      setShowMintingAnimation(false);
-      setShowSuccessAnimation(true);
-    }, 4000);
-
-    setTimeout(() => {
-      setShowSuccessAnimation(false);
-    }, 8000); // Assuming successAnimation lasts for 4 seconds
-    setScanned(true);
+  const checkAttendance = async (address, sessionId) => {
+    const data = await queryClassAttendance(sessionId);
+    if (!data || !data.mintEvents) return false;
+    return data.mintEvents.some(event => event.to.toLowerCase() === address.toLowerCase());
   };
 
-  // Display message while waiting for permission status
+  const scannedRef = useRef(false);
+
+  const handleBarCodeScanned = async ({ type, data }) => {
+    try {
+      if (scannedRef.current) return;
+      scannedRef.current = true;
+      setScanned(true);
+      console.log("Scanned QR code data:", data);
+  
+      // Manually parse the sessionId and userWallet from the URL
+      const queryString = data.split('?')[1];
+      const params = queryString.split('&').reduce((acc, current) => {
+        const [key, value] = current.split('=');
+        acc[key] = value;
+        return acc;
+      }, {});
+  
+      const sessionId = params.sessionId;
+      const userWallet = params.userWallet;
+  
+      if (!sessionId) {
+        Alert.alert("Error", "Session ID not found in the QR code");
+        return;
+      }
+  
+      const sessionExists = await checkClassSessionExists(sessionId);
+      if (!sessionExists) {
+        Alert.alert("Error", "Class session does not exist");
+        return;
+      }
+  
+      if (!userWallet) {
+        Alert.alert("Error", "User wallet not found in the QR code");
+        return;
+      }
+  
+      const hasAttended = await checkAttendance(userWallet, sessionId);
+      if (hasAttended) {
+        Alert.alert("Attendance", "User has already attended");
+        return;
+      }
+  
+      setShowMintingAnimation(true);
+      await mintAttendanceToken(userWallet, 1, sessionId);
+      await getAttendanceBalance(userWallet);
+      setShowMintingAnimation(false);
+      setShowSuccessAnimation(true);
+  
+      setTimeout(() => {
+        setShowSuccessAnimation(false);
+      }, 4000); // Adjust time as needed
+  
+    } catch (error) {
+      console.error("Error handling QR code scan:", error);
+      Alert.alert("Error", "An error occurred while processing the QR code");
+    } finally {
+      setScanned(false);
+    }
+  };
+  
+  
+  
+
   if (hasPermission === null) {
     return <Text>Requesting for camera permission</Text>;
   }
-  // Display message if camera access is denied
+
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
 
-  // Render the QR code scanner
-  //...
   return (
     <View style={styles.container}>
       <BarCodeScanner
@@ -81,24 +113,11 @@ export default function Scan() {
       />
 
       {showMintingAnimation && (
-        <></>
-        // <LottieView
-        //   source={require("../../assets/animations/mintingTokenAnimation.json")}
-        //   autoPlay
-        //   loop={true}
-        //   style={styles.lottieAnimation}
-        ///>
+        <Text style={styles.loadingText}>Minting Attendance Token...</Text>
       )}
 
       {showSuccessAnimation && (
-        <></>
-        // <LottieView
-        //   source={require("../../assets/animations/tokenMintedSuccess.json")} // Path to your success animation
-        //   autoPlay
-        //   loop={false}
-        //   onAnimationFinish={() => setShowSuccessAnimation(false)}
-        //   style={styles.lottieAnimation}
-        // />
+        <Text style={styles.successText}>Attendance Token Minted! New Balance: {balance}</Text>
       )}
 
       {scanned && !showMintingAnimation && !showSuccessAnimation && (
@@ -112,17 +131,21 @@ export default function Scan() {
   );
 }
 
-// Styling for the Scan component
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
     justifyContent: "center",
-    alignItems: "center", // Add this line to center child components horizontally
+    alignItems: "center",
   },
-  lottieAnimation: {
+  loadingText: {
     position: "absolute",
-    width: 300, // adjust width
-    height: 300, // adjust height
+    color: "white",
+    fontSize: 18,
+  },
+  successText: {
+    position: "absolute",
+    color: "white",
+    fontSize: 18,
   },
 });
