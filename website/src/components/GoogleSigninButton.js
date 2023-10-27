@@ -1,21 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { Button } from 'react-native';
-import * as Google from 'expo-auth-session/providers/google';
-import { useGraphContext } from '@/contexts/graphContext'; // Adjust the import path as needed
-import { useWeb3Context } from '@/contexts/web3Context'; // Adjust the import path as needed
+import { useState, useEffect } from 'react';
+import { useGraphContext } from '@/contexts/graphContext';
+import { useWeb3Context } from '@/contexts/web3Context';
 
-export default function GoogleSignInButton() {
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    androidClientId: "<your-android-client-id>",
-    iosClientId: "<your-ios-client-id>",
-    webClientId: "<your-web-client-id>",
-  });
+function GoogleSigninButton() {
+
+  const { queryAccountAdress } = useGraphContext();
+  const {createWallet,  setUserWallet} = useWeb3Context();
 
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [hashedUserId, setHashedUserId] = useState(null);
 
-  const { queryAccountAdress } = useGraphContext();
-  const { createWallet, setUserWallet } = useWeb3Context();
+  const decodeJWT = (token) => {
+    try {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace('-', '+').replace('_', '/');
+      return JSON.parse(window.atob(base64));
+    } catch (error) {
+      console.error("Failed to decode JWT:", error);
+      return {};
+    }
+  };
 
   const hashUserId = async (userId) => {
     const encoder = new TextEncoder();
@@ -25,40 +29,74 @@ export default function GoogleSignInButton() {
     return hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
   };
 
+  const onCredentialResponse = async (response) => {
+    const tokenId = response.credential;
+    
+    const decodedToken = decodeJWT(tokenId);
+    const userId = decodedToken.sub;
+    const hashedId = await hashUserId(userId);
+    setHashedUserId(hashedId);
+    const check =await queryAccountAdress(hashedId);
+
+    // if check is false, create wallet else display wallet adress
+
+    if (check == false){
+      await createWallet(hashedId, "teacher");
+    }
+    else{
+      console.log("Wallet already exists")
+      console.log(check)
+      setUserWallet(check)
+
+    }
+
+
+    console.log("Hashed User's Google ID:", hashedId);
+    setIsSignedIn(true);
+    
+  };
+
   useEffect(() => {
-    const handleSignIn = async (authentication) => {
-      console.log('GoogleSignInButton.onSignIn', { authentication });
-      const token = authentication.accessToken;
+    // Dynamically load the new GIS library
+    const script = document.createElement('script');
+    script.src = 'https://accounts.google.com/gsi/client';
+    script.async = true;
+    script.onload = () => {
+      console.log("Google Identity Services script loaded successfully.");
 
-      // Your logic to decode the JWT token and get user ID goes here
-      const userId = "someUserId"; // Replace with actual user ID extraction logic
-      const hashedId = await hashUserId(userId);
-      setHashedUserId(hashedId);
+      window.google.accounts.id.initialize({
+        client_id: '75204647996-ua3mellpivin98pa8726dugoellsqaip.apps.googleusercontent.com', // Replace with your actual client ID
+        callback: onCredentialResponse,
+      });
 
-      const check = await queryAccountAdress(hashedId);
-      if (check === false) {
-        await createWallet(hashedId, "teacher");
-      } else {
-        console.log("Wallet already exists");
-        console.log(check);
-        setUserWallet(check);
-      }
-
-      setIsSignedIn(true);
+      window.google.accounts.id.renderButton(
+        document.getElementById("buttonDiv"),
+        {
+          theme: 'outline',
+          size: 'large',
+        }
+      );
     };
 
-    if (response?.type === 'success') {
-      handleSignIn(response.authentication);
-    }
-  }, [response, queryAccountAdress, createWallet, setUserWallet]);
+    script.onerror = () => {
+      console.error("Failed to load Google Identity Services script.");
+    };
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   return (
-    <Button
-      title={isSignedIn ? "Signed In!" : "Sign in with Google"}
-      disabled={!request || isSignedIn}
-      onPress={() => {
-        promptAsync();
-      }}
-    />
+    <div>
+      {!isSignedIn ? (
+        <div id="buttonDiv"></div>
+      ) : (
+        <p>User signed in!</p>
+      )}
+    </div>
   );
 }
+
+export default GoogleSigninButton;
