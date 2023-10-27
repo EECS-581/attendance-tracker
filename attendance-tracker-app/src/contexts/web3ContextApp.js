@@ -6,6 +6,7 @@ import { ethers, providers } from "ethers"; // Importing necessary components an
 
 
 import { createContext, useContext, useState, useEffect, useCallback } from 'react'; // Importing React hooks: createContext, useContext, useState, useEffect, useCallback
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 const AttendanceToken = require('../abi/AttendanceToken.json'); // Importing ABI of AttendanceToken contract
 const Classes = require('../abi/Classes.json'); // Importing ABI of Classes contract
 const WalletFactory = require('../abi/WalletFactory.json'); // Importing ABI of WalletFactory contract
@@ -65,6 +66,13 @@ export const Web3Provider = ({ children }) => {
       console.log(formattedBalance)
       setBalance(formattedBalance); // Setting balance state.
     }
+
+    useEffect(() => {
+      if (userWallet != "loading..."){
+        getAttendanceBalance(userWallet)
+      }
+
+    }, [userWallet])
     
     // Define an asynchronous function to mint AttendanceToken.
     async function mintAttendanceToken(address, amount, classSessionID) {

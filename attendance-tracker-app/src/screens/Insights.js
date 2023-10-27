@@ -18,6 +18,7 @@
  */
 
 import React from "react";
+import { useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import globalStyles from "../styles/globalStyles";
 import SimpleCard from "../components/SimpleCard";
@@ -29,6 +30,13 @@ import ProgressComponent from "../components/Data Visualizations/ProgressCompone
 
 const Insights = ({ navigation }) => {
   const { balance } = useWeb3Context();
+  let updatedBalance = balance
+
+  useEffect(() => {
+    console.log("balance", balance)
+    updatedBalance = balance
+  }, [])
+
 
   return (
     <>
@@ -45,7 +53,7 @@ const Insights = ({ navigation }) => {
       >
         <SimpleCard backgroundColor="lightblue">
           <Text style={[globalStyles.defaultFont, { fontSize: 20 }]}>
-            You currently have {balance} tokens.
+            You currently have {updatedBalance} tokens.
           </Text>
         </SimpleCard>
 

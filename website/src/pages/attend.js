@@ -9,6 +9,8 @@ function AttendPage() {
   const {queryClassAttendance, checkClassSessionExists } = useGraphContext();
   
   async function checkAttendance(adress,sessionId){
+    console.log("checking attendance")
+    console.log(adress)
     const data = await queryClassAttendance(sessionId)
     
     if (!data || !data.mintEvents) {
@@ -27,6 +29,7 @@ function AttendPage() {
 
   async function verifyAttendance() {
     const { sessionId } = router.query;
+    const { userWallet } = router.query;
     console.log("verifying");
     console.log(sessionId);
     if (sessionId) {
@@ -42,7 +45,7 @@ function AttendPage() {
 
       // get user address
       console.log("checking if already attended")
-      const userAdress = "0x06e6620C67255d308A466293070206176288A67B";
+      const userAdress = userWallet
 
       const checkAttend =await checkAttendance(userAdress,sessionId)
       console.log(checkAttend)
