@@ -1,4 +1,4 @@
-// Code Requirement 35.1 - Web-Other features - Navigation bar at the top, linking to other pages on the site, main navigation 
+// Code Requirement 35.1 - Web-Other features - Navigation bar at the top, linking to other pages on the site, main navigation
 // This code creates the navbar component for the website
 // Programmers name: Libby Miller
 // Date: 09/24/2023
@@ -8,7 +8,7 @@
 // This section brings in the necessary imports
 // import React and useState to track the active navbar item
 import React, { useState } from "react";
-
+import Image from "next/image";
 // This section creates an array, that hold the menu item obejcts
 // The objects in the list contain the text, and path of each item
 // This represents each link in the navbar
@@ -32,11 +32,20 @@ const Navbar = () => {
   return (
     <header>
       {/* creates a nav container element  */}
-      <nav className="bg-white">
+      <nav className="bg-white flex">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center py-4">
             {/* this will be replaced with the logo image in sprint 4 */}
-            <h1 className="text-black font-bold">LOGO</h1>
+
+            <a href="/">
+              <Image
+                src="/assets/medium_logo.png"
+                alt="Classroom"
+                width={200}
+                height={200}
+              />
+            </a>
+
             <div className="sm:hidden">
               {/* this button will only appear on smaller screens for mobile nav  */}
               <button
@@ -61,7 +70,7 @@ const Navbar = () => {
             {/* creates a list for the menu items  */}
             <ul className="hidden sm:flex space-x-6">
               {MENU_LIST.map((menu) => (
-                // create an item element for each list item 
+                // create an item element for each list item
                 <li
                   key={menu.text}
                   className={`font-medium text-lg hover:font-bold ${
