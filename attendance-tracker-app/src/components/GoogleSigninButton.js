@@ -3,6 +3,9 @@ import { Button } from 'react-native';
 import * as Google from 'expo-auth-session/providers/google';
 import { useGraphContext } from '../contexts/graphContextApp'; // Adjust the import path as needed
 import { useWeb3Context } from '../contexts/web3ContextApp'; // Adjust the import path as needed
+import 'fast-text-encoding'
+import jwtDecode from 'jwt-decode';
+import * as Crypto from 'expo-crypto';
 
 export default function GoogleSignInButton() {
   const [request, response, promptAsync] = Google.useAuthRequest({
@@ -18,23 +21,28 @@ export default function GoogleSignInButton() {
   const { createWallet, setUserWallet } = useWeb3Context();
 
   const hashUserId = async (userId) => {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(userId);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    return hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+    const hash = await Crypto.digestStringAsync(
+      Crypto.CryptoDigestAlgorithm.SHA256,
+      userId
+    );
+    return hash;
   };
 
   useEffect(() => {
     const handleSignIn = async (authentication) => {
       console.log('GoogleSignInButton.onSignIn', { authentication });
-      const token = authentication.accessToken;
+      const idToken = authentication.idToken;
+    
+      // Decode the ID token to get the user's Google ID
+      const decodedToken = jwtDecode(idToken);
+      const googleId = decodedToken.sub; // 'sub' field contains the user's Google ID
 
-      // Your logic to decode the JWT token and get user ID goes here
-      const userId = "someUserId"; // Replace with actual user ID extraction logic
-      const hashedId = await hashUserId(userId);
+      console.log("Google ID:", googleId);
+    
+      const hashedId = await hashUserId(googleId);
+      console.log("Hashed User's Google ID:", hashedId)
       setHashedUserId(hashedId);
-
+    
       const check = await queryAccountAdress(hashedId);
       if (check === false) {
         await createWallet(hashedId, "teacher");
@@ -43,7 +51,7 @@ export default function GoogleSignInButton() {
         console.log(check);
         setUserWallet(check);
       }
-
+    
       setIsSignedIn(true);
     };
 
