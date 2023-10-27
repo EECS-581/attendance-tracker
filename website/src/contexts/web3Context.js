@@ -69,17 +69,28 @@ export const Web3Provider = ({ children }) => {
   const [AttendanceTokenContract, setAttendanceTokenContract] = useState(null);
   const [balance, setBalance] = useState("loading...");
 
-  const [userWallet, setUserWallet] = useState(null);
+  const [userWallet, setUserWalletState] = useState(null);
+
+
+  const setUserWallet = (walletAddress) => {
+    // Update the userWallet state
+    setUserWalletState(walletAddress);
+    
+    // Update the localStorage or sessionStorage
+    sessionStorage.setItem('userWallet', JSON.stringify(walletAddress));
+  };
+  
 
   useEffect(() => {
-    // Retrieve userWallet from localStorage when the component mounts, if running on client side
+    // Retrieve userWallet from sessionStorage when the component mounts, if running on client side
     if (typeof window !== 'undefined') {
-      const savedUserWallet = localStorage.getItem('userWallet');
+      const savedUserWallet = sessionStorage.getItem('userWallet');
       if (savedUserWallet) {
         setUserWallet(JSON.parse(savedUserWallet));
       }
     }
   }, []);
+  
 
 
     const attendeesAddress ="0xFb8e15EdE3a4013Bb3d0b92b00505eB7c0a49EE5"
