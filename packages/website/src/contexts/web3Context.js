@@ -191,7 +191,8 @@ export const Web3Provider = ({ children }) => {
       createWallet,
       setUserWallet,
       userWallet,
-      EnrollBusiness
+      EnrollBusiness,
+      createCoupon
     };
     
     // Returning the Web3Context.Provider with value and children props.
