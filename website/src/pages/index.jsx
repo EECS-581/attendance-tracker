@@ -17,7 +17,13 @@ import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 // import button component
 import LightColorfulButton from "@/components/LightColorfulButton";
+
+
+import GoogleSigninButton from "@/components/GoogleSigninButton";
+
+
 import Image from "next/image";
+
 // This section creates the Home component
 // Creates a Home component to export to other pages if necessary
 export default function Home() {
@@ -80,11 +86,13 @@ export default function Home() {
           {/* This creates a paragraph tag to hold this sentence between the buttons */}
           <p className="text-gray-700">Already have an account?</p>
           {/* This section creates the container to hold the login button which redirects to the login page */}
+          
           <LightColorfulButton
             shadowColor="powderblue"
             title="Sign in"
             link="/login"
           />
+          <GoogleSigninButton />
         </div>
       </div>
       {/* This section creates a container to hold the footer */}

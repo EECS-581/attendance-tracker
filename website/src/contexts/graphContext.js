@@ -103,14 +103,23 @@ export const GraphProvider = ({ children }) => {
         const query = `
             query {
                 classes(where: {teacher: "${teacherAddress}"}) {
-                    id
                     name
-                    classId
-                    timestamp
                 }
             }
         `;
-        return querySubgraph(query);
+        console.log(teacherAddress)
+
+        
+        const data = await querySubgraph(query);
+
+        console.log(data)
+
+        if(data.classes.length > 0) {
+            return data.classes;
+        }
+        else {
+            return false;
+        }
     }
     
 
