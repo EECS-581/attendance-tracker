@@ -36,10 +36,10 @@ import { useRouter } from "next/router"; // Importing useRouter hook from next/r
 
 import "@/styles/globals.css"; // Importing global styles
 import { Web3Provider } from "../contexts/web3Context.js"; // Importing Web3Provider from the shared contexts
-import { DbProvider } from "../contexts/dbContext.js" // Importing DbProvider from the shared contexts
+import { DbProvider } from "../contexts/dbContext.js"; // Importing DbProvider from the shared contexts
 import LoadingProvider from "../contexts/LoadingProvider.js";
-import {GraphProvider} from "../contexts/graphContext.js"
-
+import { GraphProvider } from "../contexts/graphContext.js";
+import { SuccessProvider } from "@/components/Success.jsx";
 // The MyApp component which receives Component and pageProps as props.
 function MyApp({ Component, pageProps }) {
   const router = useRouter(); // Initializing the router object using useRouter hook
@@ -49,11 +49,12 @@ function MyApp({ Component, pageProps }) {
   // To make the contexts available to the Component and its child components,
   // you should wrap the Component with these providers.
   return (
-    
     <Web3Provider>
       <GraphProvider>
         <LoadingProvider>
-          <Component {...pageProps} />
+          <SuccessProvider>
+            <Component {...pageProps} />
+          </SuccessProvider>
         </LoadingProvider>
       </GraphProvider>
     </Web3Provider>
