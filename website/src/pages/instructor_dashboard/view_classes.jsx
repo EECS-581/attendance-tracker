@@ -10,7 +10,6 @@
 // inputs to this page are the users addition, deletion, or updating of class items
 
 // import the necessary components
-import React, { useState } from 'react';
 // import Navbar component
 import Navbar from "@/components/navbar";
 // import Footer component
