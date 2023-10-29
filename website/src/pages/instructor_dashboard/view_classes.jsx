@@ -16,12 +16,35 @@ import SolidColorButton from "@/components/SolidColorButton";
 import LightColorfulButton from "@/components/LightColorfulButton";
 // import Footer component
 import Footer from "@/components/footer";
+import { useState, useEffect } from "react";
+import { useWeb3Context } from "../../contexts/web3Context";
+import { useGraphContext } from "../../contexts/graphContext";
+
 
 // creates a static list of classes - this will need to be updated when we are pulling from database
 var listItems = ['Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5'];
 
 // creates the View Classes page
 export default function View_Classes() {
+  const [classes, setClasses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const { createClassSession, createClass, userWallet } = useWeb3Context();
+  const { queryClassesByTeacher } = useGraphContext(); // Use the queryClassesByTeacher function
+
+  useEffect(() => {
+    console.log(userWallet);
+    async function fetchClasses() {
+      const classes = await queryClassesByTeacher(userWallet);
+      if(classes) {
+        setClasses(classes);
+        setLoading(false);
+      }
+      
+    }
+
+    fetchClasses();
+  }, [userWallet]);
+
   return (
     //creates a main html tag to hold the page 
     <main className="w-full overflow-hidden">
@@ -43,11 +66,11 @@ export default function View_Classes() {
           {/* creates an html list, this will need to be refactored when pulling real data */}
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* loops through the list items  */}
-          {listItems.map((listItem, index) => (
+          {classes.map((classItem, index) => (
             // for each item create a list item element 
             <li key={index} className="bg-white p-4 shadow-md rounded-md">
               <div className="flex justify-between items-center">
-                <span className="text-lg font-semibold">{listItem}</span>
+                <span className="text-lg font-semibold">{classItem.name}</span>
                 {/* create a button for updating the class  */}
                 <div className="space-x-2">
                   <LightColorfulButton
