@@ -1,4 +1,4 @@
-// Code Requirement 35.1 - Web-Other features - Navigation bar at the top, linking to other pages on the site, main navigation
+// Code Requirement 35.1 - Web-Other features - Navigation bar at the top, linking to other pages on the site, main navigation 
 // This code creates the navbar component for the website
 // Programmers name: Libby Miller
 // Date: 09/24/2023
@@ -6,25 +6,24 @@
 // This pages sets up the UI, there are no pre or post conditions, and no inputs to this page
 
 // This section brings in the necessary imports
-// import React and useState to track the active navbar item
+// import React and useState to track the navbar state
 import React, { useState } from "react";
 import Image from "next/image";
+
+
 // This section creates an array, that hold the menu item obejcts
 // The objects in the list contain the text, and path of each item
 // This represents each link in the navbar
 const MENU_LIST = [
   { text: "Home", href: "/" },
+  { text: "About Us", href: "/about" },
   { text: "Instructor Dashboard", href: "/instructor_dashboard" },
   { text: "Business Dashboard", href: "/business_dashboard" },
-  { text: "About Us", href: "/about" },
   { text: "Login", href: "/login" },
-  //{ text: "Create Account", href: "/create_account"}
 ];
 
 // creates the navbar component which is exported from this file
 const Navbar = () => {
-  // creates the states needed to track which nav item is active
-  const [active, setIsActive] = useState("Home");
   // creates the toggle to add the mobile navigation
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -32,20 +31,20 @@ const Navbar = () => {
   return (
     <header>
       {/* creates a nav container element  */}
-      <nav className="bg-white flex">
+      <nav className="bg-white">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center py-4">
             {/* this will be replaced with the logo image in sprint 4 */}
-
+            <h1 className="text-black font-bold">
             <a href="/">
               <Image
                 src="/assets/medium_logo.png"
                 alt="Classroom"
-                width={200}
-                height={200}
+                width={150}
+                height={150}
               />
             </a>
-
+            </h1>
             <div className="sm:hidden">
               {/* this button will only appear on smaller screens for mobile nav  */}
               <button
@@ -70,15 +69,10 @@ const Navbar = () => {
             {/* creates a list for the menu items  */}
             <ul className="hidden sm:flex space-x-6">
               {MENU_LIST.map((menu) => (
-                // create an item element for each list item
+                // create an item element for each list item 
                 <li
                   key={menu.text}
-                  className={`font-medium text-lg hover:font-bold ${
-                    // set the active menu item to different look
-                    active === menu.text
-                      ? "text-gray-500 font-semibold"
-                      : "text-black"
-                  }`}
+                  className={"font-medium text-2xl hover:text-gray-500"}
                 >
                   {/* create a link for each list item  */}
                   <a href={menu.href}>{menu.text}</a>
@@ -94,11 +88,7 @@ const Navbar = () => {
                 {MENU_LIST.map((menu) => (
                   <li
                     key={menu.text}
-                    className={`font-medium text-lg ${
-                      active === menu.text
-                        ? "text-gray-500 font-semibold"
-                        : "text-black"
-                    }`}
+                    className={"font-medium text-lg hover:text-gray-500"}
                   >
                     {/* create a link for each item  */}
                     <a href={menu.href}>{menu.text}</a>

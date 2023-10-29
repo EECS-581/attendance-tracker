@@ -65,3 +65,4 @@ export default function Manage_Classes() {
     </main>
   );
 }
+
