@@ -18,7 +18,7 @@
  */
 
 import React, { useContext, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import globalStyles from "../styles/globalStyles"; // Importing global styles
 import LightColorfulButton from "../components/LightColorfulButton"; // Importing the LightColorfulButton component
 import CameraButtonContext from "../contexts/CameraButtonContext";
@@ -51,11 +51,11 @@ const Landing = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-     
       <View style={styles.titleContainer}>
-        <Text style={[globalStyles.defaultFont, { fontSize: 30 }]}>
-          Welcome
-        </Text>
+        <Image
+          source={require("../../assets/images/logo.png")}
+          style={{ marginTop: 50, width: 220, height: 220 }}
+        />
       </View>
       <GoogleSignInButton />
 
