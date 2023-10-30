@@ -33,6 +33,7 @@
 
 import React from "react";
 import { View, Text, Image } from "react-native";
+import ProgressComponent from "./Data Visualizations/SimpleProgress";
 
 const CouponCard = ({
   company,
@@ -55,6 +56,7 @@ const CouponCard = ({
         marginBottom: 10,
       }}
     >
+      <ProgressComponent />
       {/* Top section for the logo and offer */}
       <View
         style={{
