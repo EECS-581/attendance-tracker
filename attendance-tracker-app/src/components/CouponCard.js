@@ -69,7 +69,14 @@ const CouponCard = ({
         {logo && (
           <Image
             source={logo}
-            style={{ width: 50, height: 50, borderRadius: 25, marginRight: 10 }}
+            style={{
+              width: 50,
+              height: 50,
+              borderRadius: 25,
+              marginRight: 10,
+              borderColor: "black",
+              borderWidth: 0.5,
+            }}
           />
         )}
 

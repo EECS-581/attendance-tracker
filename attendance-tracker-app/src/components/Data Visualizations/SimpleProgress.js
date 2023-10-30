@@ -73,16 +73,16 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   viewStyles: {
-    padding: 10,
+    padding: 3,
     borderRadius: 5,
     borderWidth: 2,
-    borderColor: "skyblue",
+    borderColor: "black",
     marginBottom: 10,
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 10,
-    backgroundColor: "black",
+    // backgroundColor: "black",
   },
 });
 
