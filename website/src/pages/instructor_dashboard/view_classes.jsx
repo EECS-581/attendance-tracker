@@ -42,7 +42,7 @@ export default function View_Classes() {
     }
 
     fetchClasses();
-  }, [userWallet]);
+  }, [userWallet, createClass]);
 
    // sets up variables for the add, update and delete button modals with a default value of false
    const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);

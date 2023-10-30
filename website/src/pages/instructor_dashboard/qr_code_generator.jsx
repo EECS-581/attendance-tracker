@@ -4,10 +4,10 @@ import { useWeb3Context } from "../../contexts/web3Context";
 import { useGraphContext } from "../../contexts/graphContext"; // Import your GraphContext
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
-import { useSuccess } from "@/components/Success";
+import {useSuccess } from "../../components/Success"
 
 export default function QrCodeGenerator() {
-  const {triggerSuccess} = useSuccess();
+  const { triggerSuccess} = useSuccess();
   const { createClassSession, createClass, userWallet } = useWeb3Context();
   const { queryClassesByTeacher } = useGraphContext(); // Use the queryClassesByTeacher function
   const [classes, setClasses] = useState([]); // State to store the fetched classes
@@ -46,13 +46,14 @@ export default function QrCodeGenerator() {
     const generatedUrl = generateURLWithSessionID(sessionId, userWallet);
     console.log(generatedUrl);
     setUrl(generatedUrl);
+    triggerSuccess();
   };
 
   const generateURLWithSessionID = (sessionId, userWallet) => {
     const { hostname, port } = window.location;
     const base = (hostname === "localhost" && port) ? `localhost:${port}` : hostname;
     return `${window.location.protocol}//${base}/attend?sessionId=${sessionId}&userWallet=${userWallet}`;
-    triggerSuccess();
+    
   }
 
   return (
@@ -111,12 +112,6 @@ export default function QrCodeGenerator() {
             <div>
               {url && (
                 <>
-                  <p>
-                    Generated URL:{" "}
-                    <a href={url} target="_blank" rel="noopener noreferrer">
-                      {url}
-                    </a>
-                  </p>
                   <QRCode value={url} size={200} ref={qrCodeRef} />
                 </>
               )}
