@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
-import { Text, View, StyleSheet, Button, Alert } from "react-native";
+import { Text, View, StyleSheet, Button, Alert, Image } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import CameraButtonContext from "../contexts/CameraButtonContext";
 import { useWeb3Context } from "../contexts/web3ContextApp";
@@ -87,7 +87,7 @@ export default function Scan() {
 
       setTimeout(() => {
         setShowSuccessAnimation(false);
-      }, 4000); // Adjust time as needed
+      }, 3000);
     } catch (error) {
       console.error("Error handling QR code scan:", error);
       Alert.alert("Error", "An error occurred while processing the QR code");
@@ -103,6 +103,16 @@ export default function Scan() {
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
+  const testAnimation = () => {
+    setShowMintingAnimation(true);
+    setTimeout(() => {
+      setShowMintingAnimation(false);
+      setShowSuccessAnimation(true);
+      setTimeout(() => {
+        setShowSuccessAnimation(false);
+      }, 4000); // Display success animation for 4 seconds
+    }, 4000); // Display minting animation for 4 seconds
+  };
 
   return (
     <View style={styles.container}>
@@ -124,9 +134,6 @@ export default function Scan() {
             source={require("../../assets/animations/success.gif")} // Replace with the correct path
             style={styles.animation}
           />
-          <Text style={styles.successText}>
-            Attendance Token Minted! New Balance: {balance}
-          </Text>
         </>
       )}
 
@@ -154,9 +161,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   successText: {
-    position: "absolute",
+    // position: "absolute",
     color: "white",
     fontSize: 18,
+    marginTop: 150,
   },
   animation: {
     width: 220,
