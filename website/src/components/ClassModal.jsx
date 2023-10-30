@@ -8,16 +8,20 @@
 // import react and usestate from react
 import React, { useState } from 'react';
 
+import { useWeb3Context } from "../contexts/web3Context";
+
 function ClassModal({ isOpen, onClose, actionType }) {
+  const { createClassSession, createClass, userWallet } = useWeb3Context();
+
   const [formData, setFormData] = useState({
     // default values
-    title: '',
+    name: '',
     description: ''
   });
 
   // creates method to handle when the confirm button is clicked
   // this will be updated when real data is used
-  const handleConfirm = () => {
+  const handleConfirm = async() => {
     if (actionType === 'update') {
       // Handle the update action
       alert("Class updated!", formData);
@@ -26,7 +30,9 @@ function ClassModal({ isOpen, onClose, actionType }) {
       alert("Data deleted!");
     } else if (actionType === 'add') {
       // handle the add action
-      alert("Data added!", formData);
+      //generate random class id
+      const classId = Math.floor(Math.random() * 1000000);
+      await createClass(formData.name, classId, userWallet)
     }
     // Close the modal after the action is performed
     onClose();

@@ -4,10 +4,10 @@ import { useWeb3Context } from "../../contexts/web3Context";
 import { useGraphContext } from "../../contexts/graphContext"; // Import your GraphContext
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
-import { useSuccess } from "@/components/Success";
+import {useSuccess } from "../../components/Success"
 
 export default function QrCodeGenerator() {
-  const triggerSuccess = useSuccess();
+  const { triggerSuccess} = useSuccess();
   const { createClassSession, createClass, userWallet } = useWeb3Context();
   const { queryClassesByTeacher } = useGraphContext(); // Use the queryClassesByTeacher function
   const [classes, setClasses] = useState([]); // State to store the fetched classes
@@ -16,12 +16,18 @@ export default function QrCodeGenerator() {
   const [url, setUrl] = useState("");
   const qrCodeRef = useRef(null);
 
+  const [loadingClasses, setLoadingClasses] = useState(true);
+
   // Fetch classes when the component mounts
   useEffect(() => {
     console.log(userWallet);
     async function fetchClasses() {
       const classes = await queryClassesByTeacher(userWallet);
-      setClasses(classes);
+      if(classes) {
+        setClasses(classes);
+        setLoadingClasses(false);
+      }
+      
     }
 
     fetchClasses();
@@ -40,13 +46,14 @@ export default function QrCodeGenerator() {
     const generatedUrl = generateURLWithSessionID(sessionId, userWallet);
     console.log(generatedUrl);
     setUrl(generatedUrl);
+    triggerSuccess();
   };
 
   const generateURLWithSessionID = (sessionId, userWallet) => {
     const { hostname, port } = window.location;
     const base = (hostname === "localhost" && port) ? `localhost:${port}` : hostname;
     return `${window.location.protocol}//${base}/attend?sessionId=${sessionId}&userWallet=${userWallet}`;
-    triggerSuccess();
+    
   }
 
   return (
@@ -67,20 +74,26 @@ export default function QrCodeGenerator() {
               <label htmlFor="orgs" className="text-lg font-semibold">
                 Classes:
               </label>
-              <select
-                value={selectedClass}
-                onChange={handleClassChange}
-                className="block mt-2 border border-gray-300 rounded p-2 w-full"
-                name="orgs"
-                id="orgs"
-              >
-                <option value="">Please select</option>
-                {classes.map((classItem) => (
-                  <option key={classItem.id} value={classItem.id}>
-                    {classItem.name}
-                  </option>
-                ))}
-              </select>
+              {loadingClasses ? (
+                <p>Loading classes...</p> // Loading indicator
+              ) : classes.length > 0 ? (
+                <select
+                  value={selectedClass}
+                  onChange={handleClassChange}
+                  className="block mt-2 border border-gray-300 rounded p-2 w-full"
+                  name="orgs"
+                  id="orgs"
+                >
+                  <option value="">Please select</option>
+                  {classes.map((classItem) => (
+                    <option key={classItem.id} value={classItem.id}>
+                      {classItem.name}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <p>No classes available</p> // Message when no classes are available
+              )}
               <label htmlFor="sessionId">Enter Session ID:</label>
               <input
                 type="text"
@@ -99,12 +112,6 @@ export default function QrCodeGenerator() {
             <div>
               {url && (
                 <>
-                  <p>
-                    Generated URL:{" "}
-                    <a href={url} target="_blank" rel="noopener noreferrer">
-                      {url}
-                    </a>
-                  </p>
                   <QRCode value={url} size={200} ref={qrCodeRef} />
                 </>
               )}
@@ -117,4 +124,5 @@ export default function QrCodeGenerator() {
       </div>
     </main>
   );
+  
 }

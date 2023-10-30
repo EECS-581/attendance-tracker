@@ -48,12 +48,13 @@ export const useSuccess = () => {
 
   const { setShowState } = context;
 
-  const trigger = () => {
+  const triggerSuccess = () => {
     setShowState(true);
   };
 
-  return trigger;
+  return { triggerSuccess };
 };
+
 
 export const SuccessProvider = ({ children }) => {
   const [showState, setShowState] = useState(false);

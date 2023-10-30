@@ -18,6 +18,9 @@ import Navbar from "@/components/navbar";
 import LightColorfulButton from '@/components/LightColorfulButton';
 // import Footer component
 import Footer from "@/components/footer";
+import { useState, useEffect } from "react";
+import { useWeb3Context } from "../../contexts/web3Context";
+import { useGraphContext } from "../../contexts/graphContext";
 
 // this adds some dummy test data to use in the charts until we have the backend setup to pull data from
 const classData = [
@@ -30,6 +33,25 @@ const classData = [
 
 // create the Instructor Dashboard page
 export default function Instructor_dashboard() {
+  const [classes, setClasses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const { createClassSession, createClass, userWallet } = useWeb3Context();
+  const { queryClassesByTeacher } = useGraphContext(); // Use the queryClassesByTeacher function
+
+  useEffect(() => {
+    console.log(userWallet);
+    async function fetchClasses() {
+      const classes = await queryClassesByTeacher(userWallet);
+      if(classes) {
+        setClasses(classes);
+        setLoading(false);
+      }
+      
+    }
+
+    fetchClasses();
+  }, [userWallet]);
+
   return (
     // create a main html tag to hold the page
     <main className="min-h-screen flex flex-col w-full overflow-hidden">
@@ -111,7 +133,7 @@ export default function Instructor_dashboard() {
          
           <ul className="">
           {/* loops through the list items  */}
-          {classData.map((classItem, index) => (
+          {classes.map((classItem, index) => (
             // for each item create a list item element 
             <li key={index} className="p-4 border-b">
               <div className="flex items-center justify-between">
