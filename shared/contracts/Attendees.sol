@@ -24,8 +24,6 @@ contract Attendees {
     // Struct: Attendee
     // Description: Represents an attendee with first name, last name, and organization ID.
     struct Attendee {
-        string firstName;
-        string lastName;
         uint256 organizationID;
     }
 
@@ -49,7 +47,7 @@ contract Attendees {
     mapping(string => uint256) public organizationToID; 
 
     // Event: AttendeeCreated
-    event AttendeeCreated(address indexed attendeeAddress, string firstName, string lastName, uint256 organizationID, uint256 time);
+    event AttendeeCreated(address indexed attendeeAddress, uint256 organizationID, uint256 time);
 
     // Event: OrganizationIDSet
     event OrganizationIDSet(string organizationName, uint256 organizationID, uint256 time);
@@ -66,14 +64,14 @@ contract Attendees {
     // Unacceptable Input Values: None
     // Postconditions: A new Attendee is created and associated with _account
     // Return: True if the operation is successful
-    function createAttendee(address _account, string memory _firstName, string memory _lastName, string memory _organization) public returns (bool) {
+    function createAttendee(address _account, string memory _organization) public returns (bool) {
         if(organizationToID[_organization] == 0){ //checks to see if organization has ID
             setOrganizationID(_organization); //if not sets ID
         }
         uint256 _organizationID = organizationToID[_organization]; //sets value
-        Attendee memory attendee = Attendee(_firstName, _lastName, _organizationID); //creates attendee
+        Attendee memory attendee = Attendee(_organizationID); //creates attendee
         addressToAttendee[_account] = attendee; //adds attendee
-        emit AttendeeCreated(_account, _firstName, _lastName, _organizationID, block.timestamp); // Emit the AttendeeCreated event
+        emit AttendeeCreated(_account, _organizationID, block.timestamp); // Emit the AttendeeCreated event
         return true; //return true
     }
 
@@ -89,10 +87,8 @@ contract Attendees {
     // Acceptable Input Values: Valid Ethereum address for _account
     // Unacceptable Input Values: None
     // Postconditions: Attendee information is retrieved
-    function getAddressToAttendee(address _account) external view returns (string memory firstName, string memory lastName, uint256 organizationID) {
+    function getAddressToAttendee(address _account) external view returns (uint256 organizationID) {
         Attendee memory attendee = addressToAttendee[_account]; // get attendee
-        firstName = attendee.firstName; //set first name
-        lastName = attendee.lastName; //set last name
         organizationID = attendee.organizationID; //set id
     }
 

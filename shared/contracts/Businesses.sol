@@ -146,7 +146,7 @@ contract Businesses {
     function buyCoupon(uint256 _couponID) public returns (bool) {
         Coupon storage coupon = couponIDToCoupon[_couponID]; // Gets the coupon
         uint256 price = coupon.price; // Gets the coupon price
-        (,,uint256 organizationID) = attendeesContract.getAddressToAttendee(msg.sender); // Gets the organization ID of the caller
+        uint256 organizationID = attendeesContract.getAddressToAttendee(msg.sender); // Gets the organization ID of the caller
         bool banned = coupon.organizationBanList[organizationID]; // Checks if the caller's organization is banned
         require(!banned, "You are part of a banned organization"); // Requires that the caller's organization is not banned
         require(attendanceTokenContract.balanceOf(msg.sender) >= price); // Requires that the caller has enough tokens to buy the coupon
