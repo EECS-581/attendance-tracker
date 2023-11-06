@@ -88,12 +88,24 @@ function GoogleSigninButton() {
     };
   }, []);
 
+  const handleSignOut = () => {
+    const auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(() => {
+      setIsSignedIn(false); // Update the signed-in state in your component
+      setHashedUserId(null); // Clear the hashed user ID
+      // Add any other necessary state updates here
+    });
+  };  
+
   return (
     <div>
       {!isSignedIn ? (
         <div id="buttonDiv"></div>
       ) : (
-        <p>User signed in!</p>
+        <div>
+          <p>User signed in!</p>
+          <button onClick={handleSignOut}>Sign out</button>
+        </div>
       )}
     </div>
   );

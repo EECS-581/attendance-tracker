@@ -11,6 +11,7 @@
 import Navbar from "@/components/navbar";
 // import footer component 
 import Footer from "@/components/footer";
+import LightColorfulButton from "@/components/LightColorfulButton";
 
 // creates createAccount page
 export default function CreateAccount() {
@@ -31,6 +32,15 @@ export default function CreateAccount() {
           <h2 className="text-2xl font-bold text-center mb-4">Create an Account</h2>
           {/* create form element  */}
           <form className="space-y-4">
+            <div className="mb-4">
+            <label htmlFor="usertype" className="block text-sm font-medium text-gray-600">
+              User Type
+            </label>
+            <select className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300">
+              <option value="instructor">Instructor</option>
+              <option value="business">Business Admin</option>
+            </select>
+            </div>
             <div className="mb-4">
               {/* create label for name  */}
               <label className="block text-sm font-medium text-gray-600">
@@ -99,6 +109,11 @@ export default function CreateAccount() {
             >
               Create Account
             </button>
+            {/* <LightColorfulButton
+              shadowColor="powderblue"
+              title="Update Profile"
+              onClick={handleSubmit}
+            /> */}
           </form>
           {/* create link to login page if the user already has an account  */}
           <p className="mt-4 text-center text-gray-600">

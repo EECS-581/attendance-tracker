@@ -5,40 +5,29 @@
 // Date: 10/05/2023
 // This pages sets up the UI, there are no pre or post conditions, and no inputs to this page
 
+import React from 'react';
 // import the victory chart libraries Line chart
 import { VictoryLine, VictoryChart, VictoryAxis, VictoryTheme } from 'victory';
 
-// creates static data to pull into the chart
-const classData = [
-  {name: "EECS 101", attendance: 100, date: "10/05"},
-  {name: "EECS 268", attendance: 50, date: "10/01"},
-  {name: "EECS 348", attendance: 25, date: "10/02"},
-  {name: "EECS 448", attendance: 75, date: "10/04"},
-  {name: "EECS 581", attendance: 80, date: "10/03"}
-]
-
-// creates the line chart component 
-const LineChart = () => {
+const LineChart = ({ title, data, xKey, yKey, xAxisLabel, yAxisLabel, theme, chartHeight }) => {
   return (
-    // Creates an instance of the Victory Chart, this creates the chart with the specified theme and padding
     <div className="bg-white p-4 rounded-lg shadow-md">
-      <VictoryChart 
-        theme={VictoryTheme.material}
-        height={300}
+      <h2 className='text-2xl md:text-3xl font-semibold text-gray-900'>{title}</h2>
+      <VictoryChart
+        theme={theme || VictoryTheme.material}
+        height={chartHeight || 300}
       >
-        {/* creates the line on the chart with the below specifications  */}
         <VictoryLine
-          data={classData}
-          x="date"
-          y="attendance"
+          data={data}
+          x={xKey}
+          y={yKey}
           style={{
             data: { stroke: "#4299E1" },
             parent: { border: "1px solid #ccc" }
           }}
         />
-        {/* creates the x axis with the below specifications  */}
         <VictoryAxis
-          label="Date"
+          label={xAxisLabel}
           style={{
             axisLabel: { fontSize: 12, padding: 30 },
             grid: { stroke: "gray" },
@@ -46,9 +35,8 @@ const LineChart = () => {
             tickLabels: { fontSize: 8, padding: 5 }
           }}
         />
-        {/* creates the y axis with the below specifications  */}
         <VictoryAxis
-          label="Attendance"
+          label={yAxisLabel}
           style={{
             axisLabel: { fontSize: 12, padding: 30 },
             ticks: { stroke: "gray", size: 5 },
@@ -58,7 +46,8 @@ const LineChart = () => {
         />
       </VictoryChart>
     </div>
-  )
-}
+  );
+};
+
 // exports LineChart component 
 export default LineChart;

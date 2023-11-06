@@ -5,64 +5,49 @@
 // Date: 10/05/2023
 // This pages sets up the UI, there are no pre or post conditions, and no inputs to this page
 
+import React from 'react';
 // import the victory chart libraries bar chart
 import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme } from 'victory';
 
-// creates a static list of data for the chart, this will be replaced with real data 
-const classData = [
-  {name: "EECS 101", attendance: 100, date: "10/05"},
-  {name: "EECS 268", attendance: 50, date: "10/01"},
-  {name: "EECS 348", attendance: 25, date: "10/02"},
-  {name: "EECS 448", attendance: 75, date: "10/04"},
-  {name: "EECS 581", attendance: 80, date: "10/03"}
-]
-
-// creates the bar chart component 
-const BarChart = () => {
+const BarChart = ({ title, data, xKey, yKey, xAxisLabel, yAxisLabel, theme, chartHeight, chartWidth }) => {
   return (
-    // Creates an instance of the Victory Chart, this creates the chart with the specified theme and padding
     <div className="bg-white p-4 rounded-lg shadow-md">
+      <h2 className='text-2xl md:text-3xl font-semibold text-gray-900'>{title}</h2>
       <VictoryChart
-        theme={VictoryTheme.material}
-        domainPadding={20}
-        height={300}
-        width={500}
+        theme={theme || VictoryTheme.material}
+        height={chartHeight || 300}
+        width={chartWidth || 500}
       >
-        {/* Creates the x-axis with a label and styling to make it look nicer */}
         <VictoryAxis
-          label="Class"
+          label={xAxisLabel}
           style={{
-            axisLabel: {fontSize: 16, padding: 30},
-            grid: {stroke: "grey"},
-            ticks: {stroke: "grey", size: 5},
-            tickLabels: {fontSize: 8, padding: 5}
+            axisLabel: { fontSize: 16, padding: 30 },
+            grid: { stroke: "grey" },
+            ticks: { stroke: "grey", size: 5 },
+            tickLabels: { fontSize: 8, padding: 5 }
           }}
         />
-        {/* Creates the y-axis with a label and styling  */}
         <VictoryAxis
-          label="Attendance"
+          label={yAxisLabel}
           style={{
-            axisLabel: {fontSize: 16, padding: 30},
-            ticks: {stroke: "grey", size: 5},
-            tickLabels: {fontSize: 8, padding: 5}
+            axisLabel: { fontSize: 16, padding: 30 },
+            ticks: { stroke: "grey", size: 5 },
+            tickLabels: { fontSize: 8, padding: 5 }
           }}
-          // sets this as the dependent axis 
           dependentAxis
         />
-        {/* Creates the actual bar chart using the class data  */}
         <VictoryBar
-          data={classData}
-          // set up the categories that are pulling the data, class name for the x-axis 
-          x="name"
-          // and attendance number for y-axis
-          y="attendance"
+          data={data}
+          x={xKey}
+          y={yKey}
           style={{
             data: { fill: "#4299E1" }
           }}
         />
       </VictoryChart>
     </div>
-  )
-}
+  );
+};
+
 // exports BarChart component 
 export default BarChart;
