@@ -175,8 +175,8 @@ contract Businesses {
     }
 
     // Function to get coupon details by coupon ID
-    function getCouponDetails(uint256 _couponID) public view returns (uint256, uint256, uint256, string memory) {
+    function getCouponDetails(uint256 _couponID) public view returns (uint256, uint256, uint256) {
         Coupon storage coupon = couponIDToCoupon[_couponID];
-        return (coupon.couponID, coupon.price, coupon.supplyLeft, coupon.description);
+        return (coupon.couponID, coupon.price, coupon.supplyLeft);
     }
 }
