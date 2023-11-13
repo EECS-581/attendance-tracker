@@ -5,6 +5,8 @@ node_modules/
 
 attendance-tracker-app/ios
 
+ios
+
 # Expo
 .expo/
 dist/
