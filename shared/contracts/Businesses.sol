@@ -18,7 +18,7 @@ contract Businesses {
     event BusinessEnrolled(string businessName, uint256 businessID, uint256 time);
 
     // Define an event for coupon creation
-    event CouponCreated(uint256 couponID, uint256 businessID, string businessName, uint256 time);
+    event CouponCreated(uint256 couponID,uint256 supply, string description, uint256 businessID, string businessName, uint256 time);
 
     // Define an event for coupon redemption
     event CouponRedeemed(uint256 couponID, address redeemer, uint256 time);
@@ -44,7 +44,6 @@ contract Businesses {
         uint256 couponID;
         uint256 price;
         uint256 supplyLeft;
-        string description;
         mapping(uint256 => bool) organizationBanList;
     }
 
@@ -84,7 +83,6 @@ contract Businesses {
         coupon.couponID = couponIDCounter; // Sets the coupon ID
         coupon.price = _price; // Sets the coupon price
         coupon.supplyLeft = _supply; // Sets the coupon supply
-        coupon.description = _description; // Sets the coupon description
         for (uint i = 0; i < _banList.length; i++) {
             uint256 BusinessId = attendeesContract.getOrganizationToId(_banList[i]);
             coupon.organizationBanList[BusinessId] = true; // Sets organizations to ban
@@ -92,7 +90,7 @@ contract Businesses {
         uint256[] storage couponArray = businessToCouponIDs[businessID]; // Gets the array of coupon IDs for the business
         couponArray.push(couponIDCounter); // Adds the new coupon ID to the business's coupons
         couponIDCounter++; // Increments the coupon ID counter
-        emit CouponCreated(coupon.couponID, businessID, _businessName, block.timestamp); // Emit the CouponCreated event
+        emit CouponCreated(coupon.couponID, _supply, _description, businessID, _businessName, block.timestamp); // Emit the CouponCreated event
         return coupon.couponID; // Return the coupon ID
     }
 
@@ -137,9 +135,9 @@ contract Businesses {
     }
 
     // Function to get coupon details by coupon ID
-    function getCouponIDToCoupon(uint256 _couponID) public view returns (uint256, uint256, string memory, uint256) {
+    function getCouponIDToCoupon(uint256 _couponID) public view returns (uint256, uint256, uint256) {
         Coupon storage coupon = couponIDToCoupon[_couponID];
-        return (coupon.couponID, coupon.price, coupon.description, coupon.supplyLeft);
+        return (coupon.couponID, coupon.price, coupon.supplyLeft);
     }
 
     // Function to buy a coupon
@@ -177,8 +175,8 @@ contract Businesses {
     }
 
     // Function to get coupon details by coupon ID
-    function getCouponDetails(uint256 _couponID) public view returns (uint256, uint256, uint256, string memory) {
+    function getCouponDetails(uint256 _couponID) public view returns (uint256, uint256, uint256) {
         Coupon storage coupon = couponIDToCoupon[_couponID];
-        return (coupon.couponID, coupon.price, coupon.supplyLeft, coupon.description);
+        return (coupon.couponID, coupon.price, coupon.supplyLeft);
     }
 }
