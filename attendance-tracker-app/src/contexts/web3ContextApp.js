@@ -43,7 +43,7 @@ export const Web3Provider = ({ children }) => {
   
   const walletFactoryAddress = "0x44e3A12Ed8eC1ed5b70c3A344809122d7396DECe";
   const AttendeesAddress ="0xFb8e15EdE3a4013Bb3d0b92b00505eB7c0a49EE5";
-  const TokenContract = "0x918C774D35e53e826fdF5cF8d6fCc898FDA8b1A6";
+  const TokenContract = "0xB0EfFDAFA6b16aC776E9211B73B32DF8F3a1cc68";
   const ClassesContractAddress = "0xcDa8F1D34Cc07f6C2f351AB52b58Caf02CE7E443";
 
   const createInstance = (ContractAddress, ABI, _signer) => {
@@ -92,12 +92,12 @@ export const Web3Provider = ({ children }) => {
       
       console.log("Minting Attendance Token"); // Logging the start of the minting process.
     
-      const tx = await AttendanceTokenContract.mint(address, amount, classSessionID); // Minting tokens.
+      const tx = await AttendanceTokenContract.mint(address, amount, classSessionID, 1); //IMPORTANT made organization id 1 by default add more later
       
-      console.log(tx); // Logging transaction object.
-      await tx.wait(); // Waiting for the transaction to be mined.
+      console.log(tx);
+      await tx.wait();
       
-      console.log("Minted Attendance Token"); // Logging the end of the minting process.
+      console.log("Minted Attendance Token"); 
     }
     
     // Define an asynchronous function as a test function to perform minting and fetching balance.
