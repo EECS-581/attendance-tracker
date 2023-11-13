@@ -32,7 +32,7 @@
  * 
  */
 
-require('dotenv').config({ path: './.env.local' });
+require('dotenv').config({ path: '../.env.local' });
 
 const ethers = require('ethers'); // Importing ethers.js library
 

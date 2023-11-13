@@ -71,32 +71,29 @@ export const GraphProvider = ({ children }) => {
     }
 
     async function queryAccountAdress(hashedTokenID){
-        // finds generated wallet adress for a given users google tokenID
-
         const string = hashedTokenID.toString();
         const ACCOUNT_QUERY = `
         {
-            wallets(where: {authId: "${string}"}) {
+            users(where: {authId: "${string}"}) {
               id
+              address
+              balance
               timestamp
               authId
             }
           }
-          
         `;
 
         const data = await querySubgraph(ACCOUNT_QUERY);
 
         console.log(data)
 
-        if (data.wallets.length > 0) {
-             return data.wallets[0].id;
+        if (data.users.length > 0) {
+             return data.users[0].id;
          }
          else {
              return false;
          }
-
-
     }
 
     async function queryClassesByTeacher(teacherAddress) {

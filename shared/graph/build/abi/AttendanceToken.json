@@ -55,6 +55,12 @@
         "internalType": "uint256",
         "name": "classSessionID",
         "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "organizationID",
+        "type": "uint256"
       }
     ],
     "name": "TokensMinted",
@@ -228,6 +234,11 @@
       {
         "internalType": "uint256",
         "name": "_classSessionID",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_organizationID",
         "type": "uint256"
       }
     ],

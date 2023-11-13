@@ -1,4 +1,4 @@
-require('dotenv').config({ path: './.env.local' }); // Loading environment variables
+require('dotenv').config({ path: '../.env.local' }); // Loading environment variables
 const ethers = require('ethers'); // Importing ethers.js library
 
 const Wallet = require('../abi/Wallet.json'); // Importing ABI and bytecode of Wallet contract
