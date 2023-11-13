@@ -1,6 +1,6 @@
 import { BigInt } from "@graphprotocol/graph-ts";
 import { TokensMinted } from "./generated/AttendanceToken/AttendanceToken";
-import { TokenHolder, MintEvent, Token } from "./generated/schema";
+import { User, MintEvent, Token } from "./generated/schema";
 
 import { EnrolledClass, EnrolledClassSession } from "./generated/Classes/Classes";
 import { Class, ClassSession } from "./generated/schema";
@@ -10,12 +10,15 @@ import { WalletCreated } from "./generated/WalletFactory/WalletFactory"
 import { Wallet } from "./generated/schema"
 
 export function handleWalletCreated(event: WalletCreated): void {
-    let wallet = new Wallet(event.params._address.toHexString())
-    wallet.timestamp = event.block.timestamp
-    wallet.authId = event.params._authId.toString()
-    wallet.userType = event.params._userType.toString()
-    wallet.save()
+  let user = new User(event.params._address.toHexString());
+  user.address = event.params._address;
+  user.balance = BigInt.fromI32(0);  // Initialize balance
+  user.timestamp = event.block.timestamp;
+  user.authId = event.params._authId.toString();
+  user.userType = event.params._userType.toString();
+  user.save();
 }
+
 
 export function handleEnrolledClass(event: EnrolledClass): void {
   let classEntity = new Class(event.params.classId.toString());
@@ -43,25 +46,29 @@ export function handleTokensMinted(event: TokensMinted): void {
   mintEvent.to = event.params.to;
   mintEvent.amount = event.params.amount;
   mintEvent.time = event.params.time.toI32();
-  mintEvent.classSessionID = event.params.classSessionID;  // Added this line
+  mintEvent.classSessionID = event.params.classSessionID;
   mintEvent.save();
 
-  // Update the TokenHolder's balance
-  let tokenHolder = TokenHolder.load(event.params.to.toHex());
-  if (!tokenHolder) {
-    tokenHolder = new TokenHolder(event.params.to.toHex());
-    tokenHolder.address = event.params.to;
-    tokenHolder.balance = BigInt.fromI32(0);
+  // Update the User's balance
+  let user = User.load(event.params.to.toHex());
+  if (!user) {
+      user = new User(event.params.to.toHex());
+      user.address = event.params.to;
+      user.balance = BigInt.fromI32(0);
+      user.timestamp = event.block.timestamp; // Set a default timestamp
+      user.authId = ""; // Default authId
+      user.userType = ""; // Default userType
   }
-  tokenHolder.balance = tokenHolder.balance.plus(event.params.amount);
-  tokenHolder.save();
+  user.balance = user.balance.plus(event.params.amount);
+  user.save();
 
   // Update the total minted tokens
   let token = Token.load("1");
   if (!token) {
-    token = new Token("1");
-    token.totalMinted = BigInt.fromI32(0);
+      token = new Token("1");
+      token.totalMinted = BigInt.fromI32(0);
   }
   token.totalMinted = token.totalMinted.plus(event.params.amount);
   token.save();
 }
+

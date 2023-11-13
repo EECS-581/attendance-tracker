@@ -1,7 +1,10 @@
-type TokenHolder @entity {
+type User @entity {
   id: ID!
   address: Bytes!
   balance: BigInt!
+  timestamp: BigInt!
+  authId: String!
+  userType: String!
 }
 
 type MintEvent @entity {
@@ -33,13 +36,3 @@ type ClassSession @entity {
   timestamp: Int!
   teacher: Bytes!
 }
-
-type Wallet @entity {
-    id: ID!            
-    timestamp: BigInt!           
-    authId: String!
-    userType: String!             
-}
-
-
-
