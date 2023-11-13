@@ -44,3 +44,10 @@ type ClassSession @entity {
   timestamp: Int!
   teacher: Bytes!
 }
+
+type Organization @entity{
+  id : ID!
+  name : String!
+  organizationId : BigInt!
+  timestamp : Int!
+}
