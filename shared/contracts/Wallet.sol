@@ -57,7 +57,7 @@ contract Wallet {
         businessesContract = Businesses(_businesses);
         owner = _owner;
         approvedSigners[owner] = true;
-        attendeesContract.createAttendee(msg.sender, _organization);
+        attendeesContract.createAttendee(address(this), _organization);
         // Additional functionality to enroll, etc.
     }
 
@@ -93,7 +93,7 @@ contract Wallet {
      * @return A boolean indicating the success of the purchase.
      */
     function buyCoupon(uint256 _couponID) public approvedsigner returns (bool) {
-        (, uint256 price, , ) = businessesContract.getCouponDetails(_couponID); // Gets the coupon
+        (, uint256 price, ) = businessesContract.getCouponDetails(_couponID); // Gets the coupon
         tokenContract.approve(address(businessesContract), price);
         businessesContract.buyCoupon(_couponID);
         return true;
