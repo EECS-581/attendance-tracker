@@ -46,6 +46,7 @@ export function handleTokensMinted(event: TokensMinted): void {
   mintEvent.to = event.params.to;
   mintEvent.amount = event.params.amount;
   mintEvent.time = event.params.time.toI32();
+  mintEvent.organizationID = event.params.organizationID;
   mintEvent.classSessionID = event.params.classSessionID;
   mintEvent.save();
 
@@ -56,15 +57,15 @@ export function handleTokensMinted(event: TokensMinted): void {
     user = new User(userId);
     user.address = event.params.to;
     user.balance = BigInt.fromI32(0);
-    user.timestamp = event.block.timestamp; // Set a default timestamp
-    user.authId = ""; // Default authId
-    user.userType = ""; // Default userType
+    user.timestamp = event.block.timestamp;
+    user.authId = ""; 
+    user.userType = ""; 
   }
   user.balance = user.balance.plus(event.params.amount);
   user.save();
 
   // Update the organization-specific balance for the User
-  let orgId = event.params.classSessionID.toString(); // Assuming classSessionID represents the organization
+  let orgId = event.params.organizationID.toString();
   let orgBalanceId = userId + "-" + orgId;
   let orgBalance = OrganizationBalance.load(orgBalanceId);
   if (!orgBalance) {

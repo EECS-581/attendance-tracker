@@ -21,6 +21,7 @@ type MintEvent @entity {
   amount: BigInt!
   time: Int!
   classSessionID: BigInt!
+  organizationID: BigInt!
 }
 
 type Token @entity {
