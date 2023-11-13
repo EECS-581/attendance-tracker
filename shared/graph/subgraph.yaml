@@ -51,7 +51,7 @@ dataSources:
     name: AttendanceToken
     network: mumbai
     source:
-      address: "0xB0EfFDAFA6b16aC776E9211B73B32DF8F3a1cc68"
+      address: "0x44Fd4Eee04527b8dAD8A2D9Bf3CC1e1BeDEa68C7"
       abi: AttendanceToken
       startBlock: 41434737
     mapping:

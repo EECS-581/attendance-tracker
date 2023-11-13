@@ -43,7 +43,7 @@ export const Web3Provider = ({ children }) => {
   
   const walletFactoryAddress = "0x44e3A12Ed8eC1ed5b70c3A344809122d7396DECe";
   const AttendeesAddress ="0xFb8e15EdE3a4013Bb3d0b92b00505eB7c0a49EE5";
-  const TokenContract = "0xB0EfFDAFA6b16aC776E9211B73B32DF8F3a1cc68";
+  const TokenContract = "0x44Fd4Eee04527b8dAD8A2D9Bf3CC1e1BeDEa68C7";
   const ClassesContractAddress = "0xcDa8F1D34Cc07f6C2f351AB52b58Caf02CE7E443";
 
   const createInstance = (ContractAddress, ABI, _signer) => {

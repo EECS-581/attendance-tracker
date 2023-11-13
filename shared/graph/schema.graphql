@@ -11,7 +11,7 @@ type User @entity {
 type OrganizationBalance @entity {
   id: ID!
   user: User!
-  organizationId: Bytes!   
+  organizationId: BigInt!  
   balance: BigInt!         
 }
 

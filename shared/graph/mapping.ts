@@ -7,7 +7,9 @@ import { Class, ClassSession } from "./generated/schema";
 
 
 import { WalletCreated } from "./generated/WalletFactory/WalletFactory"
-import { Wallet } from "./generated/schema"
+import { Bytes } from "@graphprotocol/graph-ts";
+
+
 
 export function handleWalletCreated(event: WalletCreated): void {
   let user = new User(event.params._address.toHexString());
@@ -65,14 +67,16 @@ export function handleTokensMinted(event: TokensMinted): void {
   user.save();
 
   // Update the organization-specific balance for the User
-  let orgId = event.params.organizationID.toString();
-  let orgBalanceId = userId + "-" + orgId;
+  let orgId = event.params.organizationID;
+  let orgBalanceId = userId + "-" + orgId.toString();
   let orgBalance = OrganizationBalance.load(orgBalanceId);
   if (!orgBalance) {
     orgBalance = new OrganizationBalance(orgBalanceId);
     orgBalance.user = user.id;
     orgBalance.organizationId = orgId;
     orgBalance.balance = BigInt.fromI32(0);
+  } else {
+    orgBalance.organizationId = orgId; // Corrected this line
   }
   orgBalance.balance = orgBalance.balance.plus(event.params.amount);
   orgBalance.save();
@@ -86,4 +90,5 @@ export function handleTokensMinted(event: TokensMinted): void {
   token.totalMinted = token.totalMinted.plus(event.params.amount);
   token.save();
 }
+
 

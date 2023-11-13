@@ -81,7 +81,7 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.attendancetracker"
+    namespace 'com.hudsonh.attendancetracker'
     defaultConfig {
         applicationId 'com.hudsonh.attendancetracker'
         minSdkVersion rootProject.ext.minSdkVersion
