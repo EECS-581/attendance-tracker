@@ -3,7 +3,7 @@
 # dependencies
 node_modules/
 
-./attendance-tracker-app/ios
+attendance-tracker-app/ios
 
 # Expo
 .expo/
