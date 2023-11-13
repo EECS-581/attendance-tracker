@@ -1,6 +1,6 @@
 import { BigInt } from "@graphprotocol/graph-ts";
 import { TokensMinted } from "./generated/AttendanceToken/AttendanceToken";
-import { User, MintEvent, Token } from "./generated/schema";
+import { User, MintEvent, Token, OrganizationBalance } from "./generated/schema";
 
 import { EnrolledClass, EnrolledClassSession } from "./generated/Classes/Classes";
 import { Class, ClassSession } from "./generated/schema";
@@ -49,24 +49,38 @@ export function handleTokensMinted(event: TokensMinted): void {
   mintEvent.classSessionID = event.params.classSessionID;
   mintEvent.save();
 
-  // Update the User's balance
-  let user = User.load(event.params.to.toHex());
+  // Update the User's total balance
+  let userId = event.params.to.toHex();
+  let user = User.load(userId);
   if (!user) {
-      user = new User(event.params.to.toHex());
-      user.address = event.params.to;
-      user.balance = BigInt.fromI32(0);
-      user.timestamp = event.block.timestamp; // Set a default timestamp
-      user.authId = ""; // Default authId
-      user.userType = ""; // Default userType
+    user = new User(userId);
+    user.address = event.params.to;
+    user.balance = BigInt.fromI32(0);
+    user.timestamp = event.block.timestamp; // Set a default timestamp
+    user.authId = ""; // Default authId
+    user.userType = ""; // Default userType
   }
   user.balance = user.balance.plus(event.params.amount);
   user.save();
 
+  // Update the organization-specific balance for the User
+  let orgId = event.params.classSessionID.toString(); // Assuming classSessionID represents the organization
+  let orgBalanceId = userId + "-" + orgId;
+  let orgBalance = OrganizationBalance.load(orgBalanceId);
+  if (!orgBalance) {
+    orgBalance = new OrganizationBalance(orgBalanceId);
+    orgBalance.user = user.id;
+    orgBalance.organizationId = orgId;
+    orgBalance.balance = BigInt.fromI32(0);
+  }
+  orgBalance.balance = orgBalance.balance.plus(event.params.amount);
+  orgBalance.save();
+
   // Update the total minted tokens
   let token = Token.load("1");
   if (!token) {
-      token = new Token("1");
-      token.totalMinted = BigInt.fromI32(0);
+    token = new Token("1");
+    token.totalMinted = BigInt.fromI32(0);
   }
   token.totalMinted = token.totalMinted.plus(event.params.amount);
   token.save();

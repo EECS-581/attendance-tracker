@@ -2,9 +2,17 @@ type User @entity {
   id: ID!
   address: Bytes!
   balance: BigInt!
+  organizationBalances: [OrganizationBalance!]! @derivedFrom(field: "user")
   timestamp: BigInt!
   authId: String!
   userType: String!
+}
+
+type OrganizationBalance @entity {
+  id: ID!
+  user: User!
+  organizationId: Bytes!   
+  balance: BigInt!         
 }
 
 type MintEvent @entity {
