@@ -37,9 +37,10 @@ export default function CreateAccount() {
             </div>
           ) : (
             <div>
-              <h3 className="text-center mb-4">You selected: {selectedOrganization} Signin with Google to finish account Creation</h3>
+              <h3 className="text-center mb-4">Welcome {selectedOrganization}</h3>
+              <h3 className="text-center mb-4">Please sign in with Google to continue</h3>
               <div className="flex justify-center"> 
-                <GoogleSigninButton />
+                <GoogleSigninButton userType={selectedOrganization}/>
               </div>
             </div>
           )}
