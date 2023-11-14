@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
-
-// Import Google Sign-in Button Component
 import GoogleSigninButton from '@/components/GoogleSigninButton';
+import UserTypeSelectCard from '@/components/UserTypeSelectCard';
 
 export default function CreateAccount() {
-  const [organization, setOrganization] = useState('');
+  const [selectedOrganization, setSelectedOrganization] = useState('');
 
-  const handleOrganizationChange = (event) => {
-    setOrganization(event.target.value);
+  const handleOrganizationSelect = (organization) => {
+    setSelectedOrganization(organization);
   };
 
   return (
@@ -21,28 +20,30 @@ export default function CreateAccount() {
       </div>
 
       <div className="flex-1 flex items-center justify-center">
-        <div className="w-full sm:w-96 p-6 rounded-lg bg-white shadow-md">
+        <div className="w-full sm:w-3/4 p-6 rounded-lg bg-white shadow-md">
           <h2 className="text-2xl font-bold text-center mb-4">Create an Account</h2>
-          <form className="space-y-4">
-            {/* Organization Dropdown */}
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-600">Organization</label>
-              <select
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
-                value={organization}
-                onChange={handleOrganizationChange}
-              >
-                <option value="">Select Organization</option>
-                <option value="instructor">Instructor</option>
-                <option value="business">Business</option>
-                <option value="student">Student</option>
-              </select>
+          
+          {!selectedOrganization ? (
+            <div className="flex justify-between">
+              <div className="mr-4">
+                <UserTypeSelectCard name="Instructor" image="path_to_instructor_image" onSelect={handleOrganizationSelect} />
+              </div>
+              <div className="mr-4">
+                <UserTypeSelectCard name="Student" image="path_to_student_image" onSelect={handleOrganizationSelect} />
+              </div>
+              <div>
+                <UserTypeSelectCard name="Business" image="path_to_business_image" onSelect={handleOrganizationSelect} />
+              </div>
             </div>
-            
-            {/* Google Sign-in Button */}
-            <GoogleSigninButton />
+          ) : (
+            <div>
+              <h3 className="text-center mb-4">You selected: {selectedOrganization} Signin with Google to finish account Creation</h3>
+              <div className="flex justify-center"> 
+                <GoogleSigninButton />
+              </div>
+            </div>
+          )}
 
-          </form>
           <p className="mt-4 text-center text-gray-600">
             Already have an account?{" "}
             <a href="/login" className="text-blue-500 hover:underline">Log in</a>
