@@ -9,6 +9,7 @@ function GoogleSigninButton({userType}) {
 
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [hashedUserId, setHashedUserId] = useState(null);
+  const [check, setCheck] = useState(null);
 
   const decodeJWT = (token) => {
     try {
@@ -36,9 +37,12 @@ function GoogleSigninButton({userType}) {
     const userId = decodedToken.sub;
     const hashedId = await hashUserId(userId);
     setHashedUserId(hashedId);
-    const check = await queryAccountAdress(hashedId);
+    const exists = await queryAccountAdress(hashedId)
+    console.log(exists);
+    setCheck(exists);
+    console.log(check);
 
-    if (!check) {
+    if (!exists) {
       if(userType){
         await createWallet(hashedId, userType);
         console.log("New user created");
@@ -54,8 +58,8 @@ function GoogleSigninButton({userType}) {
      else{
       // Account exists, retrieve userType
       console.log("User exists");
-      console.log(check);
-      setUserWallet(check);
+      console.log(exists);
+      setUserWallet(exists);
       setIsSignedIn(true);
     }
 
