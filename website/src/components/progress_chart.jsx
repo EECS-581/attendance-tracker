@@ -15,7 +15,7 @@ const ProgressChart = ({ title, data, colors, innerRadius, labelStyle, animation
       <div className="flex justify-center items-center">
         <div className="relative">
           <VictoryPie
-            colorScale={colors || ["cyan", "gray"]}
+            colorScale={colors || ["powderblue", "pink"]}
             width={chartWidth || 400}
             height={chartHeight || 400}
             data={data || [

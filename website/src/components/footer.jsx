@@ -3,47 +3,59 @@
 // Programmers name: Libby Miller
 // Date: 09/24/2023
 // Updated: 10/17/2023, Requirement 36.7 - CSS styling version 1 - added tailwind css classes for styling
+// Updated: 11/13/2023, Fix issue with nested routing, switched to using <LINK> component instead of <a> tags
 // This pages sets up the UI, there are no pre or post conditions, and no inputs to this page
 
+// imports the link component from next for routing
+import Link from 'next/link';
 // This section creates the footer component 
 const Footer = () => {
   return (
-    // creates an html footer tag 
+    // creates a footer DOM element 
     <footer className="bg-gray-100 text-gray-800 py-8">
-      {/* creates a container to hold the links within the footer */}
+      {/* creates a container to hold the two footer columns */}
       <div className="container mx-auto flex flex-wrap justify-between">
-        {/* creates container to hold the links  */}
+        {/* creates a container to hold first column  */}
         <div className="w-full sm:w-1/2 md:w-1/4 lg:w-1/6 mb-4">
-          {/* creates a header for links  */}
+          {/* creates a header for the links  */}
           <h2 className="text-xl font-bold">USEFUL LINKS</h2>
-          {/* creates a list of links  */}
+          {/* creates a list of links for footer  */}
           <ul className="mt-4 space-y-2">
-            {/* create a list item for home navigation  */}
             <li>
-              <a href="/" className="hover:text-gray-300">Home</a>
+              {/* Use Link component for navigation */}
+              <Link href="/">
+                <span className="hover:text-gray-300">Home</span>
+              </Link>
             </li>
-            {/* create a list item and link for hte about page  */}
             <li>
-              <a href="about" className="hover:text-gray-300">About</a>
+              {/* Use Link component for navigation */}
+              <Link href="/about">
+                <span className="hover:text-gray-300">About</span>
+              </Link>
             </li>
-            {/* create a list item and link for the insturtor dashboard  */}
             <li>
-              <a href="instructor_dashboard" className="hover:text-gray-300">Instructors</a>
+              {/* Use Link component for navigation */}
+              <Link href="/instructor_dashboard">
+                <span className="hover:text-gray-300">Instructors</span>
+              </Link>
             </li>
-            {/* create a list and link for the business dashboard  */}
             <li>
-              <a href="business_dashboard" className="hover:text-gray-300">Businesses</a>
+              {/* Use Link component for navigation */}
+              <Link href="/business_dashboard">
+                <span className="hover:text-gray-300">Businesses</span>
+              </Link>
             </li>
           </ul>
         </div>
-        {/* creates a container to hold the contact or other info */}
-        <div className="w-full sm: w-1/2 md:w-1/4 lg:w-1/6 mb-4">
-          {/* creates a title for contacts  */}
+        {/* creates second column container  */}
+        <div className="w-full sm:w-1/2 md:w-1/4 lg:w-1/6 mb-4">
           <h2 className="text-xl font-bold">CONTACT US</h2>
-          {/* creates a list to hold contact info  */}
           <ul className="mt-4 space-y-2">
             <li>
-              <a href="/" className="hover:text-gray-300">AttendThis.com</a>
+              {/* Use Link component for navigation */}
+              <Link href="/">
+                <span className="hover:text-gray-300">AttendThis.com</span>
+              </Link>
             </li>
             <li>
               <p>101 AttendThis Ave.</p>
@@ -57,5 +69,5 @@ const Footer = () => {
     </footer>
   );
 };
-// export the footer component so it can be used elsewhere on the site
+// export footer component so it can be used elsewhere in application
 export default Footer;

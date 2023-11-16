@@ -19,12 +19,22 @@ import Footer from "@/components/footer";
 
 // this adds some dummy test data to use in the charts until we have the backend setup to pull data from
 const classData = [
-  {name: "EECS 101", attendance: 100, date: "10/05"},
-  {name: "EECS 268", attendance: 50, date: "10/01"},
-  {name: "EECS 348", attendance: 25, date: "10/02"},
-  {name: "EECS 448", attendance: 75, date: "10/04"},
-  {name: "EECS 581", attendance: 80, date: "10/03"}
+  {name: "EECS 101", attendance: 100, date: "2023-10-05"},
+  {name: "EECS 268", attendance: 50, date: "2023-10-01"},
+  {name: "EECS 348", attendance: 25, date: "2023-10-03"},
+  {name: "EECS 448", attendance: 75, date: "2023-10-04"},
+  {name: "EECS 581", attendance: 80, date: "2023-10-23"},
+  {name: "EECS 101", attendance: 100, date: "2023-10-17"},
+  {name: "EECS 268", attendance: 50, date: "2023-11-01"},
+  {name: "EECS 348", attendance: 25, date: "2023-11-03"},
+  {name: "EECS 448", attendance: 75, date: "2023-11-12"},
+  {name: "EECS 581", attendance: 80, date: "2023-11-11"}
 ]
+
+const formattedData = classData.map(point => ({
+  date: new Date(point.date),
+  attendance: point.attendance,
+}));
 
 const progressData = [
   { x: "attending", y: 75 },
@@ -62,12 +72,12 @@ export default function Insights() {
             {/* creates an instance of the line chart  */}
             <LineChart 
               title="Attendance Trends"
-              data={classData}
+              data={formattedData}
               xKey="date"
               yKey="attendance"
               xAxisLabel="Date"
               yAxisLabel="Attendance"
-              chartHeight={300}
+              chartHeight={250}
             />
           </div>
           <div>
@@ -83,7 +93,7 @@ export default function Insights() {
                 fontWeight: "bold"
               }}
               animationData={{y: 75 }}
-              colors={["#4299E1", "gray"]}
+              colors={["powderblue", "pink"]}
             />
           </div>
         </div>

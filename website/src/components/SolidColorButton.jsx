@@ -36,6 +36,7 @@ import Link from "next/link";
 const SolidColorButton = ({
   title,
   link,
+  onClick,
   backgroundColor = "pink",
   textColor = "black",
 }) => {
@@ -59,11 +60,30 @@ const SolidColorButton = ({
     textDecoration: "none",
   };
 
+  const handleClick = (e) => {
+    if (onClick) {
+      onClick(e);
+    } else if (link) {
+      // Navigate to the provided link if it exists
+      window.location.href = link;
+    }
+  };
+
   return (
-    <Link href={link} passHref>
-      <div style={buttonStyle}>{title}</div>
-    </Link>
+    <div>
+    {link ? (
+      <Link href={link} passHref>
+        <div style={buttonStyle}>{title}</div>
+      </Link>
+    ) : (
+      <div style={buttonStyle} onClick={handleClick}>
+        {title}
+      </div>
+    )}
+  </div>
   );
 };
+
+
 
 export default SolidColorButton;

@@ -16,6 +16,8 @@ import Navbar from "@/components/navbar";
 // import Footer component
 import Footer from "@/components/footer";
 import ClassModal from '@/components/ClassModal';
+import SolidColorButton from '@/components/SolidColorButton';
+import LightColorfulButton from '@/components/LightColorfulButton';
 // creates a static list of classes - this will need to be updated when we are pulling from database
 var listItems = ['EECS 101', 'EECS 581', 'EECS 658', 'EECS 388', 'EECS 268'];
 
@@ -66,15 +68,12 @@ export default function View_Classes() {
           <h2 className="text-2xl font-medium mb-6">View Classes</h2>
           <div className="flex space-x-4 mb-4">
             {/* creates the Add new class button, this will need to be updated once we have CRUD functionality */}
-            <div 
-            onClick={openAddModal}
-            className='inline-flex items-center justify-center bg-white rounded-lg border border-black p-2 cursor-pointer font-bold relative top-[-3px] left-[-3px] no-underline text-black'
-            style={{
-              backgroundColor: "pink"
-            }}
-            >
-              Add New Class
-            </div>
+            <SolidColorButton
+                title = "Add New Class"
+                onClick = {openAddModal}
+                backgroundColor = "pink"
+                textColor = "black"
+            />             
           </div>
           {/* creates an html list, this will need to be refactored when pulling real data */}
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -86,13 +85,17 @@ export default function View_Classes() {
                 <span className="text-lg font-semibold">{listItem}</span>
                 {/* create a button for updating the class  */}
                 <div className="space-x-2">
-                  <div onClick={openUpdateModal} className="inline-flex items-center justify-center bg-white rounded-lg border border-black p-2 cursor-pointer font-bold relative top-[-3px] left-[-3px] no-underline text-black">
-                    Update 
-                  </div>
+                  <LightColorfulButton
+                    title="Update"
+                    onClick={openUpdateModal}
+                    shadowColor='powderblue'
+                  />
                   {/* create a button for deleting the class  */}
-                  <div onClick={openDeleteModal} className="inline-flex items-center justify-center bg-white rounded-lg border border-black p-2 cursor-pointer font-bold relative top-[-3px] left-[-3px] no-underline text-black">
-                    Delete 
-                  </div>
+                  <LightColorfulButton
+                    title="Delete"
+                    onClick={openDeleteModal}
+                    shadowColor='pink'
+                  />
                 </div>
               </div>
             </li>

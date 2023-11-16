@@ -3,9 +3,11 @@
 // This code creates the Create account Page for the website
 // Programmers name: Libby Miller
 // Date: 10/17/2023
-// This pages sets up the UI, there are no pre or post conditions to this page
+// This pages sets up the UI, there are no pre conditions to this page
 // inputs to this page are the users data for each field
+// post conditions of this page are the created account with the users data 
 
+import { useState } from "react";
 // import necessary components
 // import Navbar component
 import Navbar from "@/components/navbar";
@@ -15,6 +17,35 @@ import LightColorfulButton from "@/components/LightColorfulButton";
 
 // creates createAccount page
 export default function CreateAccount() {
+
+  const [userData, setUserData ] = useState({
+    username: "",
+    email: "",
+    password: "",
+    institution: "",
+    usertype: "",
+    profilePicture: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUserData({ ...userData, [name]: value });
+  };
+
+  // const handleFileChange = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     setUserData({ ...userData, profilePicture: file.name });
+  //   }
+  // };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert("user updated data: ", userData);
+    
+  };
+
+
   return (
     // create main page container
     <main className="w-full min-h-screen flex flex-col overflow-hidden bg-gray-100">
@@ -31,7 +62,7 @@ export default function CreateAccount() {
           {/* create title for form  */}
           <h2 className="text-2xl font-bold text-center mb-4">Create an Account</h2>
           {/* create form element  */}
-          <form className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div className="mb-4">
             <label htmlFor="usertype" className="block text-sm font-medium text-gray-600">
               User Type
@@ -51,6 +82,22 @@ export default function CreateAccount() {
                 type="text"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
                 placeholder="Full Name"
+                onChange={handleInputChange}
+                value={userData.name}
+              />
+            </div>
+            <div className="mb-4">
+              {/* create label for name  */}
+              <label className="block text-sm font-medium text-gray-600">
+                Username
+              </label>
+              {/* create input for name  */}
+              <input
+                type="text"
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                placeholder="Username"
+                onChange={handleInputChange}
+                value={userData.username}
               />
             </div>
             {/* create label for institution  */}
@@ -63,6 +110,8 @@ export default function CreateAccount() {
                 type="text"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
                 placeholder="Institution"
+                onChange={handleInputChange}
+                value={userData.institution}
               />
             </div>
             {/* create label for email address  */}
@@ -75,6 +124,8 @@ export default function CreateAccount() {
                 type="email"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
                 placeholder="Email"
+                onChange={handleInputChange}
+                value={userData.email}
               />
             </div>
             {/* create label for password  */}
@@ -87,6 +138,8 @@ export default function CreateAccount() {
                 type="password"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
                 placeholder="Password"
+                onChange={handleInputChange}
+                value={userData.password}
               />
             </div>
             {/* create label for confirming password  */}
@@ -99,21 +152,18 @@ export default function CreateAccount() {
                 type="password"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
                 placeholder="Confirm Password"
+                onChange={handleInputChange}
+                value={userData.password}
               />
             </div>
             {/* create button for submitting form and creating account */}
-            {/* this will need to be refactored when authentication is set up */}
-            <button
-              type="submit"
-              className="w-full bg-blue-500 text-white rounded-md py-2 hover:bg-blue-600 transition duration-300"
-            >
-              Create Account
-            </button>
-            {/* <LightColorfulButton
-              shadowColor="powderblue"
-              title="Update Profile"
-              onClick={handleSubmit}
-            /> */}
+            <div className="text-center">
+              <LightColorfulButton
+                shadowColor="powderblue"
+                title="Update Profile"
+                onClick={handleSubmit}
+              />
+            </div>
           </form>
           {/* create link to login page if the user already has an account  */}
           <p className="mt-4 text-center text-gray-600">

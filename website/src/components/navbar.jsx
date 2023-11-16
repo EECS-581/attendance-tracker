@@ -3,13 +3,16 @@
 // Programmers name: Libby Miller
 // Date: 09/24/2023
 // Updated: 10/17/2023, Requirement 36.7 - CSS styling version 1 - added tailwind css classes for styling
+// Updated: 11/13/2023, Switch navigation from <a> tags to using next js Link components
 // This pages sets up the UI, there are no pre or post conditions, and no inputs to this page
 
 // This section brings in the necessary imports
 // import React and useState to track the navbar state
 import React, { useState } from "react";
+// import Image from next for logo
 import Image from "next/image";
-
+// import Link for navigation routing
+import Link from "next/link";
 
 // This section creates an array, that hold the menu item obejcts
 // The objects in the list contain the text, and path of each item
@@ -36,14 +39,14 @@ const Navbar = () => {
           <div className="flex justify-between items-center py-4">
             {/* this will be replaced with the logo image in sprint 4 */}
             <h1 className="text-black font-bold">
-            <a href="/">
+            <Link href="/" passHref>
               <Image
                 src="/assets/medium_logo.png"
                 alt="Classroom"
                 width={150}
                 height={150}
               />
-            </a>
+            </Link>
             </h1>
             <div className="sm:hidden">
               {/* this button will only appear on smaller screens for mobile nav  */}
@@ -75,7 +78,9 @@ const Navbar = () => {
                   className={"font-medium text-2xl hover:text-gray-500"}
                 >
                   {/* create a link for each list item  */}
-                  <a href={menu.href}>{menu.text}</a>
+                  <Link href={menu.href}>
+                    <span>{menu.text}</span>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -91,7 +96,9 @@ const Navbar = () => {
                     className={"font-medium text-lg hover:text-gray-500"}
                   >
                     {/* create a link for each item  */}
-                    <a href={menu.href}>{menu.text}</a>
+                    <Link href={menu.href}>
+                      <span>{menu.text}</span>
+                    </Link>                  
                   </li>
                 ))}
               </ul>
