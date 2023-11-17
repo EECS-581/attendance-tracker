@@ -114,7 +114,7 @@ export const Web3Provider = ({ children }) => {
     
     // Define an asynchronous function to get the balance of the AttendanceToken.
     async function getAttendanceBalance(address) {
-      let AttendanceTokenContract= new ethers.Contract('0x918C774D35e53e826fdF5cF8d6fCc898FDA8b1A6', AttendanceToken.abi, signer);
+      let AttendanceTokenContract= new ethers.Contract('0x44Fd4Eee04527b8dAD8A2D9Bf3CC1e1BeDEa68C7', AttendanceToken.abi, signer);
       const balance = await AttendanceTokenContract.balanceOf(address); // Fetching balance of an address
       let formattedBalance= parseFloat(balance)
       console.log(formattedBalance)
@@ -124,7 +124,7 @@ export const Web3Provider = ({ children }) => {
     // Define an asynchronous function to mint AttendanceToken.
     async function mintAttendanceToken(address, amount, classSessionID) {
       // Creating a contract instance.
-      let AttendanceTokenContract= new ethers.Contract('0x918C774D35e53e826fdF5cF8d6fCc898FDA8b1A6', AttendanceToken.abi, signer);
+      let AttendanceTokenContract= new ethers.Contract('0x44Fd4Eee04527b8dAD8A2D9Bf3CC1e1BeDEa68C7', AttendanceToken.abi, signer);
       setAttendanceTokenContract(AttendanceTokenContract); // Setting the AttendanceTokenContract state.
       
       console.log("Minting Attendance Token"); // Logging the start of the minting process.

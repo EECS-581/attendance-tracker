@@ -35,7 +35,6 @@ const Redeem = ({ navigation }) => {
         }}
       />
       <View style={styles.container}>
-        <Text style={[globalStyles.defaultFont, { fontSize: 24 }]}>Redeem</Text>
         <FlatList
           data={TempCouponData}
           keyExtractor={(item) => item.id.toString()}

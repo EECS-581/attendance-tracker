@@ -64,6 +64,10 @@ export class TokensMinted__Params {
   get classSessionID(): BigInt {
     return this._event.parameters[3].value.toBigInt();
   }
+
+  get organizationID(): BigInt {
+    return this._event.parameters[4].value.toBigInt();
+  }
 }
 
 export class Transfer extends ethereum.Event {
@@ -239,12 +243,22 @@ export class AttendanceToken extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  mint(_to: Address, _amount: BigInt, _classSessionID: BigInt): boolean {
-    let result = super.call("mint", "mint(address,uint256,uint256):(bool)", [
-      ethereum.Value.fromAddress(_to),
-      ethereum.Value.fromUnsignedBigInt(_amount),
-      ethereum.Value.fromUnsignedBigInt(_classSessionID)
-    ]);
+  mint(
+    _to: Address,
+    _amount: BigInt,
+    _classSessionID: BigInt,
+    _organizationID: BigInt
+  ): boolean {
+    let result = super.call(
+      "mint",
+      "mint(address,uint256,uint256,uint256):(bool)",
+      [
+        ethereum.Value.fromAddress(_to),
+        ethereum.Value.fromUnsignedBigInt(_amount),
+        ethereum.Value.fromUnsignedBigInt(_classSessionID),
+        ethereum.Value.fromUnsignedBigInt(_organizationID)
+      ]
+    );
 
     return result[0].toBoolean();
   }
@@ -252,13 +266,19 @@ export class AttendanceToken extends ethereum.SmartContract {
   try_mint(
     _to: Address,
     _amount: BigInt,
-    _classSessionID: BigInt
+    _classSessionID: BigInt,
+    _organizationID: BigInt
   ): ethereum.CallResult<boolean> {
-    let result = super.tryCall("mint", "mint(address,uint256,uint256):(bool)", [
-      ethereum.Value.fromAddress(_to),
-      ethereum.Value.fromUnsignedBigInt(_amount),
-      ethereum.Value.fromUnsignedBigInt(_classSessionID)
-    ]);
+    let result = super.tryCall(
+      "mint",
+      "mint(address,uint256,uint256,uint256):(bool)",
+      [
+        ethereum.Value.fromAddress(_to),
+        ethereum.Value.fromUnsignedBigInt(_amount),
+        ethereum.Value.fromUnsignedBigInt(_classSessionID),
+        ethereum.Value.fromUnsignedBigInt(_organizationID)
+      ]
+    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -550,6 +570,10 @@ export class MintCall__Inputs {
 
   get _classSessionID(): BigInt {
     return this._call.inputValues[2].value.toBigInt();
+  }
+
+  get _organizationID(): BigInt {
+    return this._call.inputValues[3].value.toBigInt();
   }
 }
 

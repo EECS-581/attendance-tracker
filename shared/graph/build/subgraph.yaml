@@ -51,7 +51,7 @@ dataSources:
     name: AttendanceToken
     network: mumbai
     source:
-      address: "0x918C774D35e53e826fdF5cF8d6fCc898FDA8b1A6"
+      address: "0x44Fd4Eee04527b8dAD8A2D9Bf3CC1e1BeDEa68C7"
       abi: AttendanceToken
       startBlock: 41434737
     mapping:
@@ -66,6 +66,6 @@ dataSources:
         - name: AttendanceToken
           file: abi/AttendanceToken.json
       eventHandlers:
-        - event: TokensMinted(indexed address,uint256,uint256,uint256)
+        - event: TokensMinted(indexed address,uint256,uint256,uint256,uint256)
           handler: handleTokensMinted
       file: WalletFactory/WalletFactory.wasm

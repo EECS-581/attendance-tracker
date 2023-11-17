@@ -10,11 +10,15 @@
 // inputs to this page are the users addition, deletion, or updating of class items
 
 // import the necessary components
-import React, { useState } from 'react';
 // import Navbar component
 import Navbar from "@/components/navbar";
 // import Footer component
 import Footer from "@/components/footer";
+import { useState, useEffect } from "react";
+import { useWeb3Context } from "../../contexts/web3Context";
+import { useGraphContext } from "../../contexts/graphContext";
+
+
 import ClassModal from '@/components/ClassModal';
 import SolidColorButton from '@/components/SolidColorButton';
 import LightColorfulButton from '@/components/LightColorfulButton';
@@ -23,6 +27,24 @@ var listItems = ['EECS 101', 'EECS 581', 'EECS 658', 'EECS 388', 'EECS 268'];
 
 // creates the View Classes page
 export default function View_Classes() {
+  const [classes, setClasses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const { createClassSession, createClass, userWallet } = useWeb3Context();
+  const { queryClassesByTeacher } = useGraphContext(); // Use the queryClassesByTeacher function
+
+  useEffect(() => {
+    console.log(userWallet);
+    async function fetchClasses() {
+      const classes = await queryClassesByTeacher(userWallet);
+      if(classes) {
+        setClasses(classes);
+        setLoading(false);
+      }
+      
+    }
+
+    fetchClasses();
+  }, [userWallet, createClass]);
 
    // sets up variables for the add, update and delete button modals with a default value of false
    const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
@@ -78,11 +100,11 @@ export default function View_Classes() {
           {/* creates an html list, this will need to be refactored when pulling real data */}
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* loops through the list items  */}
-          {listItems.map((listItem, index) => (
+          {classes.map((classItem, index) => (
             // for each item create a list item element 
             <li key={index} className="bg-white p-4 shadow-md rounded-md">
               <div className="flex justify-between items-center">
-                <span className="text-lg font-semibold">{listItem}</span>
+                <span className="text-lg font-semibold">{classItem.name}</span>
                 {/* create a button for updating the class  */}
                 <div className="space-x-2">
                   <LightColorfulButton

@@ -17,9 +17,9 @@ interface IAttendees {
     // - firstName: The first name of the attendee
     // - lastName: The last name of the attendee
     // - organizationID: The organization ID of the attendee
-    function getAddressToAttendee(address _account) external view returns (string memory firstName, string memory lastName, uint256 organizationID);
+    function getAddressToAttendee(address _account) external view returns (uint256 organizationID);
 
-    function createAttendee(address _account, string calldata _firstName, string calldata _lastName, string calldata _organization) external returns (bool);
+    function createAttendee(address _account, string calldata _organization) external returns (bool);
 
     function getOrganizationToId(string memory _name)external view returns(uint256);
 

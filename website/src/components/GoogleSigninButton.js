@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react';
 import { useGraphContext } from '@/contexts/graphContext';
 import { useWeb3Context } from '@/contexts/web3Context';
 
-function GoogleSigninButton() {
+function GoogleSigninButton({userType}) {
 
   const { queryAccountAdress } = useGraphContext();
-  const {createWallet,  setUserWallet} = useWeb3Context();
+  const { createWallet, setUserWallet } = useWeb3Context();
 
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [hashedUserId, setHashedUserId] = useState(null);
+  const [check, setCheck] = useState(null);
 
   const decodeJWT = (token) => {
     try {
@@ -31,29 +32,39 @@ function GoogleSigninButton() {
 
   const onCredentialResponse = async (response) => {
     const tokenId = response.credential;
-    
+
     const decodedToken = decodeJWT(tokenId);
     const userId = decodedToken.sub;
     const hashedId = await hashUserId(userId);
     setHashedUserId(hashedId);
-    const check =await queryAccountAdress(hashedId);
+    const exists = await queryAccountAdress(hashedId)
+    console.log(exists);
+    setCheck(exists);
+    console.log(check);
 
-    // if check is false, create wallet else display wallet adress
+    if (!exists) {
+      if(userType){
+        await createWallet(hashedId, userType);
+        console.log("New user created");
+        setIsSignedIn(true);
 
-    if (check == false){
-      await createWallet(hashedId, "teacher");
+      }
+      else{
+        console.log("User type not specified. Please Create an account");
+        setIsSignedIn(false);
+      }
+
+      }
+     else{
+      // Account exists, retrieve userType
+      console.log("User exists");
+      console.log(exists);
+      setUserWallet(exists);
+      setIsSignedIn(true);
     }
-    else{
-      console.log("Wallet already exists")
-      console.log(check)
-      setUserWallet(check)
-
-    }
-
 
     console.log("Hashed User's Google ID:", hashedId);
-    setIsSignedIn(true);
-    
+
   };
 
   useEffect(() => {
@@ -93,7 +104,10 @@ function GoogleSigninButton() {
       {!isSignedIn ? (
         <div id="buttonDiv"></div>
       ) : (
-        <p>User signed in!</p>
+        <div>
+          <p>User signed in!</p>
+          {userType && !check &&<p>New {userType} Account Created</p>}
+        </div>
       )}
     </div>
   );

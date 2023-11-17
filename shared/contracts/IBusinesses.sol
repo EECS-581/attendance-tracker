@@ -26,5 +26,5 @@ interface IBusinesses {
      * @param _couponID The ID of the coupon.
      * @return A tuple containing coupon details (price, supplyLeft, description).
      */
-    function getCouponDetails(uint256 _couponID) external view returns (uint256, uint256, uint256, string memory);
+    function getCouponDetails(uint256 _couponID) external view returns (uint256, uint256, uint256);
 }

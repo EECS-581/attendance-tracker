@@ -11,7 +11,7 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
-export class TokenHolder extends Entity {
+export class User extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -19,24 +19,22 @@ export class TokenHolder extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save TokenHolder entity without an ID");
+    assert(id != null, "Cannot save User entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type TokenHolder must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type User must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("TokenHolder", id.toString(), this);
+      store.set("User", id.toString(), this);
     }
   }
 
-  static loadInBlock(id: string): TokenHolder | null {
-    return changetype<TokenHolder | null>(
-      store.get_in_block("TokenHolder", id)
-    );
+  static loadInBlock(id: string): User | null {
+    return changetype<User | null>(store.get_in_block("User", id));
   }
 
-  static load(id: string): TokenHolder | null {
-    return changetype<TokenHolder | null>(store.get("TokenHolder", id));
+  static load(id: string): User | null {
+    return changetype<User | null>(store.get("User", id));
   }
 
   get id(): string {
@@ -63,6 +61,136 @@ export class TokenHolder extends Entity {
 
   set address(value: Bytes) {
     this.set("address", Value.fromBytes(value));
+  }
+
+  get balance(): BigInt {
+    let value = this.get("balance");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set balance(value: BigInt) {
+    this.set("balance", Value.fromBigInt(value));
+  }
+
+  get organizationBalances(): OrganizationBalanceLoader {
+    return new OrganizationBalanceLoader(
+      "User",
+      this.get("id")!.toString(),
+      "organizationBalances"
+    );
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get authId(): string {
+    let value = this.get("authId");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
+  }
+
+  set authId(value: string) {
+    this.set("authId", Value.fromString(value));
+  }
+
+  get userType(): string {
+    let value = this.get("userType");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
+  }
+
+  set userType(value: string) {
+    this.set("userType", Value.fromString(value));
+  }
+}
+
+export class OrganizationBalance extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save OrganizationBalance entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type OrganizationBalance must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("OrganizationBalance", id.toString(), this);
+    }
+  }
+
+  static loadInBlock(id: string): OrganizationBalance | null {
+    return changetype<OrganizationBalance | null>(
+      store.get_in_block("OrganizationBalance", id)
+    );
+  }
+
+  static load(id: string): OrganizationBalance | null {
+    return changetype<OrganizationBalance | null>(
+      store.get("OrganizationBalance", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get user(): string {
+    let value = this.get("user");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
+  }
+
+  set user(value: string) {
+    this.set("user", Value.fromString(value));
+  }
+
+  get organizationId(): BigInt {
+    let value = this.get("organizationId");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set organizationId(value: BigInt) {
+    this.set("organizationId", Value.fromBigInt(value));
   }
 
   get balance(): BigInt {
@@ -168,6 +296,19 @@ export class MintEvent extends Entity {
 
   set classSessionID(value: BigInt) {
     this.set("classSessionID", Value.fromBigInt(value));
+  }
+
+  get organizationID(): BigInt {
+    let value = this.get("organizationID");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set organizationID(value: BigInt) {
+    this.set("organizationID", Value.fromBigInt(value));
   }
 }
 
@@ -423,7 +564,7 @@ export class ClassSession extends Entity {
   }
 }
 
-export class Wallet extends Entity {
+export class Organization extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -431,22 +572,24 @@ export class Wallet extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save Wallet entity without an ID");
+    assert(id != null, "Cannot save Organization entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type Wallet must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type Organization must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("Wallet", id.toString(), this);
+      store.set("Organization", id.toString(), this);
     }
   }
 
-  static loadInBlock(id: string): Wallet | null {
-    return changetype<Wallet | null>(store.get_in_block("Wallet", id));
+  static loadInBlock(id: string): Organization | null {
+    return changetype<Organization | null>(
+      store.get_in_block("Organization", id)
+    );
   }
 
-  static load(id: string): Wallet | null {
-    return changetype<Wallet | null>(store.get("Wallet", id));
+  static load(id: string): Organization | null {
+    return changetype<Organization | null>(store.get("Organization", id));
   }
 
   get id(): string {
@@ -462,8 +605,21 @@ export class Wallet extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get timestamp(): BigInt {
-    let value = this.get("timestamp");
+  get name(): string {
+    let value = this.get("name");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
+  }
+
+  set name(value: string) {
+    this.set("name", Value.fromString(value));
+  }
+
+  get organizationId(): BigInt {
+    let value = this.get("organizationId");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
     } else {
@@ -471,33 +627,38 @@ export class Wallet extends Entity {
     }
   }
 
-  set timestamp(value: BigInt) {
-    this.set("timestamp", Value.fromBigInt(value));
+  set organizationId(value: BigInt) {
+    this.set("organizationId", Value.fromBigInt(value));
   }
 
-  get authId(): string {
-    let value = this.get("authId");
+  get timestamp(): i32 {
+    let value = this.get("timestamp");
     if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
+      return 0;
     } else {
-      return value.toString();
+      return value.toI32();
     }
   }
 
-  set authId(value: string) {
-    this.set("authId", Value.fromString(value));
+  set timestamp(value: i32) {
+    this.set("timestamp", Value.fromI32(value));
+  }
+}
+
+export class OrganizationBalanceLoader extends Entity {
+  _entity: string;
+  _field: string;
+  _id: string;
+
+  constructor(entity: string, id: string, field: string) {
+    super();
+    this._entity = entity;
+    this._id = id;
+    this._field = field;
   }
 
-  get userType(): string {
-    let value = this.get("userType");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toString();
-    }
-  }
-
-  set userType(value: string) {
-    this.set("userType", Value.fromString(value));
+  load(): OrganizationBalance[] {
+    let value = store.loadRelated(this._entity, this._id, this._field);
+    return changetype<OrganizationBalance[]>(value);
   }
 }
