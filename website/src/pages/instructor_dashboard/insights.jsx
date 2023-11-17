@@ -19,11 +19,26 @@ import Footer from "@/components/footer";
 
 // this adds some dummy test data to use in the charts until we have the backend setup to pull data from
 const classData = [
-  {name: "EECS 101", attendance: 100, date: "10/05"},
-  {name: "EECS 268", attendance: 50, date: "10/01"},
-  {name: "EECS 348", attendance: 25, date: "10/02"},
-  {name: "EECS 448", attendance: 75, date: "10/04"},
-  {name: "EECS 581", attendance: 80, date: "10/03"}
+  {name: "EECS 101", attendance: 100, date: "2023-10-05"},
+  {name: "EECS 268", attendance: 50, date: "2023-10-01"},
+  {name: "EECS 348", attendance: 25, date: "2023-10-03"},
+  {name: "EECS 448", attendance: 75, date: "2023-10-04"},
+  {name: "EECS 581", attendance: 80, date: "2023-10-23"},
+  {name: "EECS 101", attendance: 100, date: "2023-10-17"},
+  {name: "EECS 268", attendance: 50, date: "2023-11-01"},
+  {name: "EECS 348", attendance: 25, date: "2023-11-03"},
+  {name: "EECS 448", attendance: 75, date: "2023-11-12"},
+  {name: "EECS 581", attendance: 80, date: "2023-11-11"}
+]
+
+const formattedData = classData.map(point => ({
+  date: new Date(point.date),
+  attendance: point.attendance,
+}));
+
+const progressData = [
+  { x: "attending", y: 75 },
+  { x: "not", y: 25 }
 ]
 
 // creates the insights page
@@ -41,22 +56,45 @@ export default function Insights() {
           <h1 className="text-3xl md:text-4xl font-semibold text-gray-900 text-center my-4">Instructor Dashboard</h1>
           <h2 className="text-xl md:text-2xl text-gray-700 text-center my-4">Insights</h2>
           <div className="mt-6">
-            {/* Creates a title for the insights widget  */}
-            <h3 className="text-2xl md:text-3xl font-semibold text-gray-900">Attendance Per Class</h3>
             {/* Creates an instance of the BarChart component */}
-            <BarChart />  
+            <BarChart 
+              title="Attendance Per Class"
+              data={classData}
+              xKey="name"
+              yKey="attendance"
+              xAxisLabel="Class"
+              yAxisLabel="Attendance"
+              chartHeight={300}
+              // chartWidth={}
+            />  
           </div>   
-          {/* creates a title for the line chart     */}
-          <h4 className="mt-6 text-2xl md:text-3xl font-semibold text-gray-900">Student Attendance Over Time</h4>
           <div>
             {/* creates an instance of the line chart  */}
-            <LineChart />
+            <LineChart 
+              title="Attendance Trends"
+              data={formattedData}
+              xKey="date"
+              yKey="attendance"
+              xAxisLabel="Date"
+              yAxisLabel="Attendance"
+              chartHeight={250}
+            />
           </div>
-          {/* creates a title for the progress chart  */}
-          <h5 className="mt-6 text-2xl md:text-3xl font-semibold text-gray-900">Student Attendance Overall</h5>
           <div>
             {/* creates an instance of the progress chart  */}
-            <ProgressChart />
+            <ProgressChart
+              title="Student attendance overall"
+              data={progressData}
+              chartHeight={300}
+              chartWidth={300}
+              labelStyle={{ 
+                fontSize: 18,
+                fill: "black",
+                fontWeight: "bold"
+              }}
+              animationData={{y: 75 }}
+              colors={["powderblue", "pink"]}
+            />
           </div>
         </div>
       </div>

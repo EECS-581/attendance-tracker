@@ -14,6 +14,8 @@ import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 // import modal for coupon buttons
 import CouponModal from '@/components/CouponModal';
+import SolidColorButton from '@/components/SolidColorButton';
+import LightColorfulButton from '@/components/LightColorfulButton';
 
 // creates a static list of coupons - this will need to be updated when we are pulling from database
 var listItems = ['10% off $10 order', '$2 off order', 'Free 12 oz. drink', 'Free delivery', 'Free meal upgrade'];
@@ -67,15 +69,12 @@ export default function Manage_Coupons() {
           <h2 className="text-2xl font-medium mb-6">Manage Coupons</h2>
           <div className="flex space-x-4 mb-4">
             {/* creates the Add new class button - this opens the add form modal */}
-            <div 
-            onClick={openAddModal}
-            className='inline-flex items-center justify-center bg-white rounded-lg border border-black p-2 cursor-pointer font-bold relative top-[-3px] left-[-3px] no-underline text-black'
-            style={{
-              backgroundColor: "pink"
-            }}
-            >
-              Add New Coupon
-            </div>
+            <SolidColorButton
+              title="Add New Coupon"
+              onClick = {openAddModal}
+              backgroundColor = "pink"
+              textColor = "black"
+            />
           </div>
           {/* creates an html list, this will need to be refactored when pulling real data */}
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -87,13 +86,17 @@ export default function Manage_Coupons() {
                 <span className="text-lg font-semibold">{listItem}</span>
                 <div className="space-x-2">
                   {/* create a button for updating the coupon - this opens the modal  */}
-                  <div onClick={openUpdateModal} className="inline-flex items-center justify-center bg-white rounded-lg border border-black p-2 cursor-pointer font-bold relative top-[-3px] left-[-3px] no-underline text-black">
-                    Update 
-                  </div>
+                  <LightColorfulButton
+                    title="Update"
+                    onClick={openUpdateModal}
+                    shadowColor='powderblue'
+                  />
                   {/* create a button for deleting the coupon - this opens the modal */}
-                  <div onClick={openDeleteModal} className="inline-flex items-center justify-center bg-white rounded-lg border border-black p-2 cursor-pointer font-bold relative top-[-3px] left-[-3px] no-underline text-black">
-                    Delete 
-                  </div>
+                  <LightColorfulButton
+                    title="Delete"
+                    onClick={openDeleteModal}
+                    shadowColor='pink'
+                  />
                 </div>
               </div>
             </li>

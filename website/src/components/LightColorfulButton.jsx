@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-const LightColorfulButton = ({ title, link, shadowColor = "#D1CDC7" }) => {
+const LightColorfulButton = ({ title, link, onClick, shadowColor = "#D1CDC7" }) => {
   const shadowStyle = {
     display: "inline-block",
     borderRadius: "10px",
@@ -26,12 +26,27 @@ const LightColorfulButton = ({ title, link, shadowColor = "#D1CDC7" }) => {
     color: "black", // Set the text color to black
   };
 
+  const handleClick = (e) => {
+    if (onClick) {
+      onClick(e);
+    } else if (link) {
+      // Navigate to the provided link if it exists
+      window.location.href = link;
+    }
+  };
+
   return (
     <div style={shadowStyle}>
+    {link ? (
       <Link href={link} passHref>
         <div style={buttonStyle}>{title}</div>
       </Link>
-    </div>
+    ) : (
+      <div style={buttonStyle} onClick={handleClick}>
+        {title}
+      </div>
+    )}
+  </div>
   );
 };
 

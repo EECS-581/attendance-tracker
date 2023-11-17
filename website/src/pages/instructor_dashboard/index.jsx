@@ -16,6 +16,7 @@ import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme } from 'victory';
 import Navbar from "@/components/navbar";
 // import button component 
 import LightColorfulButton from '@/components/LightColorfulButton';
+import BarChart from '@/components/bar_chart';
 // import Footer component
 import Footer from "@/components/footer";
 import { useState, useEffect } from "react";
@@ -58,11 +59,11 @@ export default function Instructor_dashboard() {
       <div className="py-6">
         <div className="container mx-auto">
         {/* This adds the navbar component to the page */}
-          <Navbar />
+          <Navbar /> 
         </div>
       </div>
         <h1 className="text-3xl md:text-4xl font-semibold text-gray-900 text-center my-4">Instructor Dashboard</h1>          
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex justify-center items-center flex-grow">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         <div className="bg-white rounded shadow-lg p-0">
           <div className='p-4'>
@@ -83,41 +84,16 @@ export default function Instructor_dashboard() {
           {/* Creates a title for the insights widget  */}
           <h2 className='text-2xl md:text-3xl font-semibold text-gray-900'>Attendance Per Class</h2>
           {/* Creates an instance of the Victory Chart, this creates the chart with the specified theme and padding  */}
-          <VictoryChart
-            theme={VictoryTheme.material}
-            domainPadding={20}
-            height={300}
-          >
-            {/* Creates the x-axis with a label and styling to make it look nicer */}
-            <VictoryAxis
-              label="Class"
-              style={{
-                axisLabel: {fontSize: 16, padding: 30},
-                grid: {stroke: "grey"},
-                ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: 8, padding: 5}
-              }}
-            />
-            {/* Creates the y-axis with a label and styling  */}
-            <VictoryAxis
-              label="Attendance"
-              style={{
-                axisLabel: {fontSize: 20, padding: 30},
-                ticks: {stroke: "grey", size: 5},
-                tickLabels: {fontSize: 8, padding: 5}
-              }}
-              // sets this as the dependent axis 
-              dependentAxis
-            />
-            {/* Creates the actual bar chart using the class data  */}
-            <VictoryBar
+          <BarChart 
+              // title="Attendance Per Class"
               data={classData}
-              // set up the categories that are pulling the data, class name for the x-axis 
-              x="name"
-              // and attendance number for y-axis
-              y="attendance"
-            />
-          </VictoryChart>  
+              xKey="name"
+              yKey="attendance"
+              xAxisLabel="Class"
+              yAxisLabel="Attendance"
+              chartHeight={300}
+              // chartWidth={}
+            />   
           <div className='text-center mt-6'>
             {/* Creates a link to the full insights page       */}
             <LightColorfulButton
@@ -142,7 +118,7 @@ export default function Instructor_dashboard() {
             </li>
             ))}
           </ul>
-          <div className='mt-6 text-center'>
+          <div className='mt-6 mb-6 text-center'>
           {/* creates the view classes button/link */}
           <LightColorfulButton
             shadowColor="powderblue"
