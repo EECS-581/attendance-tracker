@@ -124,6 +124,82 @@ export const GraphProvider = ({ children }) => {
         }
     }
     
+    async function queryClassAttendanceForInstructor(teacherAddress) {
+        const query = `
+            query {
+                classes(where: {teacher: "${teacherAddress}"}) {
+                    name
+                    classSessions {
+                        attendees: _attendeesMeta { count }
+                    }
+                }
+            }
+        `;
+    
+        if (!teacherAddress) {
+            return false;
+        }
+    
+        const data = await querySubgraph(query);
+        console.log(data);
+    
+        if (data.classes.length > 0) {
+            return data.classes;
+        } else {
+            return false;
+        }
+    }
+
+    async function queryAttendanceOverTimeForInstructor(teacherAddress) {
+        const query = `
+            query {
+                classSessions(where: {teacher: "${teacherAddress}"}, orderBy: timestamp_ASC) {
+                    timestamp
+                    attendees: _attendeesMeta { count }
+                }
+            }
+        `;
+    
+        if (!teacherAddress) {
+            return false;
+        }
+    
+        const data = await querySubgraph(query);
+        console.log(data);
+    
+        if (data.classSessions.length > 0) {
+            return data.classSessions;
+        } else {
+            return false;
+        }
+    }
+
+    async function queryOverallAttendanceForInstructor(teacherAddress) {
+        const query = `
+            query {
+                classes(where: {teacher: "${teacherAddress}"}) {
+                    name
+                    totalAttendees: _attendeesMeta { count }
+                }
+            }
+        `;
+    
+        if (!teacherAddress) {
+            return false;
+        }
+    
+        const data = await querySubgraph(query);
+        console.log(data);
+    
+        if (data.classes.length > 0) {
+            return data.classes;
+        } else {
+            return false;
+        }
+    }
+    
+    
+    
 
 
 
