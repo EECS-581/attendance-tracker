@@ -41,10 +41,10 @@ export const Web3Provider = ({ children }) => {
 
   const [WalletFactoryContract, setWalletFactoryContract] = useState(null);
   
-  const walletFactoryAddress = "0x44e3A12Ed8eC1ed5b70c3A344809122d7396DECe";
+  const walletFactoryAddress = "0x908eF3bbC70e71c97dedd34706261aCbD666b9aF";
   const AttendeesAddress ="0xFb8e15EdE3a4013Bb3d0b92b00505eB7c0a49EE5";
-  const TokenContract = "0x44Fd4Eee04527b8dAD8A2D9Bf3CC1e1BeDEa68C7";
-  const ClassesContractAddress = "0xcDa8F1D34Cc07f6C2f351AB52b58Caf02CE7E443";
+  const TokenContract = "0x2D7D44d4fF0A10f02633aDab99Efb677D900EC73";
+  const ClassesContractAddress = "0x87FeA9CEDc7Cb50f167fE2Eb5a09AC87542f182E";
 
   const createInstance = (ContractAddress, ABI, _signer) => {
     const ContractInstance = new ethers.Contract(ContractAddress, ABI, _signer);

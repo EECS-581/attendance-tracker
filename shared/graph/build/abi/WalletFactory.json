@@ -15,6 +15,12 @@
       },
       {
         "indexed": false,
+        "internalType": "string",
+        "name": "_organization",
+        "type": "string"
+      },
+      {
+        "indexed": false,
         "internalType": "uint256",
         "name": "time",
         "type": "uint256"
@@ -69,6 +75,26 @@
       {
         "internalType": "string",
         "name": "_userType",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "_attendees",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_token",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_businesses",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "_organization",
         "type": "string"
       }
     ],

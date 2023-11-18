@@ -97,7 +97,7 @@ export const Web3Provider = ({ children }) => {
 
     async function createWallet(authId, userType) {
       // Creating a contract instance.
-      let WalletFactoryContract= new ethers.Contract('0x44e3A12Ed8eC1ed5b70c3A344809122d7396DECe', WalletFactory.abi, signer);
+      let WalletFactoryContract= new ethers.Contract('0x908eF3bbC70e71c97dedd34706261aCbD666b9aF', WalletFactory.abi, signer);
       
       console.log("Creating Wallet"); // Logging the start of the minting process.
 
@@ -114,7 +114,7 @@ export const Web3Provider = ({ children }) => {
     
     // Define an asynchronous function to get the balance of the AttendanceToken.
     async function getAttendanceBalance(address) {
-      let AttendanceTokenContract= new ethers.Contract('0x44Fd4Eee04527b8dAD8A2D9Bf3CC1e1BeDEa68C7', AttendanceToken.abi, signer);
+      let AttendanceTokenContract= new ethers.Contract('0x2D7D44d4fF0A10f02633aDab99Efb677D900EC73', AttendanceToken.abi, signer);
       const balance = await AttendanceTokenContract.balanceOf(address); // Fetching balance of an address
       let formattedBalance= parseFloat(balance)
       console.log(formattedBalance)
@@ -124,7 +124,7 @@ export const Web3Provider = ({ children }) => {
     // Define an asynchronous function to mint AttendanceToken.
     async function mintAttendanceToken(address, amount, classSessionID) {
       // Creating a contract instance.
-      let AttendanceTokenContract= new ethers.Contract('0x44Fd4Eee04527b8dAD8A2D9Bf3CC1e1BeDEa68C7', AttendanceToken.abi, signer);
+      let AttendanceTokenContract= new ethers.Contract('0x2D7D44d4fF0A10f02633aDab99Efb677D900EC73', AttendanceToken.abi, signer);
       setAttendanceTokenContract(AttendanceTokenContract); // Setting the AttendanceTokenContract state.
       
       console.log("Minting Attendance Token"); // Logging the start of the minting process.
@@ -148,7 +148,7 @@ export const Web3Provider = ({ children }) => {
     async function createClass(className, classId, teacher) {
       // Creating a contract instance.
       console.log(signer)
-      let ClassesContract= new ethers.Contract('0xcDa8F1D34Cc07f6C2f351AB52b58Caf02CE7E443', Classes.abi, signer);
+      let ClassesContract= new ethers.Contract('0x6ae01dd61C6ecBDeF9Adc27BC807F038eBA0C3F9', Classes.abi, signer);
       
       console.log("Creating Class"); // Logging the start of the minting process.
     
@@ -164,7 +164,7 @@ export const Web3Provider = ({ children }) => {
 
     async function createClassSession(className, sessionId, teacher) {
       // Creating a contract instance.
-      let ClassesContract= new ethers.Contract('0xcDa8F1D34Cc07f6C2f351AB52b58Caf02CE7E443', Classes.abi, signer);
+      let ClassesContract= new ethers.Contract('0x87FeA9CEDc7Cb50f167fE2Eb5a09AC87542f182E', Classes.abi, signer);
       
       console.log("Creating Class Session"); // Logging the start of the minting process.
     

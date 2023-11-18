@@ -8,36 +8,37 @@ dataSources:
     name: WalletFactory
     network: mumbai
     source:
-      address: "0x44e3A12Ed8eC1ed5b70c3A344809122d7396DECe"
+      address: "0x908eF3bbC70e71c97dedd34706261aCbD666b9aF"
       abi: WalletFactory
-      startBlock: 41614246
+      startBlock: 41641232
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
-        - Wallet
+        - User
+        - OrganizationBalance
       abis:
         - name: WalletFactory
           file: ../abi/WalletFactory.json
       eventHandlers:
-        - event: WalletCreated(string,uint256,address,string)
+        - event: WalletCreated(string,string,uint256,address,string)
           handler: handleWalletCreated
       file: ./mapping.ts
   - kind: ethereum/contract
     name: Classes
     network: mumbai
     source:
-      address: "0xcDa8F1D34Cc07f6C2f351AB52b58Caf02CE7E443"
+      address: "0x87FeA9CEDc7Cb50f167fE2Eb5a09AC87542f182E"
       abi: Classes
-      startBlock: 41438464
+      startBlock: 41641250
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
-        - Class
-        - ClassSession
+        - ClassEntity
+        - Session
       abis:
         - name: Classes
           file: ../abi/Classes.json
@@ -51,15 +52,14 @@ dataSources:
     name: AttendanceToken
     network: mumbai
     source:
-      address: "0x44Fd4Eee04527b8dAD8A2D9Bf3CC1e1BeDEa68C7"
+      address: "0x2D7D44d4fF0A10f02633aDab99Efb677D900EC73"
       abi: AttendanceToken
-      startBlock: 41434737
+      startBlock: 42365209
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
-        - TokenHolder
         - MintEvent
         - Token
       abis:

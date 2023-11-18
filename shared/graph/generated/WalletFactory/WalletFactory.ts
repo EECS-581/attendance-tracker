@@ -27,16 +27,20 @@ export class WalletCreated__Params {
     return this._event.parameters[0].value.toString();
   }
 
+  get _organization(): string {
+    return this._event.parameters[1].value.toString();
+  }
+
   get time(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
+    return this._event.parameters[2].value.toBigInt();
   }
 
   get _address(): Address {
-    return this._event.parameters[2].value.toAddress();
+    return this._event.parameters[3].value.toAddress();
   }
 
   get _userType(): string {
-    return this._event.parameters[3].value.toString();
+    return this._event.parameters[4].value.toString();
   }
 }
 
@@ -64,14 +68,26 @@ export class WalletFactory extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  createWallet(_owner: Address, _authId: string, _userType: string): boolean {
+  createWallet(
+    _owner: Address,
+    _authId: string,
+    _userType: string,
+    _attendees: Address,
+    _token: Address,
+    _businesses: Address,
+    _organization: string
+  ): boolean {
     let result = super.call(
       "createWallet",
-      "createWallet(address,string,string):(bool)",
+      "createWallet(address,string,string,address,address,address,string):(bool)",
       [
         ethereum.Value.fromAddress(_owner),
         ethereum.Value.fromString(_authId),
-        ethereum.Value.fromString(_userType)
+        ethereum.Value.fromString(_userType),
+        ethereum.Value.fromAddress(_attendees),
+        ethereum.Value.fromAddress(_token),
+        ethereum.Value.fromAddress(_businesses),
+        ethereum.Value.fromString(_organization)
       ]
     );
 
@@ -81,15 +97,23 @@ export class WalletFactory extends ethereum.SmartContract {
   try_createWallet(
     _owner: Address,
     _authId: string,
-    _userType: string
+    _userType: string,
+    _attendees: Address,
+    _token: Address,
+    _businesses: Address,
+    _organization: string
   ): ethereum.CallResult<boolean> {
     let result = super.tryCall(
       "createWallet",
-      "createWallet(address,string,string):(bool)",
+      "createWallet(address,string,string,address,address,address,string):(bool)",
       [
         ethereum.Value.fromAddress(_owner),
         ethereum.Value.fromString(_authId),
-        ethereum.Value.fromString(_userType)
+        ethereum.Value.fromString(_userType),
+        ethereum.Value.fromAddress(_attendees),
+        ethereum.Value.fromAddress(_token),
+        ethereum.Value.fromAddress(_businesses),
+        ethereum.Value.fromString(_organization)
       ]
     );
     if (result.reverted) {
@@ -168,6 +192,22 @@ export class CreateWalletCall__Inputs {
 
   get _userType(): string {
     return this._call.inputValues[2].value.toString();
+  }
+
+  get _attendees(): Address {
+    return this._call.inputValues[3].value.toAddress();
+  }
+
+  get _token(): Address {
+    return this._call.inputValues[4].value.toAddress();
+  }
+
+  get _businesses(): Address {
+    return this._call.inputValues[5].value.toAddress();
+  }
+
+  get _organization(): string {
+    return this._call.inputValues[6].value.toString();
   }
 }
 

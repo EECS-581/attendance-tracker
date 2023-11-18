@@ -180,17 +180,17 @@ export class OrganizationBalance extends Entity {
     this.set("user", Value.fromString(value));
   }
 
-  get organizationId(): BigInt {
-    let value = this.get("organizationId");
+  get organization(): string {
+    let value = this.get("organization");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
     } else {
-      return value.toBigInt();
+      return value.toString();
     }
   }
 
-  set organizationId(value: BigInt) {
-    this.set("organizationId", Value.fromBigInt(value));
+  set organization(value: string) {
+    this.set("organization", Value.fromString(value));
   }
 
   get balance(): BigInt {
@@ -246,17 +246,17 @@ export class MintEvent extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get to(): Bytes {
-    let value = this.get("to");
+  get recipient(): string {
+    let value = this.get("recipient");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
     } else {
-      return value.toBytes();
+      return value.toString();
     }
   }
 
-  set to(value: Bytes) {
-    this.set("to", Value.fromBytes(value));
+  set recipient(value: string) {
+    this.set("recipient", Value.fromString(value));
   }
 
   get amount(): BigInt {
@@ -285,30 +285,30 @@ export class MintEvent extends Entity {
     this.set("time", Value.fromI32(value));
   }
 
-  get classSessionID(): BigInt {
-    let value = this.get("classSessionID");
+  get classSession(): string {
+    let value = this.get("classSession");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
     } else {
-      return value.toBigInt();
+      return value.toString();
     }
   }
 
-  set classSessionID(value: BigInt) {
-    this.set("classSessionID", Value.fromBigInt(value));
+  set classSession(value: string) {
+    this.set("classSession", Value.fromString(value));
   }
 
-  get organizationID(): BigInt {
-    let value = this.get("organizationID");
+  get organization(): string {
+    let value = this.get("organization");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
     } else {
-      return value.toBigInt();
+      return value.toString();
     }
   }
 
-  set organizationID(value: BigInt) {
-    this.set("organizationID", Value.fromBigInt(value));
+  set organization(value: string) {
+    this.set("organization", Value.fromString(value));
   }
 }
 
@@ -365,7 +365,7 @@ export class Token extends Entity {
   }
 }
 
-export class Class extends Entity {
+export class ClassEntity extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -373,22 +373,24 @@ export class Class extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save Class entity without an ID");
+    assert(id != null, "Cannot save ClassEntity entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type Class must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type ClassEntity must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("Class", id.toString(), this);
+      store.set("ClassEntity", id.toString(), this);
     }
   }
 
-  static loadInBlock(id: string): Class | null {
-    return changetype<Class | null>(store.get_in_block("Class", id));
+  static loadInBlock(id: string): ClassEntity | null {
+    return changetype<ClassEntity | null>(
+      store.get_in_block("ClassEntity", id)
+    );
   }
 
-  static load(id: string): Class | null {
-    return changetype<Class | null>(store.get("Class", id));
+  static load(id: string): ClassEntity | null {
+    return changetype<ClassEntity | null>(store.get("ClassEntity", id));
   }
 
   get id(): string {
@@ -443,21 +445,29 @@ export class Class extends Entity {
     this.set("timestamp", Value.fromI32(value));
   }
 
-  get teacher(): Bytes {
+  get teacher(): string {
     let value = this.get("teacher");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
     } else {
-      return value.toBytes();
+      return value.toString();
     }
   }
 
-  set teacher(value: Bytes) {
-    this.set("teacher", Value.fromBytes(value));
+  set teacher(value: string) {
+    this.set("teacher", Value.fromString(value));
+  }
+
+  get sessions(): SessionLoader {
+    return new SessionLoader(
+      "ClassEntity",
+      this.get("id")!.toString(),
+      "sessions"
+    );
   }
 }
 
-export class ClassSession extends Entity {
+export class Session extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -465,24 +475,22 @@ export class ClassSession extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save ClassSession entity without an ID");
+    assert(id != null, "Cannot save Session entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type ClassSession must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type Session must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("ClassSession", id.toString(), this);
+      store.set("Session", id.toString(), this);
     }
   }
 
-  static loadInBlock(id: string): ClassSession | null {
-    return changetype<ClassSession | null>(
-      store.get_in_block("ClassSession", id)
-    );
+  static loadInBlock(id: string): Session | null {
+    return changetype<Session | null>(store.get_in_block("Session", id));
   }
 
-  static load(id: string): ClassSession | null {
-    return changetype<ClassSession | null>(store.get("ClassSession", id));
+  static load(id: string): Session | null {
+    return changetype<Session | null>(store.get("Session", id));
   }
 
   get id(): string {
@@ -498,8 +506,8 @@ export class ClassSession extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get className(): string {
-    let value = this.get("className");
+  get classEntity(): string {
+    let value = this.get("classEntity");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
     } else {
@@ -507,21 +515,8 @@ export class ClassSession extends Entity {
     }
   }
 
-  set className(value: string) {
-    this.set("className", Value.fromString(value));
-  }
-
-  get classId(): BigInt {
-    let value = this.get("classId");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigInt();
-    }
-  }
-
-  set classId(value: BigInt) {
-    this.set("classId", Value.fromBigInt(value));
+  set classEntity(value: string) {
+    this.set("classEntity", Value.fromString(value));
   }
 
   get sessionId(): BigInt {
@@ -550,17 +545,17 @@ export class ClassSession extends Entity {
     this.set("timestamp", Value.fromI32(value));
   }
 
-  get teacher(): Bytes {
+  get teacher(): string {
     let value = this.get("teacher");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
     } else {
-      return value.toBytes();
+      return value.toString();
     }
   }
 
-  set teacher(value: Bytes) {
-    this.set("teacher", Value.fromBytes(value));
+  set teacher(value: string) {
+    this.set("teacher", Value.fromString(value));
   }
 }
 
@@ -660,5 +655,23 @@ export class OrganizationBalanceLoader extends Entity {
   load(): OrganizationBalance[] {
     let value = store.loadRelated(this._entity, this._id, this._field);
     return changetype<OrganizationBalance[]>(value);
+  }
+}
+
+export class SessionLoader extends Entity {
+  _entity: string;
+  _field: string;
+  _id: string;
+
+  constructor(entity: string, id: string, field: string) {
+    super();
+    this._entity = entity;
+    this._id = id;
+    this._field = field;
+  }
+
+  load(): Session[] {
+    let value = store.loadRelated(this._entity, this._id, this._field);
+    return changetype<Session[]>(value);
   }
 }
