@@ -43,6 +43,7 @@ const CouponCard = ({
   terms,
   logo,
   backgroundColor,
+  tokensRequired,
 }) => {
   return (
     <View
@@ -56,7 +57,7 @@ const CouponCard = ({
         marginBottom: 10,
       }}
     >
-      <ProgressComponent />
+      <ProgressComponent currentAmount={10} amountRequired={tokensRequired} />
       {/* Top section for the logo and offer */}
       <View
         style={{

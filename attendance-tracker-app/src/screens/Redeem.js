@@ -46,6 +46,7 @@ const Redeem = ({ navigation }) => {
               expiryDate={item.expiryDate}
               terms={item.terms}
               logo={item.logo}
+              tokensRequired={item.tokensRequired}
             />
           )}
         />
