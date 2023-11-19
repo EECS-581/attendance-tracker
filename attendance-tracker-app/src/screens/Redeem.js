@@ -16,15 +16,26 @@
  * Invariants: N/A
  * Any known faults: N/A
  */
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, StyleSheet, Image, FlatList } from "react-native";
 import globalStyles from "../styles/globalStyles"; // Importing global styles
 import CameraButton from "../components/CameraButton";
 import CouponCard from "../components/CouponCard"; // Assuming you have this component
 import TempCouponData from "../components/TempCouponData";
+import { useWeb3Context } from "../contexts/web3ContextApp";
 
 const Redeem = ({ navigation }) => {
-  // Render the Progress screen UI
+  const { balance } = useWeb3Context();
+  let updatedBalance = balance;
+
+  useEffect(() => {
+    console.log("balance", balance);
+    updatedBalance = balance;
+  }, [balance]); // Added dependency on balance
+
+  // Check if balance is a valid number
+  const isBalanceNumeric = !isNaN(balance) && isFinite(balance);
+
   return (
     <>
       <CameraButton
@@ -47,6 +58,7 @@ const Redeem = ({ navigation }) => {
               terms={item.terms}
               logo={item.logo}
               tokensRequired={item.tokensRequired}
+              currentBalance={updatedBalance}
             />
           )}
         />
