@@ -16,9 +16,7 @@
  * Invariants: N/A
  * Any known faults: N/A
  */
-
-import React from "react";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import globalStyles from "../styles/globalStyles";
 import SimpleCard from "../components/SimpleCard";
@@ -30,13 +28,15 @@ import ProgressComponent from "../components/Data Visualizations/ProgressCompone
 
 const Insights = ({ navigation }) => {
   const { balance } = useWeb3Context();
-  let updatedBalance = balance
+  let updatedBalance = balance;
 
   useEffect(() => {
-    console.log("balance", balance)
-    updatedBalance = balance
-  }, [])
+    console.log("balance", balance);
+    updatedBalance = balance;
+  }, [balance]); // Added dependency on balance
 
+  // Check if balance is a valid number
+  const isBalanceNumeric = !isNaN(balance) && isFinite(balance);
 
   return (
     <>
@@ -57,33 +57,24 @@ const Insights = ({ navigation }) => {
           </Text>
         </SimpleCard>
 
-        <AttendanceGraphComponent />
-        <DiffClassesPieChartComponent />
-        <ProgressComponent
-          currentAmount={balance}
-          amountRequired={5}
-          companyName={"Nike"}
-        />
-        <ProgressComponent
-          currentAmount={balance}
-          amountRequired={10}
-          companyName={"Starbucks"}
-        />
-        <ProgressComponent
-          currentAmount={balance}
-          amountRequired={20}
-          companyName={"McLains"}
-        />
-        <ProgressComponent
-          currentAmount={balance}
-          amountRequired={10}
-          companyName={"Subway"}
-        />
-        <ProgressComponent
-          currentAmount={balance}
-          amountRequired={20}
-          companyName={"Spotify"}
-        />
+        {isBalanceNumeric ? (
+          <>
+            <AttendanceGraphComponent />
+            <DiffClassesPieChartComponent />
+            <ProgressComponent
+              currentAmount={balance}
+              amountRequired={5}
+              companyName={"Nike"}
+            />
+            {/* Repeat ProgressComponent for other companies */}
+          </>
+        ) : (
+          <View style={styles.noAnalyticsView}>
+            <Text style={styles.noAnalyticsText}>
+              No analytics can be displayed.
+            </Text>
+          </View>
+        )}
       </ScrollView>
     </>
   );

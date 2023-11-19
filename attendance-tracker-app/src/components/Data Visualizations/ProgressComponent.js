@@ -26,13 +26,26 @@
  * Known faults:
  * - None.
  */
-
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import globalStyles, { brightColors } from "../../styles/globalStyles";
 
 const ProgressComponent = ({ currentAmount, amountRequired, companyName }) => {
-  const progressPercentage = (currentAmount / amountRequired) * 100;
+  console.log(
+    "current amount: ",
+    currentAmount,
+    "amount required: ",
+    amountRequired
+  );
+
+  // Ensure currentAmount and amountRequired are numbers
+  const numericCurrentAmount = Number(currentAmount);
+  const numericAmountRequired = Number(amountRequired);
+  const progressPercentage =
+    (numericCurrentAmount / numericAmountRequired) * 100;
+
+  const isValidProgress =
+    !isNaN(progressPercentage) && isFinite(progressPercentage);
 
   const getRandomThemeColor = () =>
     brightColors[Math.floor(Math.random() * brightColors.length)];
@@ -50,7 +63,10 @@ const ProgressComponent = ({ currentAmount, amountRequired, companyName }) => {
         <View
           style={[
             styles.progressBarFill,
-            { width: `${progressPercentage}%`, backgroundColor: fillColor }, // set the background color here
+            {
+              width: isValidProgress ? `${progressPercentage}%` : "0%",
+              backgroundColor: fillColor,
+            },
           ]}
         ></View>
       </View>
@@ -62,8 +78,13 @@ const ProgressComponent = ({ currentAmount, amountRequired, companyName }) => {
           padding: 16,
         }}
       >
-        {Math.floor(progressPercentage)}% progress to your next {companyName}{" "}
-        reward.
+        {
+          isValidProgress
+            ? `${Math.floor(
+                progressPercentage
+              )}% progress to your next ${companyName} reward.`
+            : "Progress unavailable." // You can customize this message
+        }
       </Text>
     </View>
   );
