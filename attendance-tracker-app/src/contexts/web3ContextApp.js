@@ -41,36 +41,37 @@ export const Web3Provider = ({ children }) => {
 
   const [WalletFactoryContract, setWalletFactoryContract] = useState(null);
   
-  const walletFactoryAddress = "0x44e3A12Ed8eC1ed5b70c3A344809122d7396DECe";
-  const AttendeesAddress ="0xFb8e15EdE3a4013Bb3d0b92b00505eB7c0a49EE5";
-  const TokenContract = "0x44Fd4Eee04527b8dAD8A2D9Bf3CC1e1BeDEa68C7";
-  const ClassesContractAddress = "0xcDa8F1D34Cc07f6C2f351AB52b58Caf02CE7E443";
+  const WalletFactoryContractAddress = "0x57A2DC223CCF7276De384a265e1329Ec874959D3";
+  const AttendeesContractAddress ="0x26485eb37C150650910D2dE05D99FdE1278CA1B1";
+  const AttendanceTokenContractAddress = "0x57fcf12FF928b0d8E2132E361356ce3FDF761A20";
+  const ClassesContractAddress = "0xB3DE5D01d07F8704a6e30cDC6EE542Dc9f6dBB9a";
+  const BusinessesContractAddress = "0xD8E115B551626b00A3834d38bc521Ad66d771b14"
 
   const createInstance = (ContractAddress, ABI, _signer) => {
     const ContractInstance = new ethers.Contract(ContractAddress, ABI, _signer);
     return ContractInstance
   }
 
-    async function createWallet(authId, userType) {
-      // Creating a contract instance.
-      let WalletFactoryContract= new ethers.Contract(walletFactoryAddress, WalletFactory.abi, signer);
-      
-      console.log("Creating Wallet"); // Logging the start of the minting process.
+  async function createWallet(owner, authId, userType, organization) {
+    // Creating a contract instance.
+    let WalletFactoryContract= new ethers.Contract(WalletFactoryContractAddress, WalletFactory.abi, signer);
+    
+    console.log("Creating Wallet"); // Logging the start of the minting process.
 
-      const tx = await WalletFactoryContract.createWallet(walletFactoryAddress,authId, userType); // Minting tokens.
+    const tx = await WalletFactoryContract.createWallet(owner, authId, userType, AttendeesContractAddress, AttendanceTokenContractAddress, BusinessesContractAddress, organization); // Minting tokens.
 
-      console.log(tx); // Logging transaction object.
-      await tx.wait(); // Waiting for the transaction to be mined.
+    console.log(tx); // Logging transaction object.
+    await tx.wait(); // Waiting for the transaction to be mined.
 
-      console.log(tx)
+    console.log(tx)
 
-      console.log("Created Wallet"); // Logging the end of the minting process.
+    console.log("Created Wallet"); // Logging the end of the minting process.
 
-    }
+  }
     
     // Define an asynchronous function to get the balance of the AttendanceToken.
     async function getAttendanceBalance(address) {
-      let AttendanceTokenContract= new ethers.Contract(TokenContract, AttendanceToken.abi, signer);
+      let AttendanceTokenContract= new ethers.Contract(AttendanceTokenContractAddress, AttendanceToken.abi, signer);
       const balance = await AttendanceTokenContract.balanceOf(address); // Fetching balance of an address
       let formattedBalance= parseFloat(balance)
       console.log(formattedBalance)
@@ -85,14 +86,14 @@ export const Web3Provider = ({ children }) => {
     }, [userWallet])
     
     // Define an asynchronous function to mint AttendanceToken.
-    async function mintAttendanceToken(address, amount, classSessionID) {
+    async function mintAttendanceToken(address, amount, classSessionID, organization=1) {
       // Creating a contract instance.
-      let AttendanceTokenContract= new ethers.Contract(TokenContract, AttendanceToken.abi, signer);
+      let AttendanceTokenContract= new ethers.Contract(AttendanceTokenContractAddress, AttendanceToken.abi, signer);
       setAttendanceTokenContract(AttendanceTokenContract); // Setting the AttendanceTokenContract state.
       
       console.log("Minting Attendance Token"); // Logging the start of the minting process.
     
-      const tx = await AttendanceTokenContract.mint(address, amount, classSessionID, 1); //IMPORTANT made organization id 1 by default add more later
+      const tx = await AttendanceTokenContract.mint(address, amount, classSessionID, organization); //IMPORTANT made organization id 1 by default add more later
       
       console.log(tx);
       await tx.wait();
@@ -102,7 +103,7 @@ export const Web3Provider = ({ children }) => {
     
     // Define an asynchronous function as a test function to perform minting and fetching balance.
     async function mintTest() {
-      console.log(provider, signer, AttendanceTokenContract); // Logging provider, signer, and AttendanceTokenContract states.
+      console.log(provider, signer, AttendanceTokenContractAddress); // Logging provider, signer, and AttendanceTokenContract states.
       // Minting tokens and fetching the balance for a specific address.
       await mintAttendanceToken('0x06e6620C67255d308A466293070206176288A67B', 100, 100); 
       await getAttendanceBalance('0x06e6620C67255d308A466293070206176288A67B');
@@ -186,6 +187,55 @@ export const Web3Provider = ({ children }) => {
       console.log("Signer Removed");
   
     }
+
+    async function getBusinessCoupons(businessName) {
+      let BusinessesContract = new ethers.Contract(BusinessesContractAddress, Businesses.abi, signer);
+      console.log("Fetching Business Coupons");
+      const couponIDs = await BusinessesContract.getBusinessCoupons(businessName);
+      console.log("Business Coupons:", couponIDs);
+      return couponIDs;
+    }
+
+    async function getBusinessesList() {
+      let BusinessesContract = new ethers.Contract(BusinessesContractAddress, Businesses.abi, signer);
+      console.log("Fetching Businesses List");
+      const businessesList = await BusinessesContract.getBusinessesList();
+      console.log("Businesses List:", businessesList);
+      return businessesList;
+    }
+
+    async function getBusinessToID(businessName) {
+      let BusinessesContract = new ethers.Contract(BusinessesContractAddress, Businesses.abi, signer);
+      console.log("Fetching Business ID");
+      const businessID = await BusinessesContract.getBusinessToID(businessName);
+      console.log("Business ID:", businessID);
+      return businessID;
+    }
+
+    async function getBusinessToCouponIDs(businessID) {
+      let BusinessesContract = new ethers.Contract(BusinessesContractAddress, Businesses.abi, signer);
+      console.log("Fetching Coupons for Business ID");
+      const couponIDs = await BusinessesContract.getBusinessToCouponIDs(businessID);
+      console.log("Coupon IDs:", couponIDs);
+      return couponIDs;
+    }
+
+    async function getAttendeeToCouponIDs(address) {
+      let BusinessesContract = new ethers.Contract(BusinessesContractAddress, Businesses.abi, signer);
+      console.log("Fetching Coupons for Attendee");
+      const couponIDs = await BusinessesContract.getAttendeeToCouponIDs(address);
+      console.log("Attendee Coupon IDs:", couponIDs);
+      return couponIDs;
+    }
+    
+    async function getCouponIDToCoupon(couponID) {
+      let BusinessesContract = new ethers.Contract(BusinessesContractAddress, Businesses.abi, signer);
+      console.log("Fetching Coupon Details");
+      const couponDetails = await BusinessesContract.getCouponIDToCoupon(couponID);
+      console.log("Coupon Details:", couponDetails);
+      return couponDetails;
+    }
+    
     
     // Defining the context value.
     const value = {
@@ -203,7 +253,13 @@ export const Web3Provider = ({ children }) => {
       buyCoupon,
       redeemCoupon,
       addSigner,
-      removeSigner
+      removeSigner,
+      getBusinessCoupons,
+      getBusinessesList,
+      getBusinessToID,
+      getBusinessToCouponIDs,
+      getAttendeeToCouponIDs,
+      getCouponIDToCoupon
     };
     
     // Returning the Web3Context.Provider with value and children props.

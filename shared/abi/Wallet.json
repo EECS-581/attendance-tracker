@@ -1,73 +1,127 @@
-{
-  "_format": "hh-sol-artifact-1",
-  "contractName": "Wallet",
-  "sourceName": "contracts/Wallet.sol",
-  "abi": [
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_owner",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "nonpayable",
-      "type": "constructor"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_address",
-          "type": "address"
-        }
-      ],
-      "name": "addSigner",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "owner",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_address",
-          "type": "address"
-        }
-      ],
-      "name": "removeSigner",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    }
-  ],
-  "bytecode": "0x608060405234801561001057600080fd5b506040516102cf3803806102cf83398101604081905261002f9161006d565b600080546001600160a01b039092166001600160a01b031990921682178155908152600160208190526040909120805460ff1916909117905561009d565b60006020828403121561007f57600080fd5b81516001600160a01b038116811461009657600080fd5b9392505050565b610223806100ac6000396000f3fe608060405234801561001057600080fd5b50600436106100415760003560e01c80630e316ab7146100465780638da5cb5b1461006e578063eb12d61e14610099575b600080fd5b6100596100543660046101bd565b6100ac565b60405190151581526020015b60405180910390f35b600054610081906001600160a01b031681565b6040516001600160a01b039091168152602001610065565b6100596100a73660046101bd565b610136565b3360009081526001602052604081205460ff166101105760405162461bcd60e51b815260206004820152601e60248201527f596f7520617265206e6f7420616e20617070726f7665642063616c6c6572000060448201526064015b60405180910390fd5b506001600160a01b03166000908152600160208190526040909120805460ff1916905590565b3360009081526001602052604081205460ff166101955760405162461bcd60e51b815260206004820152601e60248201527f596f7520617265206e6f7420616e20617070726f7665642063616c6c657200006044820152606401610107565b506001600160a01b03166000908152600160208190526040909120805460ff19168217905590565b6000602082840312156101cf57600080fd5b81356001600160a01b03811681146101e657600080fd5b939250505056fea2646970667358221220babcb98fdabad0e88a4eff2c3831317064a7dffc7ebd6c89aee5c251e9c8d71564736f6c63430008130033",
-  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100415760003560e01c80630e316ab7146100465780638da5cb5b1461006e578063eb12d61e14610099575b600080fd5b6100596100543660046101bd565b6100ac565b60405190151581526020015b60405180910390f35b600054610081906001600160a01b031681565b6040516001600160a01b039091168152602001610065565b6100596100a73660046101bd565b610136565b3360009081526001602052604081205460ff166101105760405162461bcd60e51b815260206004820152601e60248201527f596f7520617265206e6f7420616e20617070726f7665642063616c6c6572000060448201526064015b60405180910390fd5b506001600160a01b03166000908152600160208190526040909120805460ff1916905590565b3360009081526001602052604081205460ff166101955760405162461bcd60e51b815260206004820152601e60248201527f596f7520617265206e6f7420616e20617070726f7665642063616c6c657200006044820152606401610107565b506001600160a01b03166000908152600160208190526040909120805460ff19168217905590565b6000602082840312156101cf57600080fd5b81356001600160a01b03811681146101e657600080fd5b939250505056fea2646970667358221220babcb98fdabad0e88a4eff2c3831317064a7dffc7ebd6c89aee5c251e9c8d71564736f6c63430008130033",
-  "linkReferences": {},
-  "deployedLinkReferences": {}
-}
+[
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_owner",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "_id",
+				"type": "string"
+			},
+			{
+				"internalType": "address",
+				"name": "_attendees",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_token",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_businesses",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "_organization",
+				"type": "string"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "addSigner",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_couponID",
+				"type": "uint256"
+			}
+		],
+		"name": "buyCoupon",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_couponID",
+				"type": "uint256"
+			}
+		],
+		"name": "redeemCoupon",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "removeSigner",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+]
