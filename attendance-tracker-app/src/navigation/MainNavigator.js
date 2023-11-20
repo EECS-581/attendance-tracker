@@ -37,6 +37,8 @@ import Redeem from "../screens/Redeem";
 import Account from "../screens/Account";
 import Discover from "../screens/Discover";
 import Scan from "../screens/Scan";
+import ManageClasses from "../screens/ManageClasses";
+import ManageAccount from "../screens/ManageAccount";
 import { Ionicons } from "@expo/vector-icons";
 import CameraButton from "../components/CameraButton";
 import { useNavigation } from "@react-navigation/native";
@@ -106,6 +108,8 @@ const MainNavigator = () => {
           component={TabNavigator}
           options={{ headerShown: false }}
         />
+        <Stack.Screen name="Manage Classes" component={ManageClasses} />
+        <Stack.Screen name="Manage Account" component={ManageAccount} />
       </Stack.Navigator>
 
       {showCameraButton && <CameraButton navigation={navigation} />}

@@ -43,7 +43,11 @@ const CouponCard = ({
   terms,
   logo,
   backgroundColor,
+  tokensRequired,
+  currentBalance,
 }) => {
+  const isBalanceNumeric = !isNaN(currentBalance) && isFinite(currentBalance);
+
   return (
     <View
       style={{
@@ -56,8 +60,12 @@ const CouponCard = ({
         marginBottom: 10,
       }}
     >
-      <ProgressComponent />
-      {/* Top section for the logo and offer */}
+      {isBalanceNumeric && (
+        <ProgressComponent
+          currentAmount={currentBalance}
+          amountRequired={tokensRequired}
+        />
+      )}
       <View
         style={{
           flexDirection: "row",

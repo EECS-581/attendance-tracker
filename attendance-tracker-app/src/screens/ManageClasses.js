@@ -1,9 +1,9 @@
 /**
- * Name of code artifact: Account Component
+ * Name of code artifact: Manage Classes Screen
  *
- * Brief description: This component renders the Account screen, displaying a profile icon, username, and buttons for settings and help.
+ * Brief description: This component renders the manage classes screen for a user to manage their classes
  * Programmer’s name: Emma Nasseri
- * Date the code was created: 9/24/23
+ * Date the code was created: 11/19/23
  * Dates the code was revised: N/A
  * Brief description of each revision & author: N/A
  *
@@ -13,7 +13,7 @@
  *  Acceptable and unacceptable input values or types:
  * - `navigation`: Object (from React Navigation)
  *
- * Postconditions: Renders the Account screen UI.
+ * Postconditions: Renders the Manage Classes UI
  * Return values or types: JSX elements (React components)
  * Error and exception condition values or types that can occur: N/A
  * Side effects: N/A
@@ -27,28 +27,13 @@ import globalStyles from "../styles/globalStyles";
 import SolidColorButton from "../components/SolidColorButton";
 import { Ionicons } from "@expo/vector-icons";
 
-const Account = ({ navigation }) => {
+const ManageClasses = ({ navigation }) => {
   // Render the Account screen UI
   return (
     <View style={styles.container}>
-      <View style={styles.profileIconContainer}>
-        <Ionicons name="person-outline" size={100} color="black" />
-      </View>
-
-      <Text style={[globalStyles.defaultFont, styles.title]}>[Username]</Text>
-
-      <View style={styles.buttonContainer}>
-        <SolidColorButton
-          title="Manage Classes"
-          onPress={() => navigation.navigate("Manage Classes")}
-          backgroundColor="powderblue"
-        />
-        <SolidColorButton
-          title="Manage Account"
-          onPress={() => navigation.navigate("Manage Account")}
-          backgroundColor="powderblue"
-        />
-      </View>
+      <Text style={[globalStyles.defaultFont, styles.title]}>
+        Your classes:{" "}
+      </Text>
     </View>
   );
 };
@@ -84,4 +69,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Account;
+export default ManageClasses;

@@ -7,6 +7,7 @@ const TempCouponData = [
     expiryDate: "31 Dec 2023",
     terms: "T&C Apply",
     logo: require("../../assets/images/templogos/starbucks.png"),
+    tokensRequired: "30",
   },
   {
     id: 2,
@@ -16,6 +17,7 @@ const TempCouponData = [
     expiryDate: "15 Jan 2024",
     terms: "T&C Apply",
     logo: require("../../assets/images/templogos/amazon.png"),
+    tokensRequired: "20",
   },
   {
     id: 3,
@@ -25,6 +27,7 @@ const TempCouponData = [
     expiryDate: "20 Feb 2024",
     terms: "T&C Apply",
     logo: require("../../assets/images/templogos/nike.png"),
+    tokensRequired: "100",
   },
   {
     id: 4,
@@ -34,6 +37,7 @@ const TempCouponData = [
     expiryDate: "10 Mar 2024",
     terms: "T&C Apply",
     logo: require("../../assets/images/templogos/mcdonalds.png"),
+    tokensRequired: "18",
   },
   {
     id: 5,
@@ -43,6 +47,7 @@ const TempCouponData = [
     expiryDate: "30 Apr 2024",
     terms: "T&C Apply",
     logo: require("../../assets/images/templogos/apple.png"),
+    tokensRequired: "15",
   },
 ];
 
