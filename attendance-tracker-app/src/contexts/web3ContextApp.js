@@ -187,6 +187,57 @@ export const Web3Provider = ({ children }) => {
       console.log("Signer Removed");
   
     }
+
+    //function to get coupons for business
+    async function getBusinessCoupons(businessName) {
+      let BusinessesContract = new ethers.Contract(BusinessesContractAddress, Businesses.abi, signer);
+      console.log("Fetching Business Coupons");
+      const couponIDs = await BusinessesContract.getBusinessCoupons(businessName);
+      console.log("Business Coupons:", couponIDs);
+      return couponIDs;
+    }
+    //function to get lists of businesses
+    async function getBusinessesList() {
+      let BusinessesContract = new ethers.Contract(BusinessesContractAddress, Businesses.abi, signer);
+      console.log("Fetching Businesses List");
+      const businessesList = await BusinessesContract.getBusinessesList();
+      console.log("Businesses List:", businessesList);
+      return businessesList;
+    }
+    //function to get business IDs
+    async function getBusinessToID(businessName) {
+      let BusinessesContract = new ethers.Contract(BusinessesContractAddress, Businesses.abi, signer);
+      console.log("Fetching Business ID");
+      const businessID = await BusinessesContract.getBusinessToID(businessName);
+      console.log("Business ID:", businessID);
+      return businessID;
+    }
+    // function to get coupons for business
+    async function getBusinessToCouponIDs(businessID) {
+      let BusinessesContract = new ethers.Contract(BusinessesContractAddress, Businesses.abi, signer);
+      console.log("Fetching Coupons for Business ID");
+      const couponIDs = await BusinessesContract.getBusinessToCouponIDs(businessID);
+      console.log("Coupon IDs:", couponIDs);
+      return couponIDs;
+    }
+    // function to get users coupons
+    async function getAttendeeToCouponIDs(address) {
+      let BusinessesContract = new ethers.Contract(BusinessesContractAddress, Businesses.abi, signer);
+      console.log("Fetching Coupons for Attendee");
+      const couponIDs = await BusinessesContract.getAttendeeToCouponIDs(address);
+      console.log("Attendee Coupon IDs:", couponIDs);
+      return couponIDs;
+    }
+    
+    //function to get coupon info 
+    async function getCouponIDToCoupon(couponID) {
+      let BusinessesContract = new ethers.Contract(BusinessesContractAddress, Businesses.abi, signer);
+      console.log("Fetching Coupon Details");
+      const couponDetails = await BusinessesContract.getCouponIDToCoupon(couponID);
+      console.log("Coupon Details:", couponDetails);
+      return couponDetails;
+    }
+
     
     // Defining the context value.
     const value = {
@@ -204,7 +255,13 @@ export const Web3Provider = ({ children }) => {
       buyCoupon,
       redeemCoupon,
       addSigner,
-      removeSigner
+      removeSigner,
+      getBusinessCoupons,
+      getBusinessesList,
+      getBusinessToID,
+      getBusinessToCouponIDs,
+      getAttendeeToCouponIDs,
+      getCouponIDToCoupon
     };
     
     // Returning the Web3Context.Provider with value and children props.
