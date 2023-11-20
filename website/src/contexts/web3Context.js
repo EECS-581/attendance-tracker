@@ -42,11 +42,11 @@ const AttendanceToken = require('../abi/AttendanceToken.json'); // Importing ABI
 const Classes = require('../abi/Classes.json'); // Importing ABI of Classes contract
 const WalletFactory = require('../abi/WalletFactory.json'); // Importing ABI of WalletFactory contract
 const Businesses = require("../abi/Businesses.json");
-const BusinessesContractAddress = "0xD8E115B551626b00A3834d38bc521Ad66d771b14"
-const AttendeesContractAddress ="0x26485eb37C150650910D2dE05D99FdE1278CA1B1"
-const WalletFactoryContractAddress = "0x57A2DC223CCF7276De384a265e1329Ec874959D3"
-const AttendanceTokenContractAddress = "0x57fcf12FF928b0d8E2132E361356ce3FDF761A20"
-const ClassesContractAddress = "0xB3DE5D01d07F8704a6e30cDC6EE542Dc9f6dBB9a"
+const BusinessesContractAddress = "0xD8E115B551626b00A3834d38bc521Ad66d771b14";
+const AttendeesContractAddress ="0x26485eb37C150650910D2dE05D99FdE1278CA1B1";
+const WalletFactoryContractAddress = "0x57A2DC223CCF7276De384a265e1329Ec874959D3";
+const AttendanceTokenContractAddress = "0x57fcf12FF928b0d8E2132E361356ce3FDF761A20";
+const ClassesContractAddress = "0xB3DE5D01d07F8704a6e30cDC6EE542Dc9f6dBB9a";
 
 
 const Web3Context = createContext(); // Creating a new React context named Web3Context.
@@ -144,7 +144,7 @@ export const Web3Provider = ({ children }) => {
       await mintAttendanceToken('0x06e6620C67255d308A466293070206176288A67B', 100, 100, 100); 
       await getAttendanceBalance('0x06e6620C67255d308A466293070206176288A67B');
     }
-
+    //function to create class
     async function createClass(className, classId, teacher) {
       // Creating a contract instance.
       console.log(signer)
@@ -161,7 +161,7 @@ export const Web3Provider = ({ children }) => {
       console.log("Created Class"); // Logging the end of the minting process.
 
     }
-
+    //function to create class session
     async function createClassSession(className, sessionId, teacher) {
       // Creating a contract instance.
       let ClassesContract= new ethers.Contract(ClassesContractAddress, Classes.abi, signer);
@@ -176,7 +176,7 @@ export const Web3Provider = ({ children }) => {
       console.log("Created Class Session"); // Logging the end of the minting process.
 
     }
-
+    //function to enroll business
     async function enrollBusiness(businessName) {
       let BusinessesContract = new ethers.Contract(BusinessesContractAddress, Businesses.abi, signer);
 
@@ -188,7 +188,7 @@ export const Web3Provider = ({ children }) => {
 
       console.log("Business Enrolled");
     }
-
+    //function to create coupon
     async function createCoupon(businessName, price, supply, description, banlist) {
       let BusinessesContract = new ethers.Contract(BusinessesContractAddress, Businesses.abi, signer);
       console.log("Creating Coupon");
@@ -199,7 +199,7 @@ export const Web3Provider = ({ children }) => {
 
       console.log("Coupon Created");
     }
-
+    //function to get businesses coupons
     async function getBusinessCoupons(businessName) {
       let BusinessesContract = new ethers.Contract(BusinessesContractAddress, Businesses.abi, signer);
       console.log("Fetching Business Coupons");
@@ -207,7 +207,7 @@ export const Web3Provider = ({ children }) => {
       console.log("Business Coupons:", couponIDs);
       return couponIDs;
     }
-
+    //function to get list of businesses
     async function getBusinessesList() {
       let BusinessesContract = new ethers.Contract(BusinessesContractAddress, Businesses.abi, signer);
       console.log("Fetching Businesses List");
@@ -215,7 +215,7 @@ export const Web3Provider = ({ children }) => {
       console.log("Businesses List:", businessesList);
       return businessesList;
     }
-
+    //function to get business id
     async function getBusinessToID(businessName) {
       let BusinessesContract = new ethers.Contract(BusinessesContractAddress, Businesses.abi, signer);
       console.log("Fetching Business ID");
@@ -223,7 +223,7 @@ export const Web3Provider = ({ children }) => {
       console.log("Business ID:", businessID);
       return businessID;
     }
-    
+    //function to get coupons per business
     async function getBusinessToCouponIDs(businessID) {
       let BusinessesContract = new ethers.Contract(BusinessesContractAddress, Businesses.abi, signer);
       console.log("Fetching Coupons for Business ID");
@@ -231,7 +231,7 @@ export const Web3Provider = ({ children }) => {
       console.log("Coupon IDs:", couponIDs);
       return couponIDs;
     }
-
+    //function to get list of coupons for person
     async function getAttendeeToCouponIDs(attendeeAddress) {
       let BusinessesContract = new ethers.Contract(BusinessesContractAddress, Businesses.abi, signer);
       console.log("Fetching Coupons for Attendee");
@@ -239,7 +239,7 @@ export const Web3Provider = ({ children }) => {
       console.log("Attendee Coupon IDs:", couponIDs);
       return couponIDs;
     }
-
+    //function to get coupon details
     async function getCouponIDToCoupon(couponID) {
       let BusinessesContract = new ethers.Contract(BusinessesContractAddress, Businesses.abi, signer);
       console.log("Fetching Coupon Details");
