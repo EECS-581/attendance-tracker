@@ -1,22 +1,17 @@
 {
   "_format": "hh-sol-artifact-1",
-  "contractName": "IAttendees",
-  "sourceName": "contracts/IAttendees.sol",
+  "contractName": "IBusinesses",
+  "sourceName": "contracts/IBusinesses.sol",
   "abi": [
     {
       "inputs": [
         {
-          "internalType": "address",
-          "name": "_account",
-          "type": "address"
-        },
-        {
-          "internalType": "string",
-          "name": "_organization",
-          "type": "string"
+          "internalType": "uint256",
+          "name": "_couponID",
+          "type": "uint256"
         }
       ],
-      "name": "createAttendee",
+      "name": "buyCoupon",
       "outputs": [
         {
           "internalType": "bool",
@@ -30,16 +25,26 @@
     {
       "inputs": [
         {
-          "internalType": "address",
-          "name": "_account",
-          "type": "address"
+          "internalType": "uint256",
+          "name": "_couponID",
+          "type": "uint256"
         }
       ],
-      "name": "getAddressToAttendee",
+      "name": "getCouponDetails",
       "outputs": [
         {
           "internalType": "uint256",
-          "name": "organizationID",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
           "type": "uint256"
         }
       ],
@@ -49,20 +54,20 @@
     {
       "inputs": [
         {
-          "internalType": "string",
-          "name": "_name",
-          "type": "string"
-        }
-      ],
-      "name": "getOrganizationToId",
-      "outputs": [
-        {
           "internalType": "uint256",
-          "name": "",
+          "name": "_couponID",
           "type": "uint256"
         }
       ],
-      "stateMutability": "view",
+      "name": "redeemCoupon",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
       "type": "function"
     }
   ],

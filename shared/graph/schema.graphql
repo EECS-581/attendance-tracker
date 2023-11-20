@@ -7,21 +7,20 @@ type User @entity {
   authId: String!
   userType: String!
 }
-
 type OrganizationBalance @entity {
   id: ID!
-  user: User!
-  organizationId: BigInt!  
+  user: User! @relation(name: "UserOrganizationBalances")
+  organization: Organization! @relation(name: "OrganizationBalances")
   balance: BigInt!         
 }
 
 type MintEvent @entity {
   id: ID!
-  to: Bytes!
+  recipient: User! @relation(name: "UserMintEvents")
   amount: BigInt!
   time: Int!
-  classSessionID: BigInt!
-  organizationID: BigInt!
+  classSession: Session! @relation(name: "SessionMintEvents")
+  organization: Organization! @relation(name: "OrganizationMintEvents")
 }
 
 type Token @entity {
@@ -29,26 +28,35 @@ type Token @entity {
   totalMinted: BigInt!
 }
 
-type Class @entity {
+type ClassEntity @entity {
   id: ID!
   name: String!
   classId: BigInt!
   timestamp: Int!
-  teacher: Bytes!
+  teacher: User! @relation(name: "UserClassEntities")
+  sessions: [Session!]! @derivedFrom(field: "classEntity")
 }
 
-type ClassSession @entity {
+type Session @entity {
   id: ID!
-  className: String!
-  classId: BigInt!
+  classEntity: ClassEntity! @relation(name: "ClassEntitySessions")
   sessionId: BigInt!
   timestamp: Int!
-  teacher: Bytes!
+  teacher: User! @relation(name: "UserSessions")
+  attendanceCount: Int! @default(value: "0") 
 }
 
+
 type Organization @entity{
-  id : ID!
-  name : String!
-  organizationId : BigInt!
-  timestamp : Int!
+  id: ID!
+  name: String!
+  organizationId: BigInt!
+  timestamp: Int!
+}
+
+type Attendance @entity {
+  id: ID!
+  user: User! @relation(name: "UserAttendances")
+  session: Session! @relation(name: "SessionAttendances")
+  timestamp: BigInt!
 }

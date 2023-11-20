@@ -42,7 +42,13 @@ const AttendanceToken = require('../abi/AttendanceToken.json'); // Importing ABI
 const Classes = require('../abi/Classes.json'); // Importing ABI of Classes contract
 const WalletFactory = require('../abi/WalletFactory.json'); // Importing ABI of WalletFactory contract
 const Businesses = require("../abi/Businesses.json");
-const BusinessesContractAddress = ""
+
+const BusinessesContractAddress = "0x2f16448E23322996538EdfFb2E914d5C0402f4E7"
+const walletFactoryAddress = "0x11c0f87a35d1614aF1201E3F77164344339d3c92";
+const attendanceTokenAdress = "0x8FE018D5531698B4504aec62Cf0DA45F18A686c8";
+const ClassesContractAddress = "0x42f58FEddf37BCd945Bb530e107318b905EEc6f0";
+const AttendeesAddress ="0x74855D9ea68e3c152EBb860Ae981Db7917F516a9";
+
 
 
 const Web3Context = createContext(); // Creating a new React context named Web3Context.
@@ -93,15 +99,13 @@ export const Web3Provider = ({ children }) => {
   
 
 
-    const attendeesAddress ="0xFb8e15EdE3a4013Bb3d0b92b00505eB7c0a49EE5"
-
     async function createWallet(authId, userType) {
       // Creating a contract instance.
-      let WalletFactoryContract= new ethers.Contract('0x44e3A12Ed8eC1ed5b70c3A344809122d7396DECe', WalletFactory.abi, signer);
+      let WalletFactoryContract= new ethers.Contract(walletFactoryAddress, WalletFactory.abi, signer);
       
       console.log("Creating Wallet"); // Logging the start of the minting process.
 
-      const tx = await WalletFactoryContract.createWallet("0x06e6620C67255d308A466293070206176288A67B",authId, userType); // Minting tokens.
+      const tx = await WalletFactoryContract.createWallet("0x06e6620C67255d308A466293070206176288A67B",authId, userType,AttendeesAddress, attendanceTokenAdress, BusinessesContractAddress, "ku"); // Minting tokens.
 
       console.log(tx); // Logging transaction object.
       await tx.wait(); // Waiting for the transaction to be mined.
@@ -114,7 +118,7 @@ export const Web3Provider = ({ children }) => {
     
     // Define an asynchronous function to get the balance of the AttendanceToken.
     async function getAttendanceBalance(address) {
-      let AttendanceTokenContract= new ethers.Contract('0x44Fd4Eee04527b8dAD8A2D9Bf3CC1e1BeDEa68C7', AttendanceToken.abi, signer);
+      let AttendanceTokenContract= new ethers.Contract(attendanceTokenAdress, AttendanceToken.abi, signer);
       const balance = await AttendanceTokenContract.balanceOf(address); // Fetching balance of an address
       let formattedBalance= parseFloat(balance)
       console.log(formattedBalance)
@@ -124,7 +128,7 @@ export const Web3Provider = ({ children }) => {
     // Define an asynchronous function to mint AttendanceToken.
     async function mintAttendanceToken(address, amount, classSessionID) {
       // Creating a contract instance.
-      let AttendanceTokenContract= new ethers.Contract('0x44Fd4Eee04527b8dAD8A2D9Bf3CC1e1BeDEa68C7', AttendanceToken.abi, signer);
+      let AttendanceTokenContract= new ethers.Contract(attendanceTokenAdress, AttendanceToken.abi, signer);
       setAttendanceTokenContract(AttendanceTokenContract); // Setting the AttendanceTokenContract state.
       
       console.log("Minting Attendance Token"); // Logging the start of the minting process.
@@ -148,7 +152,7 @@ export const Web3Provider = ({ children }) => {
     async function createClass(className, classId, teacher) {
       // Creating a contract instance.
       console.log(signer)
-      let ClassesContract= new ethers.Contract('0xcDa8F1D34Cc07f6C2f351AB52b58Caf02CE7E443', Classes.abi, signer);
+      let ClassesContract= new ethers.Contract(ClassesContractAddress, Classes.abi, signer);
       
       console.log("Creating Class"); // Logging the start of the minting process.
     
@@ -164,7 +168,7 @@ export const Web3Provider = ({ children }) => {
 
     async function createClassSession(className, sessionId, teacher) {
       // Creating a contract instance.
-      let ClassesContract= new ethers.Contract('0xcDa8F1D34Cc07f6C2f351AB52b58Caf02CE7E443', Classes.abi, signer);
+      let ClassesContract= new ethers.Contract(ClassesContractAddress, Classes.abi, signer);
       
       console.log("Creating Class Session"); // Logging the start of the minting process.
     
