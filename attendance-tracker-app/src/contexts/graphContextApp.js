@@ -35,12 +35,13 @@ export const GraphProvider = ({ children }) => {
 
         console.log(sessionId)
         console.log(walletAddress)
+        
         const ATTENDANCE_QUERY = `
         {
             mintEvents(
               where: {
-                recipient_: { address: "0xd7b34ce328de8c5efaba03cd6b520cdda313a1a7" },
-                classSession_: { id: "343223" }
+                recipient_: { address: "${walletAddress}" },
+                classSession_: { id: "${sessionId}" }
               }
             ) {
               id
