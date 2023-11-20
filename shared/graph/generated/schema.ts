@@ -557,6 +557,19 @@ export class Session extends Entity {
   set teacher(value: string) {
     this.set("teacher", Value.fromString(value));
   }
+
+  get attendanceCount(): i32 {
+    let value = this.get("attendanceCount");
+    if (!value || value.kind == ValueKind.NULL) {
+      return 0;
+    } else {
+      return value.toI32();
+    }
+  }
+
+  set attendanceCount(value: i32) {
+    this.set("attendanceCount", Value.fromI32(value));
+  }
 }
 
 export class Organization extends Entity {
@@ -637,6 +650,85 @@ export class Organization extends Entity {
 
   set timestamp(value: i32) {
     this.set("timestamp", Value.fromI32(value));
+  }
+}
+
+export class Attendance extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Attendance entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type Attendance must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("Attendance", id.toString(), this);
+    }
+  }
+
+  static loadInBlock(id: string): Attendance | null {
+    return changetype<Attendance | null>(store.get_in_block("Attendance", id));
+  }
+
+  static load(id: string): Attendance | null {
+    return changetype<Attendance | null>(store.get("Attendance", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get user(): string {
+    let value = this.get("user");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
+  }
+
+  set user(value: string) {
+    this.set("user", Value.fromString(value));
+  }
+
+  get session(): string {
+    let value = this.get("session");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
+  }
+
+  set session(value: string) {
+    this.set("session", Value.fromString(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
   }
 }
 

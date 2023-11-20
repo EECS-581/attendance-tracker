@@ -23,6 +23,7 @@ export default function QrCodeGenerator() {
     console.log(userWallet);
     async function fetchClasses() {
       const classes = await queryClassesByTeacher(userWallet);
+      console.log(classes);
       if(classes) {
         setClasses(classes);
         setLoadingClasses(false);
@@ -34,6 +35,7 @@ export default function QrCodeGenerator() {
   }, [userWallet]);
 
   const handleClassChange = (event) => {
+    console.log(event.target.value);
     setSelectedClass(event.target.value);
   };
 
@@ -42,12 +44,23 @@ export default function QrCodeGenerator() {
   };
 
   const handleCreateSession = async () => {
-    await createClassSession(selectedClass, sessionId, userWallet);
+    // Find the class object based on the selectedClass ID
+    const classObj = classes.find(c => c.id === selectedClass);
+
+    // Use the class name if the class object is found, else use an empty string
+    const className = classObj ? classObj.name : '';
+
+    console.log("Creating session for class: ", className);
+
+    console.log(className, sessionId, userWallet);
+    await createClassSession(className, sessionId, userWallet); // Pass the class name instead of the ID
+
     const generatedUrl = generateURLWithSessionID(sessionId, userWallet);
     console.log(generatedUrl);
     setUrl(generatedUrl);
     triggerSuccess();
-  };
+};
+
 
   const generateURLWithSessionID = (sessionId, userWallet) => {
     const { hostname, port } = window.location;

@@ -99,31 +99,39 @@ export const GraphProvider = ({ children }) => {
             classEntities(where: {teacher: "${teacherAddress}"}) {
                 id
                 name
+                sessions{
+                    id
+                    timestamp
+                    attendanceCount
+                }
             }
         }
         `;
-
         const data = await querySubgraph(CLASS_QUERY);
-
-        if (data.classEntities) {
-            const attendancePromises = data.classEntities.map(async (cls) => {
-                const attendanceData = await querySubgraph(`
-                    {
-                        mintEvents(where: {classSession: "${cls.id}"}) {
-                            id
-                        }
-                    }
-                `);
-                return {
-                    name: cls.name,
-                    attendance: attendanceData.mintEvents ? attendanceData.mintEvents.length : 0
-                };
+        
+        // Process the data to format it as required
+        let attendanceByClass = [];
+        if (data.classEntities && data.classEntities.length > 0) {
+            data.classEntities.forEach(classEntity => {
+                const className = classEntity.name;
+                const sessions = classEntity.sessions.map(session => {
+                    const sessionDate = new Date(session.timestamp * 1000).toISOString().split('T')[0]; // converting timestamp to YYYY-MM-DD format
+                    return {
+                        sessionDate: sessionDate,
+                        sessionAttendance: session.attendanceCount
+                    };
+                });
+                attendanceByClass.push({
+                    className: className,
+                    sessions: sessions
+                });
             });
-            return Promise.all(attendancePromises);
-        } else {
-            return false;
         }
+    
+        return attendanceByClass;
     }
+    
+    
 
     async function queryAttendanceTrendsForInstructor(teacherAddress) {
         const TRENDS_QUERY = `
@@ -134,8 +142,9 @@ export const GraphProvider = ({ children }) => {
             }
         }
         `;
-
+        
         const data = await querySubgraph(TRENDS_QUERY);
+        console.log(data)
 
         if (data.sessions) {
             const trendsPromises = data.sessions.map(async (session) => {

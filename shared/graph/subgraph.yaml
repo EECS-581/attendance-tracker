@@ -8,9 +8,9 @@ dataSources:
     name: WalletFactory
     network: mumbai
     source:
-      address: "0x908eF3bbC70e71c97dedd34706261aCbD666b9aF"
+      address: "0x11c0f87a35d1614aF1201E3F77164344339d3c92"
       abi: WalletFactory
-      startBlock: 41641232
+      startBlock: 42441232
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -29,9 +29,9 @@ dataSources:
     name: Classes
     network: mumbai
     source:
-      address: "0x87FeA9CEDc7Cb50f167fE2Eb5a09AC87542f182E"
+      address: "0x42f58FEddf37BCd945Bb530e107318b905EEc6f0"
       abi: Classes
-      startBlock: 41641250
+      startBlock: 42441232
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -52,9 +52,9 @@ dataSources:
     name: AttendanceToken
     network: mumbai
     source:
-      address: "0x2D7D44d4fF0A10f02633aDab99Efb677D900EC73"
+      address: "0x8FE018D5531698B4504aec62Cf0DA45F18A686c8"
       abi: AttendanceToken
-      startBlock: 42365209
+      startBlock: 42441232
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6

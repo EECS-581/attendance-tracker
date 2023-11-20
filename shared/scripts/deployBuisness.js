@@ -6,6 +6,9 @@ const ethers = require('ethers'); // Importing ethers.js library
 
 const Businesses = require('../abi/Businesses.json'); // Importing ABI and bytecode of AttendanceToken contract
 
+const AttendanceTokenAddress = "0x8FE018D5531698B4504aec62Cf0DA45F18A686c8";
+const AttendeesAddress = "0x74855D9ea68e3c152EBb860Ae981Db7917F516a9";
+
 async function main() {
   // Extracting ABI and bytecode from imported JSON.
   const BusinessesBytecode = Businesses.bytecode
@@ -19,7 +22,7 @@ async function main() {
   const factory = new ethers.ContractFactory(BusinessesAbi, BusinessesBytecode, wallet);
 
   // Deploying the contract.
-  const contract = await factory.deploy();// EDIT THIS WITH CONSTRUCTOR INFO
+  const contract = await factory.deploy(AttendanceTokenAddress, AttendeesAddress);// EDIT THIS WITH CONSTRUCTOR INFO
   await contract.deployed(); // Waiting for the contract to be deployed.
 
   // Logging the address at which the contract is deployed.

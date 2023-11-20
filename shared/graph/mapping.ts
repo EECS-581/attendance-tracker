@@ -1,6 +1,6 @@
 import { BigInt, Bytes } from "@graphprotocol/graph-ts";
 import { TokensMinted } from "./generated/AttendanceToken/AttendanceToken";
-import { User, MintEvent, Token, OrganizationBalance, ClassEntity, Session, Organization } from "./generated/schema";
+import { Attendance, User, MintEvent, Token, OrganizationBalance, ClassEntity, Session, Organization } from "./generated/schema";
 
 import { EnrolledClass, EnrolledClassSession } from "./generated/Classes/Classes";
 import { WalletCreated } from "./generated/WalletFactory/WalletFactory";
@@ -37,6 +37,7 @@ export function handleEnrolledClassSession(event: EnrolledClassSession): void {
     sessionEntity.classEntity = classEntity.id; // Ensure this matches the schema
     sessionEntity.sessionId = event.params.sessionId;
     sessionEntity.timestamp = event.params.time.toI32();
+    sessionEntity.attendanceCount = 0;
 
     let teacherUser = User.load(event.params.teacher.toHexString());
     if (teacherUser) {
@@ -51,36 +52,40 @@ export function handleTokensMinted(event: TokensMinted): void {
   let mintEvent = new MintEvent(event.transaction.hash.toHex());
 
   let user = User.load(event.params.to.toHexString());
-  if (user) {
-    mintEvent.recipient = user.id;
-  }
-
-  mintEvent.amount = event.params.amount;
-  mintEvent.time = event.params.time.toI32();
-
-  let sessionEntity = Session.load(event.params.classSessionID.toString()); // Updated to Session
-  if (sessionEntity) {
-    mintEvent.classSession = sessionEntity.id; // Ensure this matches the schema
-  }
-
-  let organization = Organization.load(event.params.organizationID.toString());
-  if (organization) {
-    mintEvent.organization = organization.id;
-  }
-
-  mintEvent.save();
-
-  // Updating User's total balance
   if (!user) {
     user = new User(event.params.to.toHexString());
     user.address = event.params.to;
     user.balance = BigInt.fromI32(0);
     user.timestamp = event.block.timestamp;
-    user.authId = ""; 
-    user.userType = ""; 
+    user.authId = ""; // Default value or extract from another source if available
+    user.userType = ""; // Default value or extract from another source if available
   }
   user.balance = user.balance.plus(event.params.amount);
   user.save();
+
+  mintEvent.recipient = user.id;
+  mintEvent.amount = event.params.amount;
+  mintEvent.time = event.params.time.toI32();
+
+  let sessionEntity = Session.load(event.params.classSessionID.toString());
+  if (sessionEntity) {
+    mintEvent.classSession = sessionEntity.id;
+    sessionEntity.attendanceCount = sessionEntity.attendanceCount + 1;
+    sessionEntity.save();
+  }
+
+  let organization = Organization.load(event.params.organizationID.toString());
+  if (!organization) {
+    organization = new Organization(event.params.organizationID.toString());
+    organization.name = "ku"; // Set a default name or extract from another source if available
+    organization.organizationId = event.params.organizationID;
+    organization.timestamp = event.block.timestamp.toI32();
+    // Initialize balances array if needed
+    // organization.balances = []; // Uncomment and use if you need to initialize the balances array
+    organization.save();
+  }
+  mintEvent.organization = organization.id;
+  mintEvent.save();
 
   // Updating organization-specific balance for the User
   if (organization) {
@@ -104,4 +109,5 @@ export function handleTokensMinted(event: TokensMinted): void {
   }
   token.totalMinted = token.totalMinted.plus(event.params.amount);
   token.save();
+
 }

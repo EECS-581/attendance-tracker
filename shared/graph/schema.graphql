@@ -7,7 +7,6 @@ type User @entity {
   authId: String!
   userType: String!
 }
-
 type OrganizationBalance @entity {
   id: ID!
   user: User! @relation(name: "UserOrganizationBalances")
@@ -44,11 +43,20 @@ type Session @entity {
   sessionId: BigInt!
   timestamp: Int!
   teacher: User! @relation(name: "UserSessions")
+  attendanceCount: Int! @default(value: "0") 
 }
+
 
 type Organization @entity{
   id: ID!
   name: String!
   organizationId: BigInt!
   timestamp: Int!
+}
+
+type Attendance @entity {
+  id: ID!
+  user: User! @relation(name: "UserAttendances")
+  session: Session! @relation(name: "SessionAttendances")
+  timestamp: BigInt!
 }

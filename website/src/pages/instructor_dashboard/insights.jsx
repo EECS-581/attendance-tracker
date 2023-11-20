@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from "@/components/navbar";
 import BarChart from '@/components/bar_chart';
-import LineChart from '@/components/line_chart';
-import ProgressChart from "@/components/progress_chart";
 import Footer from "@/components/footer";
 import { useGraphContext } from "@/contexts/graphContext";
 import { useWeb3Context } from "@/contexts/web3Context";
@@ -10,27 +8,20 @@ import { useWeb3Context } from "@/contexts/web3Context";
 export default function Insights() {
     const { userWallet } = useWeb3Context();
     const {
-        queryAttendancePerClassForInstructor,
-        queryAttendanceTrendsForInstructor,
-        queryOverallStudentAttendanceForInstructor
+        queryAttendancePerClassForInstructor
     } = useGraphContext();
 
-    const [classAttendance, setClassAttendance] = useState([]);
-    const [attendanceTrends, setAttendanceTrends] = useState([]);
-    const [overallAttendance, setOverallAttendance] = useState([]);
+    const [classAttendanceData, setClassAttendanceData] = useState([]);
 
     useEffect(() => {
-        if(userWallet) {
-            queryAttendancePerClassForInstructor(userWallet).then(data => {
-                setClassAttendance(data);
-            });
-            queryAttendanceTrendsForInstructor(userWallet).then(data => {
-                setAttendanceTrends(data);
-            });
-            queryOverallStudentAttendanceForInstructor(userWallet).then(data => {
-                setOverallAttendance(data);
-            });
-        }
+        const fetchData = async () => {
+            if (userWallet) {
+                const attendanceData = await queryAttendancePerClassForInstructor(userWallet);
+                setClassAttendanceData(attendanceData);
+            }
+        };
+
+        fetchData();
     }, [userWallet]);
 
     return (
@@ -41,44 +32,24 @@ export default function Insights() {
                 </div>
                 <div className="max-w-4xl mx-auto p-6">
                     <h1 className="text-3xl md:text-4xl font-semibold text-gray-900 text-center my-4">Instructor Dashboard</h1>
-                    <h2 className="text-xl md:text-2xl text-gray-700 text-center my-4">Insights</h2>
-                    <div className="mt-6">
-                        <BarChart 
-                            title="Attendance Per Class"
-                            data={classAttendance}
-                            xKey="name"
-                            yKey="attendance"
-                            xAxisLabel="Class"
-                            yAxisLabel="Attendance"
-                            chartHeight={300}
-                        />
-                    </div>   
-                    <div>
-                        <LineChart 
-                            title="Attendance Trends"
-                            data={attendanceTrends}
-                            xKey="date"
-                            yKey="attendance"
-                            xAxisLabel="Date"
-                            yAxisLabel="Attendance"
-                            chartHeight={250}
-                        />
-                    </div>
-                    <div>
-                        <ProgressChart
-                            title="Student attendance overall"
-                            data={overallAttendance}
-                            chartHeight={300}
-                            chartWidth={300}
-                            labelStyle={{ 
-                                fontSize: 18,
-                                fill: "black",
-                                fontWeight: "bold"
-                            }}
-                            animationData={{y: 75 }}
-                            colors={["powderblue", "pink"]}
-                        />
-                    </div>
+                    <h2 className="text-xl md:text-2xl text-gray-700 text-center my-4">Class Attendance Insights</h2>
+                    {classAttendanceData.map((classData, index) => (
+                        <div key={index} className="mt-6">
+                            <h3 className="text-2xl font-semibold text-gray-800">{classData.className}</h3>
+                            <BarChart 
+                                title={`Attendance for ${classData.className}`}
+                                data={classData.sessions.map(session => ({
+                                    name: session.sessionDate,
+                                    attendance: session.sessionAttendance
+                                }))}
+                                xKey="name"
+                                yKey="attendance"
+                                xAxisLabel="Session Date"
+                                yAxisLabel="Attendance"
+                                chartHeight={300}
+                            />
+                        </div>
+                    ))}
                 </div>
             </div>
             <div className="py-4 text-center text-sm text-gray-600">

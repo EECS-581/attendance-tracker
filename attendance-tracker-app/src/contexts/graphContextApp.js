@@ -31,25 +31,39 @@ export const GraphProvider = ({ children }) => {
         }
     };
 
-    async function queryClassAttendance(classSessionID) {
-        // Define the GraphQL query for class attendance using template literals
+    async function hasWalletAttendedSession(walletAddress, sessionId) {
+
+        console.log(sessionId)
+        console.log(walletAddress)
         const ATTENDANCE_QUERY = `
         {
-            mintEvents(where: {classSessionID: "${classSessionID}"}) {
-              to
+            mintEvents(where: {recipient: "${walletAddress}", classSession: "${sessionId}"}) {
+                id
             }
         }
         `;
     
         // Use the generic querySubgraph function to fetch the data
-        return querySubgraph(ATTENDANCE_QUERY);
+        const data = await querySubgraph(ATTENDANCE_QUERY);
+    
+        // Check if any mint events were returned for the user and session
+        if (data && data.mintEvents && data.mintEvents.length > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
+    
+    
+
+
+    
 
     async function checkClassSessionExists(classSessionID) {
         // Define the GraphQL query for class attendance using template literals
         const ATTENDANCE_QUERY = `
         {
-            classSessions(where: {sessionId: "${classSessionID}"}) {
+            sessions(where: {sessionId: "${classSessionID}"}) {
               sessionId
             }
         }
@@ -60,7 +74,7 @@ export const GraphProvider = ({ children }) => {
 
         console.log(data)
 
-        if (data.classSessions.length > 0) {
+        if (data.sessions.length > 0) {
             return true;
         }
         else {
@@ -97,26 +111,42 @@ export const GraphProvider = ({ children }) => {
     async function queryClassesByTeacher(teacherAddress) {
         const query = `
             query {
-                classes(where: {teacher: "${teacherAddress}"}) {
+                classEntities(where: {teacher: "${teacherAddress}"}) {
                     id
                     name
                     classId
                     timestamp
+                    sessions {
+                        id
+                        sessionId
+                        timestamp
+                        attendanceCount
+                    }
                 }
             }
         `;
         return querySubgraph(query);
     }
+
+    async function queryAttendancePerClassForInstructor(teacherAddress) {
+        // find teachers classes 
+        const classes = await queryClassesByTeacher(teacherAddress);
+        console.log("classes",classes)
+
+
+    }
+    
     
 
 
 
 
     const value = {
-        queryClassAttendance,
         checkClassSessionExists,
         queryAccountAdress,
-        queryClassesByTeacher
+        queryClassesByTeacher,
+        hasWalletAttendedSession,
+        queryAttendancePerClassForInstructor
     };
 
     return (

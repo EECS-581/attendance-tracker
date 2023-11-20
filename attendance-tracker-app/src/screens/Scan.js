@@ -11,7 +11,7 @@ export default function Scan() {
   const { setShowCameraButton } = useContext(CameraButtonContext);
   const { mintAttendanceToken, getAttendanceBalance, balance, userWallet } =
     useWeb3Context();
-  const { queryClassAttendance, checkClassSessionExists } = useGraphContext();
+  const { hasWalletAttendedSession, checkClassSessionExists } = useGraphContext();
   const [showMintingAnimation, setShowMintingAnimation] = useState(false);
   const [showSuccessAnimation, setShowSuccessAnimation] = useState(false);
 
@@ -29,18 +29,13 @@ export default function Scan() {
     })();
   }, []);
 
-  const checkAttendance = async (address, sessionId) => {
-    const data = await queryClassAttendance(sessionId);
-    if (!data || !data.mintEvents) return false;
-    return data.mintEvents.some(
-      (event) => event.to.toLowerCase() === address.toLowerCase()
-    );
-  };
+
 
   const scannedRef = useRef(false);
 
   const handleBarCodeScanned = async ({ type, data }) => {
     try {
+
       if (scannedRef.current) return;
       scannedRef.current = true;
       setScanned(true);
@@ -55,14 +50,17 @@ export default function Scan() {
       }, {});
 
       const sessionId = params.sessionId;
+      console.log("Session ID:", sessionId);
       const userWallet = params.userWallet;
+      console.log("User wallet:", userWallet);
 
       if (!sessionId) {
         Alert.alert("Error", "Session ID not found in the QR code");
         return;
       }
-
+      console.log("Checking if session exists");
       const sessionExists = await checkClassSessionExists(sessionId);
+      console.log("Session exists:", sessionExists);
       if (!sessionExists) {
         Alert.alert("Error", "Class session does not exist");
         return;
@@ -73,7 +71,8 @@ export default function Scan() {
         return;
       }
 
-      const hasAttended = await checkAttendance(userWallet, sessionId);
+      const hasAttended = await hasWalletAttendedSession(userWallet, sessionId);
+      console.log("Has attended:", hasAttended);
       if (hasAttended) {
         Alert.alert("Attendance", "User has already attended");
         return;
