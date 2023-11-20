@@ -43,7 +43,7 @@ const Classes = require('../abi/Classes.json'); // Importing ABI of Classes cont
 const WalletFactory = require('../abi/WalletFactory.json'); // Importing ABI of WalletFactory contract
 const Businesses = require("../abi/Businesses.json");
 
-const BusinessesContractAddress = "0x2f16448E23322996538EdfFb2E914d5C0402f4E7"
+const BusinessesContractAddress = "0x2f16448E23322996538EdfFb2E914d5C0402f4E7";
 const walletFactoryAddress = "0x11c0f87a35d1614aF1201E3F77164344339d3c92";
 const attendanceTokenAdress = "0x8FE018D5531698B4504aec62Cf0DA45F18A686c8";
 const ClassesContractAddress = "0x42f58FEddf37BCd945Bb530e107318b905EEc6f0";
@@ -203,6 +203,56 @@ export const Web3Provider = ({ children }) => {
 
       console.log("Coupon Created");
     }
+
+    //function to get businesses coupons
+    async function getBusinessCoupons(businessName) {
+      let BusinessesContract = new ethers.Contract(BusinessesContractAddress, Businesses.abi, signer);
+      console.log("Fetching Business Coupons");
+      const couponIDs = await BusinessesContract.getBusinessCoupons(businessName);
+      console.log("Business Coupons:", couponIDs);
+      return couponIDs;
+    }
+    //function to get list of businesses
+    async function getBusinessesList() {
+      let BusinessesContract = new ethers.Contract(BusinessesContractAddress, Businesses.abi, signer);
+      console.log("Fetching Businesses List");
+      const businessesList = await BusinessesContract.getBusinessesList();
+      console.log("Businesses List:", businessesList);
+      return businessesList;
+    }
+    //function to get business id
+    async function getBusinessToID(businessName) {
+      let BusinessesContract = new ethers.Contract(BusinessesContractAddress, Businesses.abi, signer);
+      console.log("Fetching Business ID");
+      const businessID = await BusinessesContract.getBusinessToID(businessName);
+      console.log("Business ID:", businessID);
+      return businessID;
+    }
+    //function to get coupons per business
+    async function getBusinessToCouponIDs(businessID) {
+      let BusinessesContract = new ethers.Contract(BusinessesContractAddress, Businesses.abi, signer);
+      console.log("Fetching Coupons for Business ID");
+      const couponIDs = await BusinessesContract.getBusinessToCouponIDs(businessID);
+      console.log("Coupon IDs:", couponIDs);
+      return couponIDs;
+    }
+    //function to get list of coupons for person
+    async function getAttendeeToCouponIDs(attendeeAddress) {
+      let BusinessesContract = new ethers.Contract(BusinessesContractAddress, Businesses.abi, signer);
+      console.log("Fetching Coupons for Attendee");
+      const couponIDs = await BusinessesContract.getAttendeeToCouponIDs(attendeeAddress);
+      console.log("Attendee Coupon IDs:", couponIDs);
+      return couponIDs;
+    }
+    //function to get coupon details
+    async function getCouponIDToCoupon(couponID) {
+      let BusinessesContract = new ethers.Contract(BusinessesContractAddress, Businesses.abi, signer);
+      console.log("Fetching Coupon Details");
+      const couponDetails = await BusinessesContract.getCouponIDToCoupon(couponID);
+      console.log("Coupon Details:", couponDetails);
+      return couponDetails;
+    }
+
     
     // Defining the context value.
     const value = {
@@ -218,7 +268,13 @@ export const Web3Provider = ({ children }) => {
       setUserWallet,
       userWallet,
       EnrollBusiness,
-      createCoupon
+      createCoupon,
+      getBusinessesList,
+      getBusinessCoupons,
+      getBusinessToID,
+      getBusinessToCouponIDs,
+      getAttendeeToCouponIDs,
+      getCouponIDToCoupon
     };
     
     // Returning the Web3Context.Provider with value and children props.
