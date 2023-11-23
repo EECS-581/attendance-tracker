@@ -4,7 +4,8 @@ const path = require("path");
 const nextConfig = {
   reactStrictMode: true,
   trailingSlash: true,
-  output: 'export',
+  output: 'standalone',
+  distDir: 'out',
   images: {
     unoptimized: true,
   },
