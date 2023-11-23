@@ -166,20 +166,34 @@ export const Web3Provider = ({ children }) => {
 
     }
 
-    async function createClassSession(className, sessionId, teacher) {
-      // Creating a contract instance.
-      let ClassesContract= new ethers.Contract(ClassesContractAddress, Classes.abi, signer);
-      
-      console.log("Creating Class Session"); // Logging the start of the minting process.
+    async function createClassSession(className, sessionId, teacher, gasPrice) {
+      let ClassesContract = new ethers.Contract(ClassesContractAddress, Classes.abi, signer);
     
-      const tx = await ClassesContract.enrollClassSession(className, sessionId, teacher); // Minting tokens.
-      
-      console.log(tx); // Logging transaction object.
-      await tx.wait(); // Waiting for the transaction to be mined.
-      
-      console.log("Created Class Session"); // Logging the end of the minting process.
-
+      console.log("Creating Class Session");
+    
+      // Fetch the current gas price from the network (optional)
+      const currentGasPrice = await signer.getGasPrice();
+    
+      console.log(`Current Gas Price: ${ethers.utils.formatUnits(currentGasPrice, 'gwei')} Gwei`);
+    
+      // Determine your gas price here. 
+      // For example, you could set it to be 20% higher than the current gas price.
+      // Make sure to convert it to the correct unit.
+      const adjustedGasPrice = currentGasPrice.mul(10).div(100);
+    
+      console.log(`Adjusted Gas Price: ${ethers.utils.formatUnits(adjustedGasPrice, 'gwei')} Gwei`);
+    
+      const tx = await ClassesContract.enrollClassSession(className, sessionId, teacher, {
+        gasPrice: gasPrice || adjustedGasPrice // Use the specified or adjusted gas price
+      });
+    
+      console.log(tx);
+    
+      await tx.wait();
+    
+      console.log("Created Class Session");
     }
+    
 
     async function EnrollBusiness(businessName) {
       let BusinessesContract = new ethers.Contract(BusinessesContractAddress, Businesses.abi, signer);
