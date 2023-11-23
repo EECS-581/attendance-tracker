@@ -3,9 +3,6 @@ const path = require("path");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  trailingSlash: true,
-  output: 'standalone',
-  distDir: 'out',
   images: {
     unoptimized: true,
   },
