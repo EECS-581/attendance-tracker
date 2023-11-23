@@ -5,7 +5,7 @@ const nextConfig = {
   reactStrictMode: true,
   trailingSlash: true,
   output: 'standalone',
-  distDir: 'output',
+  distDir: 'out',
   images: {
     unoptimized: true,
   },
