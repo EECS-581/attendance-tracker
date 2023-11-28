@@ -23,8 +23,6 @@ const BusinessesContractAddress = process.env.BUSINESSES_CONTRACT_ADDRESS
 const WalletFactoryContractAddress = process.env.WALLET_FACTORY_CONTRACT_ADDRESS
 const AttendeesContractAddress = process.env.ATTENDEES_CONTRACT_ADDRESS
 
-const BusinessesContract = new ethers.Contract(BusinessesContractAddress, BusinessABI, signer)
-
 const signers = [signer1, signer2, signer3];
 let index = 0;
 const getSigner = () => {
@@ -272,9 +270,6 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
-
-
-
 
 
 
