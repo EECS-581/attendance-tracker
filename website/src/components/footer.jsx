@@ -12,49 +12,49 @@ import Link from 'next/link';
 const Footer = () => {
   return (
     // creates a footer DOM element 
-    <footer className="bg-gray-100 text-gray-800 py-8">
+    <footer className="bg-powderblue text-black py-8">
       {/* creates a container to hold the two footer columns */}
       <div className="container mx-auto flex flex-wrap justify-between">
         {/* creates a container to hold first column  */}
         <div className="w-full sm:w-1/2 md:w-1/4 lg:w-1/6 mb-4">
           {/* creates a header for the links  */}
-          <h2 className="text-xl font-bold">USEFUL LINKS</h2>
+          <h2 className="text-xl font-bold mb-4">USEFUL LINKS</h2>
           {/* creates a list of links for footer  */}
-          <ul className="mt-4 space-y-2">
+          <ul className="space-y-2">
             <li>
               {/* Use Link component for navigation */}
               <Link href="/">
-                <span className="hover:text-gray-300">Home</span>
+                <span className="hover:text-gray-500 font-bold">Home</span>
               </Link>
             </li>
             <li>
               {/* Use Link component for navigation */}
               <Link href="/about">
-                <span className="hover:text-gray-300">About</span>
+                <span className="hover:text-gray-500 font-bold">About</span>
               </Link>
             </li>
             <li>
               {/* Use Link component for navigation */}
               <Link href="/instructor_dashboard">
-                <span className="hover:text-gray-300">Instructors</span>
+                <span className="hover:text-gray-500 font-bold">Instructors</span>
               </Link>
             </li>
             <li>
               {/* Use Link component for navigation */}
               <Link href="/business_dashboard">
-                <span className="hover:text-gray-300">Businesses</span>
+                <span className="hover:text-gray-500 font-bold">Businesses</span>
               </Link>
             </li>
           </ul>
         </div>
         {/* creates second column container  */}
         <div className="w-full sm:w-1/2 md:w-1/4 lg:w-1/6 mb-4">
-          <h2 className="text-xl font-bold">CONTACT US</h2>
-          <ul className="mt-4 space-y-2">
+          <h2 className="text-xl font-bold mb-4">CONTACT US</h2>
+          <ul className="space-y-2">
             <li>
               {/* Use Link component for navigation */}
               <Link href="/">
-                <span className="hover:text-gray-300">AttendThis.com</span>
+                <span className="hover:text-gray-500 font-bold">AttendThis.com</span>
               </Link>
             </li>
             <li>

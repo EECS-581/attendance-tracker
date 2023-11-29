@@ -81,10 +81,10 @@ export default function Home() {
           <LightColorfulButton
             shadowColor="powderblue"
             title="Create Account"
-            link="/login"
+            link="/create_account"
           />
           {/* This creates a paragraph tag to hold this sentence between the buttons */}
-          {/* <p className="text-gray-700">Already have an account?</p> */}
+          <p className="text-gray-700">Already have an account?</p>
           {/* This section creates the container to hold the login button which redirects to the login page */}
           
           {/* <LightColorfulButton
