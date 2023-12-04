@@ -25,15 +25,32 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import globalStyles from "../styles/globalStyles";
 import SolidColorButton from "../components/SolidColorButton";
-import { Ionicons } from "@expo/vector-icons";
+import { TempClassData } from "./tempData";
+import SimpleCard from "../components/SimpleCard";
 
 const ManageClasses = ({ navigation }) => {
-  // Render the Account screen UI
+  const classees = 1;
   return (
     <View style={styles.container}>
       <Text style={[globalStyles.defaultFont, styles.title]}>
         Your classes:{" "}
       </Text>
+      {TempClassData.map((classItem) => (
+        <SimpleCard backgroundColor="lightblue" key={classItem.id}>
+          <View style={{ flexDirection: "column" }}>
+            <Text style={[globalStyles.defaultFont, { fontSize: 20 }]}>
+              {classItem.className}
+            </Text>
+            <Text style={[globalStyles.defaultFont]}>
+              Instructor: {classItem.instructorName}
+            </Text>
+            <Text style={[globalStyles.defaultFont]}>
+              Classes Attended: {classItem.classesAttended} /{" "}
+              {classItem.totalClassSessionsHeld}
+            </Text>
+          </View>
+        </SimpleCard>
+      ))}
     </View>
   );
 };
@@ -42,7 +59,7 @@ const ManageClasses = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    paddingTop: 20,
     alignItems: "center",
     backgroundColor: "#f5f5f5",
   },
