@@ -1,11 +1,13 @@
 const express = require('express');
-const { ethers } = require('ethers');
+const ethers = require('ethers');
 require('dotenv').config();
-const AttendanceTokenABI = require('../shared/abi/AttendanceToken.json'); // Importing ABI of AttendanceToken contract
-const ClassesABI = require('../shared/abi/Classes.json'); // Importing ABI of Classes contract
-const WalletFactoryABI = require('../shared/abi/WalletFactory.json'); // Importing ABI of WalletFactory contract
-const WalletABI = require('../shared/abi/Wallet.json');
-const BusinessABI = require('../shared/abi/Businesses.json')
+const AttendanceTokenABI = require('../shared/abi/AttendanceToken.json').abi; // Importing ABI of AttendanceToken contract
+const ClassesABI = require('../shared/abi/Classes.json').abi; // Importing ABI of Classes contract
+const WalletFactoryABI = require('../shared/abi/WalletFactory.json').abi; // Importing ABI of WalletFactory contract
+const WalletABI = require('../shared/abi/Wallet.json').abi;
+const BusinessABI = require('../shared/abi/Businesses.json').abi;
+
+
 
 const app = express();
 
@@ -50,7 +52,7 @@ app.post('/mintToken', async (req, res) => {
         const tx = await AttendanceTokenContract.mint(address, amount, classSessionID, organizationID);
         await tx.wait();
 
-        res.send({ message: 'Data sent successfully', txHash: tx.hash });
+        res.send({ message: 'Data sent successfully', txHash: tx.hash, address, amount, classSessionID, organizationID});
     } catch (error) {
         res.status(500).send({ error: error.message });
     }
@@ -61,8 +63,9 @@ app.post('/createWallet', async (req, res) => {
         // Example function to send data
         const authId = req.body.data.address
         const userType = req.body.data.userType
+        const organization = req.body.data.organization
         const WalletFactoryContract = createInstance(WalletFactoryContractAddress, WalletFactoryABI);
-        const tx = await WalletFactoryContract.createWallet("0x06e6620C67255d308A466293070206176288A67B",authId, userType, AttendeesContractAddress, AttendanceTokenContractAddress, BusinessesContractAddress, "ku");
+        const tx = await WalletFactoryContract.createWallet("0x06e6620C67255d308A466293070206176288A67B",authId, userType, AttendeesContractAddress, AttendanceTokenContractAddress, BusinessesContractAddress, organization);
         await tx.wait();
 
         res.send({ message: 'Data sent successfully', txHash: tx.hash });
@@ -107,6 +110,7 @@ app.post('/enrollBusiness', async (req, res) => {
     try {
         // Example function to send data
         const businessName = req.body.data.businessName
+        console.log(BusinessABI)
         const BusinessesContract = createInstance(BusinessesContractAddress, BusinessABI)
         const tx = await BusinessesContract.enrollBusiness(businessName)
         await tx.wait();
