@@ -64,7 +64,7 @@ const Landing = ({ navigation }) => {
           title="Get Started"
           shadowColor="plum"
           onPress={() => {
-            navigation.navigate("Tabs");
+            navigation.navigate("Login");
           }}
         />
       </View>

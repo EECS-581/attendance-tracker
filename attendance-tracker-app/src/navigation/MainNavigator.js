@@ -36,6 +36,7 @@ import Insights from "../screens/Insights";
 import Redeem from "../screens/Redeem";
 import Account from "../screens/Account";
 import Discover from "../screens/Discover";
+import Login from "../screens/Login";
 import Scan from "../screens/Scan";
 import ManageClasses from "../screens/ManageClasses";
 import ManageAccount from "../screens/ManageAccount";
@@ -100,6 +101,11 @@ const MainNavigator = () => {
         <Stack.Screen
           name="Landing"
           component={Landing}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Login"
+          component={Login}
           options={{ headerShown: false }}
         />
         <Stack.Screen name="Scan" component={Scan} />
