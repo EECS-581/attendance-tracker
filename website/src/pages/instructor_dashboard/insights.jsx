@@ -18,10 +18,12 @@ export default function Insights() {
             if (userWallet) {
                 const attendanceData = await queryAttendancePerClassForInstructor(userWallet);
                 setClassAttendanceData(attendanceData);
+                console.log(attendanceData);
             }
         };
 
         fetchData();
+        console.log("userWallet: ", userWallet);
     }, [userWallet]);
 
     return (
@@ -35,8 +37,10 @@ export default function Insights() {
                     <h2 className="text-xl md:text-2xl text-gray-700 text-center my-4">Class Attendance Insights</h2>
                     {classAttendanceData.map((classData, index) => (
                         <div key={index} className="mt-6">
+                            {console.log('Class Attendance Data:', classData)}
                             <h3 className="text-2xl font-semibold text-gray-800">{classData.className}</h3>
                             <BarChart 
+                            
                                 title={`Attendance for ${classData.className}`}
                                 data={classData.sessions.map(session => ({
                                     name: session.sessionDate,
