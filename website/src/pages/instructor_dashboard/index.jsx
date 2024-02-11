@@ -5,6 +5,8 @@
 // Date: 09/24/2023
 // Updated: 10/05/2023 - to add insights widget
 // Updated: 10/17/2023, Requirement 36.7 - CSS styling version 1 - added tailwind css classes for styling
+// Updated: 2/09/2024,Requirement: 23.3 “Add Manage Account button to link update account info page” & Requirement: 23.4 “Add notifications to Dashboard”
+
 // This pages sets up the UI, there are no pre or post condition to this page
 // inputs to this page will be the data points pulled from the instuctors classes
 
@@ -22,6 +24,7 @@ import Footer from "@/components/footer";
 import { useState, useEffect } from "react";
 import { useWeb3Context } from "../../contexts/web3Context";
 import { useGraphContext } from "../../contexts/graphContext";
+// import { _firstName } from "../../../../shared/contracts/wallet"
 
 // this adds some dummy test data to use in the charts until we have the backend setup to pull data from
 const classData = [
@@ -32,12 +35,16 @@ const classData = [
   {name: "EECS 581", attendance: 80, date: "10/03"}
 ]
 
+// figure out how to pull from wallet.sol from shared folder
+const username = "Jane Doe" 
+
 // create the Instructor Dashboard page
 export default function Instructor_dashboard() {
   const [classes, setClasses] = useState([]);
   const [loading, setLoading] = useState(true);
   const { createClassSession, createClass, userWallet } = useWeb3Context();
   const { queryClassesByTeacher } = useGraphContext(); // Use the queryClassesByTeacher function
+  // const { username } = 
 
   useEffect(() => {
     console.log(userWallet);
@@ -62,13 +69,34 @@ export default function Instructor_dashboard() {
           <Navbar /> 
         </div>
       </div>
+
+      {/* Add a new section for the subheading and link to account preferences */}
+      <section className="mb-4 ml-8">
+        <h2 className="text-2xl font-semibold text-gray-700 mb-4">
+          Welcome, {username}!
+        </h2>
+        {/* Create a link to account preferences */}
+        <LightColorfulButton
+          shadowColor="pink"
+          title="Manage Account"
+          link="/account"
+        />
+      </section>
+
         <h1 className="text-3xl md:text-4xl font-semibold text-gray-900 text-center my-4">Instructor Dashboard</h1>          
-        <div className="flex justify-center items-center flex-grow">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="flex justify-center items-center flex-grow p-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+        <div className='bg-white rounded shadow-lg p-0'>
+          <div className='p-4'>
+            <h2 className='text-2xl font-bold'>Notifications</h2>
+            <p className='text-gray-600 mt-2'>- No new notifications at this time.</p>
+          </div>
+        </div>
         <div className="bg-white rounded shadow-lg p-0">
           <div className='p-4'>
             <h2 className="text-2xl font-bold">QR Code Generator</h2>
-            <p className='text-gray-600 mt-2'>Click the link to access QR code generation options!</p>
+            <p className='text-gray-600 mt-2'>- Click the button below to access QR code generation options!</p>
+            <p className='text-gray-600 mt-2'>- QR Codes are how we track attendance.</p>
           </div>
           <div className='flex items-center justify-center p-4'>  
             {/* creates a the qr code generator button */}
@@ -79,10 +107,11 @@ export default function Instructor_dashboard() {
             />
           </div>
         </div>
+        
         <div className="bg-white rounded shadow-lg p-4">
-          <div className="mt-6">
+          <div className="">
           {/* Creates a title for the insights widget  */}
-          <h2 className='text-2xl md:text-3xl font-semibold text-gray-900'>Attendance Per Class</h2>
+          <h2 className='text-2xl font-bold'>Attendance Per Class</h2>
           {/* Creates an instance of the Victory Chart, this creates the chart with the specified theme and padding  */}
           <BarChart 
               // title="Attendance Per Class"
@@ -104,9 +133,9 @@ export default function Instructor_dashboard() {
           </div>  
         </div>        
       </div>
-        <div className="bg-white rounded shadow-lg p-0">
-          <h2 className="text-2xl font-bold p-4">Active Classes</h2>
-         
+        <div className="bg-white rounded shadow-lg p-4">
+          <h2 className="text-2xl font-bold">Active Classes</h2>
+          {classes.length > 0 ? (
           <ul className="">
           {/* loops through the list items  */}
           {classes.map((classItem, index) => (
@@ -118,6 +147,12 @@ export default function Instructor_dashboard() {
             </li>
             ))}
           </ul>
+          ) : (
+            <div>
+              <p className="text-gray-600 mt-2">- No active classes available</p>
+              <p className="text-gray-600 mt-2">- To add a class click the button below</p>
+            </div>
+          )}
           <div className='mt-6 mb-6 text-center'>
           {/* creates the view classes button/link */}
           <LightColorfulButton
