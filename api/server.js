@@ -61,7 +61,7 @@ app.post('/mintToken', async (req, res) => {
 app.post('/createWallet', async (req, res) => {
     try {
         // Example function to send data
-        const authId = req.body.data.address
+        const authId = req.body.data.authId
         const userType = req.body.data.userType
         const organization = req.body.data.organization
         const WalletFactoryContract = createInstance(WalletFactoryContractAddress, WalletFactoryABI);
@@ -110,7 +110,6 @@ app.post('/enrollBusiness', async (req, res) => {
     try {
         // Example function to send data
         const businessName = req.body.data.businessName
-        console.log(BusinessABI)
         const BusinessesContract = createInstance(BusinessesContractAddress, BusinessABI)
         const tx = await BusinessesContract.enrollBusiness(businessName)
         await tx.wait();
