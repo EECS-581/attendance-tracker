@@ -85,13 +85,13 @@ export default function Instructor_dashboard() {
 
         <h1 className="text-3xl md:text-4xl font-semibold text-gray-900 text-center my-4">Instructor Dashboard</h1>          
         <div className="flex justify-center items-center flex-grow p-8">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-        <div className='bg-white rounded shadow-lg p-0'>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {/* <div className='bg-white rounded shadow-lg p-0'>
           <div className='p-4'>
             <h2 className='text-2xl font-bold'>Notifications</h2>
             <p className='text-gray-600 mt-2'>- No new notifications at this time.</p>
-          </div>
-        </div>
+           </div>
+        </div> */}
         <div className="bg-white rounded shadow-lg p-0">
           <div className='p-4'>
             <h2 className="text-2xl font-bold">QR Code Generator</h2>

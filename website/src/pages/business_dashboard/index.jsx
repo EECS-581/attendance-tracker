@@ -33,7 +33,7 @@ const ChartData = [
   { coupon: "1/2 off", redeemed: 8, organization: "ku" }
 ]
 
-const username = "Username"
+const username = "John Doe"
 
 // create the page Business Dashboard
 export default function Business_dashboard() {
@@ -114,10 +114,10 @@ export default function Business_dashboard() {
           <p className='text-sm text-gray-600 mt-2'>-Click button to add, edit or delete active coupons</p>
           <SolidColorButton title="Manage Coupons" link="/business_dashboard/manage_coupons" />
         </div>
-              <div className='mb-12'>
+              {/* <div className='mb-12'>
                 <h3 className='text-lg font-semibold'>Notifications</h3>
                 <p className='text-sm text-gray-600 mt-2'>- No new notifications at this time.</p>
-              </div>
+              </div> */}
 
         </div>
         <div className="md:w-2/3 bg-white rounded shadow-lg p-4">

@@ -29,7 +29,7 @@ export default function Account() {
       setUserData({ ...userData, profilePicture: file.name });
     }
   };
-
+ 
   const handleSubmit = (e) => {
     e.preventDefault();
     alert("user updated data: ", userData);

@@ -16,14 +16,14 @@ export default function Login() {
   const [hovered, setHovered] = useState(false);
 
   return (
-    <main className="w-full min-h-screen flex flex-col overflow-hidden bg-gray-100">
+    <main className="w-full min-h-screen flex flex-col overflow-hidden">
       {/* Navbar */}
       <div className="py-6">
         <div className="container mx-auto">
           <Navbar />
         </div>
-      </div>
-
+      </div> 
+ 
       {/* Google Sign-In Button with Visual Depth */}
       <div className="flex-1 flex items-center justify-center">
         <div className="w-full sm:w-96 p-6 rounded-lg bg-white shadow-md">
@@ -39,6 +39,10 @@ export default function Login() {
           </div>
           <p className="mt-4 text-center text-gray-600">
             For instructors and business admin
+          </p>
+          <p className="mt-4 text-center text-gray-600">
+            Don't have an account?{" "}
+            <a href="/create_account" className="text-blue-500 hover:underline">Create one!</a>
           </p>
         </div>
       </div>
