@@ -13,8 +13,25 @@ function CouponModal({ isOpen, onClose, actionType }) {
     // default values
     title: '',
     description: '',
-    discount: 0
+    discount: 0,
   });
+
+  const orgs = ['KU', 'Lawrence Public Schools', 'All Kansas Schools'];
+  
+  const handleAllChange = (event) => {
+    const { checked } = event.target;
+    const updatedFormData = { ...formData };
+    orgs.forEach((org) => {
+      updatedFormData[org] = checked;
+    });
+    setFormData(updatedFormData);
+  };
+
+  const handleOrgChange = (event) => {
+    const { name, checked } = event.target;
+    setFormData({ ...formData, [name]: checked });
+  };
+
 
   // creates method to handle when the confirm button is clicked
   // this will be updated when real data is used
@@ -47,7 +64,7 @@ function CouponModal({ isOpen, onClose, actionType }) {
   // creates the method to render the form element on screen
   const renderForm = () => {
     return (
-      <div>
+      <div className='mb-4'>
       {/* input for the name  */}
         <input
           type="text"
@@ -74,6 +91,30 @@ function CouponModal({ isOpen, onClose, actionType }) {
           onChange={handleChange}
           className="w-full mb-4 p-2 border rounded"
         />
+        {/* 'All' checkbox */}
+      <div>
+        <input
+          type="checkbox"
+          name="allOrgs"
+          checked={orgs.every(org => formData[org])}
+          onChange={handleAllChange}
+          className="mr-2"
+        />
+        <label htmlFor="allOrgs">Select All</label>
+      </div>
+      {/* checkboxes for organizations */}
+      {orgs.map((org, index) => (
+        <div key={index}>
+          <input
+            type="checkbox"
+            name={org}
+            checked={formData[org]}
+            onChange={handleOrgChange}
+            className="mr-2"
+          />
+          <label htmlFor={org}>{org}</label>
+        </div>
+      ))}
       </div>
     );
   };
