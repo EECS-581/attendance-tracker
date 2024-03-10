@@ -4,6 +4,8 @@
 // Date: 10/26/2023
 // This page creates the modal component to be used with coupon, there are no pre or post conditions at this point
 // inputs to this page are the users input into the modal to update, add, and delete coupons
+// Updated: 03/03/2024
+// Update includes Requirement 23.4 Add ability for business to choose which institutions they want to provide coupons for on UI
 
 // import react and usestate from react library
 import React, { useState } from 'react';
