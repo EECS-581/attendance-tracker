@@ -14,7 +14,7 @@ async function callClientFunction(functionName, ...args) {
 
 // Test mintToken function
 async function testMintToken() {
-  await callClientFunction('mintToken', '0xC75187DDB11c9cDAcc71b40d13e2A7fCd23FDF18', 100, 1, 1);
+  await callClientFunction('mintToken', '0x7e28e4ad740A39997a66c15B0E385d181D8A3d92', 100, 1, 1);
 }
 
 // Test createWallet function
@@ -34,17 +34,17 @@ async function testCreateClassSession() {
 
 // Test enrollBusiness function
 async function testEnrollBusiness() {
-  await callClientFunction('enrollBusiness', 'BingBong');
+  await callClientFunction('enrollBusiness', 'Roost');
 }
 
 // Test createCoupon function
 async function testCreateCoupon() {
-  await callClientFunction('createCoupon', 'BingBong', 50, 100, 'Discount Coupon', []);
+  await callClientFunction('createCoupon', 'Roost', 50, 100, 'Discount Coupon', []);
 }
 
 // Test buyCoupon function
 async function testBuyCoupon() {
-  await callClientFunction('buyCoupon', '0x456', 'coupon01');
+  await callClientFunction('buyCoupon', '0x7e28e4ad740A39997a66c15B0E385d181D8A3d92', 3);
 }
 
 // Test redeemCoupon function
@@ -92,5 +92,4 @@ async function testCouponIDToCoupon() {
   await callClientFunction('couponIDToCoupon', 1);
 }
 
-// Example usage: test a specific function
-testCouponIDToCoupon();
+testBuyCoupon();
