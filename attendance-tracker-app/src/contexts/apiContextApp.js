@@ -5,7 +5,7 @@ const ApiContextApp = createContext();
 
 // Context Provider Component
 export const ApiAppProvider = ({ children }) => {
-    const apiUrl = 'http://localhost:3000'; // Replace with your actual API base URL
+    const apiUrl = 'http://18.222.95.223:3000'; // Replace with your actual API base URL
 
     const createClass = async (className, classId, teacher) => {
         try {
