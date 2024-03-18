@@ -11,6 +11,8 @@
 // import necessary components
 // import react and usestate to track modal and data states
 import { React, useState } from 'react';
+import { useWeb3Context } from '@/contexts/web3Context';
+
 // import victory chart and props 
 import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryLabel } from 'victory';
 // import Navbar
@@ -21,7 +23,6 @@ import Footer from "@/components/footer";
 import SolidColorButton from "@/components/SolidColorButton";
 import LightColorfulButton from '@/components/LightColorfulButton';
 
-import { useWeb3Context } from "../../contexts/web3Context";
 import { useGraphContext } from "../../contexts/graphContext";
 
 // dummy chart data to be replaced with backend data
