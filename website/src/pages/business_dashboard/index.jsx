@@ -128,17 +128,17 @@ export default function Business_dashboard() {
           {/* Creates an instance of the Victory Chart, this creates the chart with the specified theme and padding  */}
       {/* Victory Bar Chart */}
       {/* <div className='md:w-2/3 bg-white shadow-md'> */}
-      <div className="">
+      <div className="w-full">
         <VictoryChart 
           theme={VictoryTheme.material} 
-          width={300} 
-          height={200}
-          domainPadding={{ x: 20, y: 20 }} // Adjust the padding as needed
+          width={window.innerWidth > 768 ? 600 : 300} // Adjust width based on screen size
+          height={window.innerWidth > 768 ? 400 : 200} // Adjust height based on screen size
+          domainPadding={{ x: 20, y: 20 }} // Adjust the padding as needed 
         >
           {/* Title */}
           <VictoryLabel 
             text="Total Coupons Redeemed" 
-            x={150} 
+            x={window.innerWidth > 768 ? 300 : 150} // Adjust x position based on screen size
             y={14} 
             textAnchor="middle" 
             style={{ fontSize: 10}}
@@ -147,8 +147,8 @@ export default function Business_dashboard() {
           <VictoryAxis
             label="Coupon"
             style={{
-              tickLabels: { fontSize: 6, padding: 5 },
-              axisLabel: { fontSize: 9, padding: 10 },
+              tickLabels: { fontSize: window.innerWidth > 768 ? 8 : 6, padding: 5 }, // Adjust tick label font size based on screen size
+              axisLabel: { fontSize: window.innerWidth > 768 ? 11 : 9, padding: 10 }, // Adjust axis label font size based on screen size
             }}
             axisLabelComponent={<VictoryLabel dy={20} />}
           />
@@ -157,8 +157,8 @@ export default function Business_dashboard() {
             label="Redeemed"
             dependentAxis
             style={{
-              tickLabels: { fontSize: 6, padding: 5 },
-              axisLabel: { fontSize: 9, padding: 10 },
+              tickLabels: { fontSize: window.innerWidth > 768 ? 8 : 6, padding: 5 }, // Adjust tick label font size based on screen size
+              axisLabel: { fontSize: window.innerWidth > 768 ? 11 : 9, padding: 10 }, // Adjust axis label font size based on screen size
             }} 
             axisLabelComponent={<VictoryLabel dy={-20} />} // Adjust dy to move the label to the left
           />

@@ -67,7 +67,7 @@ export default function Manage_Coupons() {
           {/* creates two headers for the page title and subtitle */}
           <h1 className="text-3xl font-semibold mb-2">Business Dashboard</h1>
           <h2 className="text-2xl font-medium mb-6">Manage Coupons</h2>
-          <div className="flex space-x-4 mb-4">
+          <div className="mb-4">
             {/* creates the Add new class button - this opens the add form modal */}
             <SolidColorButton
               title="Add New Coupon"
@@ -75,7 +75,7 @@ export default function Manage_Coupons() {
               backgroundColor = "pink"
               textColor = "black"
             />
-          </div>
+          </div> 
           {/* creates an html list, this will need to be refactored when pulling real data */}
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* loop through list items and generate a item for each one  */}
@@ -84,7 +84,7 @@ export default function Manage_Coupons() {
               {/* for each list item create a container to hold the buttons */}
               <div className="flex justify-between items-center">
                 <span className="text-lg font-semibold">{listItem}</span>
-                <div className="space-x-2">
+                <div className="flex space-x-2">
                   {/* create a button for updating the coupon - this opens the modal  */}
                   <LightColorfulButton
                     title="Update"
