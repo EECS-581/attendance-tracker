@@ -32,7 +32,7 @@ function UserTypeSelectCard({ name, onSelect }) {
     padding: '8px',
     cursor: 'pointer',
     textAlign: 'center',
-    backgroundColor: isHovered ? '#f5f5f5' : 'transparent', // Apply hover background color
+    backgroundColor: isHovered ? 'powderblue' : 'transparent', // Apply hover background color
   };
 
   return (
@@ -48,7 +48,7 @@ function UserTypeSelectCard({ name, onSelect }) {
         width={300}
         height={300}
       />
-      <h3>{name}</h3>
+      <h3 className="text-lg font-bold my-4">{name}</h3>
     </div>
   );
 }

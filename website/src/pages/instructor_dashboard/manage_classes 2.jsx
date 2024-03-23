@@ -36,7 +36,7 @@ export default function Manage_Classes() {
       <div className="container mx-auto mt-6 px-4">
         <h1 className="text-3xl font-semibold mb-2">Instructor Dashboard</h1>
         <h2 className="text-2xl font-medium mb-6">Manage Classes</h2>
-        <div className="flex space-x-4 mb-4">
+        <div className="mb-4">
           <SolidColorButton title="Add New Class" link="/" />
         </div>
         {loading ? (

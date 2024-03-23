@@ -70,12 +70,12 @@ const Navbar = () => {
               </button>
             </div>
             {/* creates a list for the menu items  */}
-            <ul className="hidden sm:flex space-x-6">
+            <ul className="hidden sm:flex flex-grow justify-center space-x-6">
               {MENU_LIST.map((menu) => (
                 // create an item element for each list item 
                 <li
                   key={menu.text}
-                  className={"font-medium text-2xl hover:text-gray-500"}
+                  className={"text-center font-medium text-2xl hover:text-gray-500"}
                 >
                   {/* create a link for each list item  */}
                   <Link href={menu.href}>

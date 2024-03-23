@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from 'react';
+import { useWeb3Context } from '@/contexts/web3Context';
+
 // import necessary components
 // import Navbar component 
 import Navbar from "@/components/navbar";
@@ -9,30 +11,75 @@ import LightColorfulButton from "@/components/LightColorfulButton";
 // create the about page
 export default function Account() {
 
-  const [userData, setUserData ] = useState({
-    username: "testUser",
-    email: "email@email.com",
-    password: "password",
-    institution: "University of Kansas",
-    usertype: "instructor",
-    profilePicture: "",
+  const { createWallet, setUserWallet, getUserData, updateUserData } = useWeb3Context(); // Use the Web3Context
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        // Fetch user data from the blockchain using the Web3Context
+        const data = await getUserData();
+        setUserData(data);
+      } catch (error) {
+        // Handle error
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  // const handleSubmit = async (updatedUserData) => {
+  //   try {
+  //     // Update user data on the blockchain using the Web3Context
+  //     await updateUserData(updatedUserData);
+  //     // Update local state or perform other actions if necessary
+  //   } catch (error) {
+  //     // Handle error
+  //     console.error('Error updating user data:', error);
+  //   }
+  // };
+ 
+  // State to manage form input values
+  const [userData, setUserData] = useState({
+    usertype: '',
+    username: '',
+    password: '',
+    email: '',
+    institution: '',
+    profilePicture: null, // Assuming profilePicture is a file
   });
 
+  // Function to handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setUserData({ ...userData, [name]: value });
+    setUserData({
+      ...userData,
+      [name]: value,
+    });
   };
 
+  // Function to handle file input change
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      setUserData({ ...userData, profilePicture: file.name });
-    }
+    setUserData({
+      ...userData,
+      profilePicture: file,
+    });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert("user updated data: ", userData);
+  // Function to handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+
+    try {
+      // Call the updateUserData method from Web3Context to update user data
+      await updateUserData(userData);
+      // Optionally, perform any additional actions after successful data update
+      console.log('User data updated successfully');
+    } catch (error) {
+      // Handle error if data update fails
+      console.error('Error updating user data:', error);
+    }
   };
 
   return (
@@ -157,4 +204,4 @@ export default function Account() {
       </div>
     </main>   
   );
-};
+}; 

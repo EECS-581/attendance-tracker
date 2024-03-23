@@ -4,12 +4,15 @@
 // Date: 09/24/2023
 // Updated: 10/17/2023, Requirement 36.7 - CSS styling version 1 - added tailwind css classes for styling
 // Updated: 11/16/2023, Requirement 26.3 - Refactor charts and chart widget to reflect information more valuable to the user
+// Updated: 2/09/2024,Requirement: 24.3 “Add Manage Account button to link update account info page” & Requirement: 24.4 “Add notifications to Dashboard”
 // This pages sets up the UI, there are no pre or post conditions
 // inputs to this page are the users filtering option that they choose
 
 // import necessary components
 // import react and usestate to track modal and data states
 import { React, useState } from 'react';
+import { useWeb3Context } from '@/contexts/web3Context';
+
 // import victory chart and props 
 import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryLabel } from 'victory';
 // import Navbar
@@ -18,6 +21,9 @@ import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 // import button component 
 import SolidColorButton from "@/components/SolidColorButton";
+import LightColorfulButton from '@/components/LightColorfulButton';
+
+import { useGraphContext } from "../../contexts/graphContext";
 
 // dummy chart data to be replaced with backend data
 const ChartData = [
@@ -27,6 +33,8 @@ const ChartData = [
   { coupon: "free drink", redeemed: 20, organization: "lps" },
   { coupon: "1/2 off", redeemed: 8, organization: "ku" }
 ]
+
+const username = "John Doe"
 
 // create the page Business Dashboard
 export default function Business_dashboard() {
@@ -69,12 +77,31 @@ export default function Business_dashboard() {
           <Navbar />
         </div>
       </div>
-      {/* create a container to hold the dropdown for the organizations */}
-      <div className="container mx-auto mt-6 px-4">
+          {/* Add a new section for the subheading and link to account preferences */}
+      <section className="mb-4 ml-8">
+        <h2 className="text-2xl font-semibold text-gray-700 mb-4">
+          Welcome, {username}!
+       </h2>
+       {/* Create a link to account preferences */}
+        <LightColorfulButton
+          shadowColor="pink"
+          title="Manage Account"
+          link="/account"
+        />
+      </section>
+      <div className='p-4 mb-8'>
         <h1 className="text-3xl md:text-4xl font-semibold text-gray-900 text-center my-4">Business Dashboard</h1>
-        <div className="mb-4 max-w-sm">
+      </div>
+
+      {/* create a container to hold the dropdown for the organizations */}
+      <div className='flex flex-col md:flex-row md:justify-between p-8'>
+      {/* <div className="container mx-auto mt-6 px-4"> */}
+        <div className='md:w-1/3 bg-white rounded shadow-lg p-4'>
+          
+        <div className="mb-12">
           {/* creates a label for the dropdown */}
           <label htmlFor="orgs" className="text-lg font-semibold">View Organizations: </label>
+          <p className='text-sm text-gray-600 mt-2'>-Click dropdown to filter graph by organization</p>
           {/* creates the dropdown items, this will eventually be pulled in  */}
           <select className="block mt-2 border border-gray-300 rounded p-2 w-full" name="orgs" id="orgs" onChange={(e) => setSelectedOrganization(e.target.value)}>
             <option value="ku">University of Kansas</option>
@@ -83,23 +110,36 @@ export default function Business_dashboard() {
             <option value="all">All</option>
           </select>
         </div>
-        <SolidColorButton title="Manage Coupons" link="/business_dashboard/manage_coupons" />
-        <div className="bg-white rounded shadow-lg p-4">
+        <div className='mb-12'>
+          <h3 className='text-lg font-semibold'>Active Coupons</h3>
+          <p className='text-sm text-gray-600 mt-2'>-Click button to add, edit or delete active coupons</p>
+          <SolidColorButton title="Manage Coupons" link="/business_dashboard/manage_coupons" />
+        </div>
+              {/* <div className='mb-12'>
+                <h3 className='text-lg font-semibold'>Notifications</h3>
+                <p className='text-sm text-gray-600 mt-2'>- No new notifications at this time.</p>
+              </div> */}
+
+        </div>
+        <div className="md:w-2/3 bg-white rounded shadow-lg p-4">
           <div className="mt-6">
+            {/* </div> */}
+            </div>
           {/* Creates an instance of the Victory Chart, this creates the chart with the specified theme and padding  */}
       {/* Victory Bar Chart */}
-      <div className="bg-white p-8 rounded-lg shadow-md">
+      {/* <div className='md:w-2/3 bg-white shadow-md'> */}
+      <div className="w-full">
         <VictoryChart 
           theme={VictoryTheme.material} 
-          width={300} 
-          height={200}
-          domainPadding={{ x: 20, y: 20 }} // Adjust the padding as needed
+          width={window.innerWidth > 768 ? 600 : 300} // Adjust width based on screen size
+          height={window.innerWidth > 768 ? 400 : 200} // Adjust height based on screen size
+          domainPadding={{ x: 20, y: 20 }} // Adjust the padding as needed 
         >
           {/* Title */}
           <VictoryLabel 
             text="Total Coupons Redeemed" 
-            x={150} 
-            y={24} 
+            x={window.innerWidth > 768 ? 300 : 150} // Adjust x position based on screen size
+            y={14} 
             textAnchor="middle" 
             style={{ fontSize: 10}}
           />
@@ -107,8 +147,8 @@ export default function Business_dashboard() {
           <VictoryAxis
             label="Coupon"
             style={{
-              tickLabels: { fontSize: 6, padding: 5 },
-              axisLabel: { fontSize: 9, padding: 10 },
+              tickLabels: { fontSize: window.innerWidth > 768 ? 8 : 6, padding: 5 }, // Adjust tick label font size based on screen size
+              axisLabel: { fontSize: window.innerWidth > 768 ? 11 : 9, padding: 10 }, // Adjust axis label font size based on screen size
             }}
             axisLabelComponent={<VictoryLabel dy={20} />}
           />
@@ -117,8 +157,8 @@ export default function Business_dashboard() {
             label="Redeemed"
             dependentAxis
             style={{
-              tickLabels: { fontSize: 6, padding: 5 },
-              axisLabel: { fontSize: 9, padding: 10 },
+              tickLabels: { fontSize: window.innerWidth > 768 ? 8 : 6, padding: 5 }, // Adjust tick label font size based on screen size
+              axisLabel: { fontSize: window.innerWidth > 768 ? 11 : 9, padding: 10 }, // Adjust axis label font size based on screen size
             }} 
             axisLabelComponent={<VictoryLabel dy={-20} />} // Adjust dy to move the label to the left
           />
@@ -153,6 +193,7 @@ export default function Business_dashboard() {
             }]}
           />
         </VictoryChart>
+      {/* </div> */}
       </div>
 
       {/* Modal */}
@@ -182,7 +223,7 @@ export default function Business_dashboard() {
       )}
     </div> 
     </div>
-    </div>
+    {/* </div> */}
       {/* This section creates a container to hold the footer */}
       <div className="py-4 text-center text-sm text-gray-600">
         {/* This creates an instance of the footer component */}
