@@ -4,6 +4,8 @@
 // Date: 10/26/2023
 // This page creates the modal component to be used with coupon, there are no pre or post conditions at this point
 // inputs to this page are the users input into the modal to update, add, and delete coupons
+// Updated: 03/03/2024
+// Update includes Requirement 23.4 Add ability for business to choose which institutions they want to provide coupons for on UI
 
 // import react and usestate from react library
 import React, { useState } from 'react';
@@ -13,8 +15,25 @@ function CouponModal({ isOpen, onClose, actionType }) {
     // default values
     title: '',
     description: '',
-    discount: 0
+    discount: 0,
   });
+
+  const orgs = ['KU', 'Lawrence Public Schools', 'All Kansas Schools'];
+  
+  const handleAllChange = (event) => {
+    const { checked } = event.target;
+    const updatedFormData = { ...formData };
+    orgs.forEach((org) => {
+      updatedFormData[org] = checked;
+    });
+    setFormData(updatedFormData);
+  };
+
+  const handleOrgChange = (event) => {
+    const { name, checked } = event.target;
+    setFormData({ ...formData, [name]: checked });
+  };
+
 
   // creates method to handle when the confirm button is clicked
   // this will be updated when real data is used
@@ -47,7 +66,7 @@ function CouponModal({ isOpen, onClose, actionType }) {
   // creates the method to render the form element on screen
   const renderForm = () => {
     return (
-      <div>
+      <div className='mb-4'>
       {/* input for the name  */}
         <input
           type="text"
@@ -74,6 +93,30 @@ function CouponModal({ isOpen, onClose, actionType }) {
           onChange={handleChange}
           className="w-full mb-4 p-2 border rounded"
         />
+        {/* 'All' checkbox */}
+      <div>
+        <input
+          type="checkbox"
+          name="allOrgs"
+          checked={orgs.every(org => formData[org])}
+          onChange={handleAllChange}
+          className="mr-2"
+        />
+        <label htmlFor="allOrgs">Select All</label>
+      </div>
+      {/* checkboxes for organizations */}
+      {orgs.map((org, index) => (
+        <div key={index}>
+          <input
+            type="checkbox"
+            name={org}
+            checked={formData[org]}
+            onChange={handleOrgChange}
+            className="mr-2"
+          />
+          <label htmlFor={org}>{org}</label>
+        </div>
+      ))}
       </div>
     );
   };

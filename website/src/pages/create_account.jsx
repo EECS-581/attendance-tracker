@@ -12,26 +12,26 @@ export default function CreateAccount() {
   };
 
   return (
-    <main className="w-full min-h-screen flex flex-col overflow-hidden bg-gray-100">
+    <main className="w-full min-h-screen flex flex-col overflow-hidden">
       <div className="py-6">
         <div className="container mx-auto">
           <Navbar />
         </div>
       </div>
-
-      <div className="flex-1 flex items-center justify-center">
-        <div className="w-full sm:w-3/4 p-6 rounded-lg bg-white shadow-md">
-          <h2 className="text-2xl font-bold text-center mb-4">Create an Account</h2>
+      <div className="flex flex-grow items-center justify-center p-8">
+        <div className="w-full p-6 rounded-lg bg-white shadow-md">
+          <h2 className='text-3xl md:text-4xl font-semibold text-gray-900 text-center my-4 pb-4'>Create an Account</h2>
+          <p className='text-center pb-8'>Select User Type to Begin</p>
           
           {!selectedOrganization ? (
-            <div className="flex justify-between">
-              <div className="mr-4">
+            <div className="flex flex-wrap justify-center pb-4"> 
+              <div className="mb-4 mx-2 sm:w-auto">
                 <UserTypeSelectCard name="Instructor" image="path_to_instructor_image" onSelect={handleOrganizationSelect} />
-              </div>
-              <div className="mr-4">
+              </div> 
+              <div className="mb-4 mx-2 sm:w-auto">
                 <UserTypeSelectCard name="Student" image="path_to_student_image" onSelect={handleOrganizationSelect} />
               </div>
-              <div>
+              <div className='mb-4 mx-2 sm:w-auto'>
                 <UserTypeSelectCard name="Business" image="path_to_business_image" onSelect={handleOrganizationSelect} />
               </div>
             </div>

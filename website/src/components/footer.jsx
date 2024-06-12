@@ -35,14 +35,8 @@ const Footer = () => {
             </li>
             <li>
               {/* Use Link component for navigation */}
-              <Link href="/instructor_dashboard">
-                <span className="hover:text-gray-500 font-bold">Instructors</span>
-              </Link>
-            </li>
-            <li>
-              {/* Use Link component for navigation */}
-              <Link href="/business_dashboard">
-                <span className="hover:text-gray-500 font-bold">Businesses</span>
+              <Link href="/login">
+                <span className="hover:text-gray-500 font-bold">Login</span>
               </Link>
             </li>
           </ul>
