@@ -61,16 +61,10 @@ const Landing = ({ navigation }) => {
 
       <View style={styles.buttonContainer}>
         <LightColorfulButton
-          title="Create Account"
-          shadowColor="powderblue"
-          onPress={() => {}}
-        />
-
-        <LightColorfulButton
-          title="Login"
+          title="Get Started"
           shadowColor="plum"
           onPress={() => {
-            navigation.navigate("Tabs");
+            navigation.navigate("Login");
           }}
         />
       </View>
